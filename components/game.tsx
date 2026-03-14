@@ -244,7 +244,8 @@ function R(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function SH(a){for(var i=a.length-1;i>0;i--){var j=R(0,i);var t=a[i];a[i]=a[j];a[j]=t}return a}
 function MQ(text,ans,hint,opts){
   ans=parseInt(ans);
-  if(!opts){var s=[ans];while(s.length<4){var d=R(1,Math.max(5,Math.abs(Math.round(ans*0.3))));if(Math.random()>0.5)d=-d;var v=ans+d;if(v>=0&&v!==ans&&s.indexOf(v)===-1)s.push(v)}opts=SH(s)}
+  if(isNaN(ans))ans=0;
+  if(!opts){var s=[ans];var _safe=0;while(s.length<4&&_safe<200){_safe++;var d=R(1,Math.max(5,Math.abs(Math.round(ans*0.3))||5));if(Math.random()>0.5)d=-d;var v=ans+d;if(v>=0&&v!==ans&&s.indexOf(v)===-1)s.push(v)}while(s.length<4){s.push(ans+s.length*7)}opts=SH(s)}
   return{text:text,answer:ans,hint:hint||'',options:opts}
 }
 function genArith(op,l){
@@ -326,6 +327,7 @@ function genFrac(l){var d=R(2,9),t=d*R(2,9);return MQ('1/'+d+' c\\u1ee7a '+t+' =
 var curSkill=null,curLv=1,questions=[],qIdx=0,lives=3,correct=0,combo=0,timerInt=null,timeLeft=0;
 var TIME_Q=30,Q_COUNT=10;
 var _pendingSpin=0;
+var _advancing=false;
 window.__gameTimerInt = null;
 
 function showScreen(id){
@@ -391,7 +393,7 @@ function startSkill(id){
   curSkill=sk;
   var p=PD.sp[id]||{level:1,correct:0,total:0};curLv=p.level;
   questions=[];for(var i=0;i<Q_COUNT;i++)questions.push(sk.gen(curLv));
-  qIdx=0;lives=3;correct=0;combo=0;
+  qIdx=0;lives=3;correct=0;combo=0;_advancing=false;
   showScreen('game');renderHearts();
   document.getElementById('correctC').textContent=0;
   document.getElementById('totalQ').textContent=Q_COUNT;
@@ -407,20 +409,23 @@ function renderHearts(){
 
 function showQ(){
   if(qIdx>=Q_COUNT||lives<=0){endRound();return}
+  _answered=false;
   var q=questions[qIdx];var area=document.getElementById('gameArea');
   timeLeft=TIME_Q;
   var fontSize=q.text.length>60?'18px':q.text.length>35?'24px':'32px';
   area.innerHTML='<div class="timer-bar"><div class="fill" id="timerF" style="width:100%"></div></div><div class="game-info"><div class="g-stat"><div class="lb">C\\u00e2u</div><div class="vl" style="color:var(--gold)">'+(qIdx+1)+'/'+Q_COUNT+'</div></div><div class="g-stat"><div class="lb">Level</div><div class="vl" style="color:var(--coral)">Lv.'+curLv+'</div></div><div class="g-stat"><div class="lb">Combo</div><div class="vl" style="color:var(--mint)">'+combo+'\\ud83d\\udd25</div></div></div><div class="question-card"><div class="q-text" style="font-size:'+fontSize+';white-space:pre-line">'+q.text+'</div><div class="q-hint">'+q.hint+'</div><div class="answers-grid">'+q.options.map(function(o){return '<button class="ans-btn" onclick="checkAns('+o+','+q.answer+',this)">'+o.toLocaleString()+'</button>'}).join('')+'</div></div>';
   clearInterval(timerInt);
-  timerInt=setInterval(function(){timeLeft-=0.1;var f=document.getElementById('timerF');if(f)f.style.width=Math.max(0,(timeLeft/TIME_Q)*100)+'%';if(timeLeft<=0){clearInterval(timerInt);handleWrong();setTimeout(nextQ,1500)}},100);
+  timerInt=setInterval(function(){timeLeft-=0.1;var f=document.getElementById('timerF');if(f)f.style.width=Math.max(0,(timeLeft/TIME_Q)*100)+'%';if(timeLeft<=0&&!_answered){_answered=true;clearInterval(timerInt);document.querySelectorAll('.ans-btn').forEach(function(b){b.style.pointerEvents='none'});handleWrong();setTimeout(nextQ,1500)}},100);
   window.__gameTimerInt=timerInt;
 }
 
+var _answered=false;
 function checkAns(sel,cor,btn){
+  if(_answered)return;_answered=true;
   clearInterval(timerInt);
   document.querySelectorAll('.ans-btn').forEach(function(b){b.style.pointerEvents='none'});
   if(sel===cor){btn.classList.add('correct');handleCorrect()}
-  else{btn.classList.add('wrong');document.querySelectorAll('.ans-btn').forEach(function(b){if(parseInt(b.textContent.replace(/,/g,''))===cor)b.classList.add('correct')});handleWrong()}
+  else{btn.classList.add('wrong');document.querySelectorAll('.ans-btn').forEach(function(b){if(parseInt(b.textContent.replace(/[,.]/g,''))===cor)b.classList.add('correct')});handleWrong()}
   setTimeout(nextQ,1400);
 }
 
@@ -443,7 +448,7 @@ function handleWrong(){
   cg.classList.add('corgi-sad');setTimeout(function(){cg.classList.remove('corgi-sad')},600);
   showEncourage(false);spawnFloating('\\ud83d\\udcaa',2);
 }
-function nextQ(){qIdx++;showQ()}
+function nextQ(){if(_advancing)return;_advancing=true;qIdx++;showQ();_advancing=false}
 
 function showEncourage(isCorrect){
   var msgs=isCorrect?CORRECT_MESSAGES:WRONG_MESSAGES;var m=msgs[R(0,msgs.length-1)];
@@ -472,15 +477,17 @@ function tapCorgiMap(el){
 function spawnPaw(){for(var i=0;i<3;i++){(function(idx){var p=document.createElement('div');p.className='paw-trail';p.textContent='\\ud83d\\udc3e';p.style.left=R(10,90)+'%';p.style.top=R(40,80)+'%';p.style.setProperty('--rot',R(-30,30)+'deg');p.style.animationDelay=(idx*0.2)+'s';document.body.appendChild(p);setTimeout(function(){p.remove()},2200)})(i)}}
 
 function endRound(){
-  clearInterval(timerInt);document.getElementById('corgiGame').style.display='none';
+  clearInterval(timerInt);
+  try{document.getElementById('corgiGame').style.display='none'}catch(e){}
   var acc=Math.round(correct/Q_COUNT*100);
   var stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
   var xpE=correct*10+stars*15;var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
   var xuE=correct*2+(stars>=3?20:stars>=2?10:stars>=1?5:0)+(combo>=5?combo*2:0);
   PD.xp+=xpE;PD.stars+=stars;PD.gems+=gemE;PD.xu=(PD.xu||0)+xuE;PD.totalPlayed+=Q_COUNT;
-  while(PD.xp>=PD.level*100){PD.xp-=PD.level*100;PD.level++}
+  var _xpSafe=0;while(PD.xp>=PD.level*100&&_xpSafe<100){_xpSafe++;PD.xp-=PD.level*100;PD.level++}
   if(curSkill){var p=PD.sp[curSkill.id]||{level:1,correct:0,total:0};p.correct+=correct;p.total+=Q_COUNT;if(acc>=80&&p.level<10)p.level++;PD.sp[curSkill.id]=p}
-  updateDailyProg(correct);_pendingSpin=checkLevelComplete();saveData();showScreen('result');
+  try{updateDailyProg(correct)}catch(e){}
+  _pendingSpin=checkLevelComplete();saveData();showScreen('result');
   var mood=stars>=3?'love':stars>=2?'excited':stars>=1?'happy':'sad';
   var anim=stars>=2?'corgi-happy':'';
   document.getElementById('resultScene').innerHTML='<div class="corgi-wrap '+anim+'">'+corgiSVG(stars>=2?130:110,mood)+'</div>';
