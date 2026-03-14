@@ -11,11 +11,13 @@ export default function Game() {
     if (loaded) return
     setLoaded(true)
 
-    loadCloudData().then(() => {
-      const script = document.createElement('script')
-      script.src = '/game.js?v=2'
-      document.body.appendChild(script)
-    })
+    // Load game.js immediately (don't block on cloud data)
+    const script = document.createElement('script')
+    script.src = '/game.js?v=4'
+    document.body.appendChild(script)
+
+    // Cloud sync in background
+    loadCloudData()
 
     let saveTimer: ReturnType<typeof setTimeout>
     const handleSave = () => {
@@ -36,6 +38,28 @@ export default function Game() {
   return null
 }
 
+function migrateOldFormat(old: Record<string, unknown>): Record<string, unknown> {
+  // If already new format (has 'sp' key), return as-is
+  if (old.sp) return old
+  // Migrate from old format (skill_progress, total_correct, etc.)
+  return {
+    level: old.level || 1,
+    xp: old.xp || 0,
+    stars: old.stars || 0,
+    gems: old.gems || 0,
+    streak: old.streak || 0,
+    lastPlay: old.last_play_date || old.lastPlay || null,
+    sp: old.skill_progress || {},
+    ach: old.achievements || {},
+    daily: old.daily || { date: null, m: [] },
+    tc: old.total_correct || 0,
+    tp: old.total_played || 0,
+    combo: 0,
+    mc: old.max_combo || 0,
+    ct: old.corgi_taps || 0,
+  }
+}
+
 async function loadCloudData() {
   try {
     const controller = new AbortController()
@@ -45,16 +69,17 @@ async function loadCloudData() {
     if (!res.ok) return
     const { data } = await res.json()
     if (data && data.level) {
+      const migrated = migrateOldFormat(data)
       const localRaw = localStorage.getItem(SAVE_KEY)
       if (localRaw) {
         const local = JSON.parse(localRaw)
-        const cloudScore = (data.tp || 0) + (data.level || 0) * 1000
+        const cloudScore = ((migrated.tp as number) || 0) + ((migrated.level as number) || 0) * 1000
         const localScore = (local.tp || 0) + (local.level || 0) * 1000
         if (cloudScore >= localScore) {
-          localStorage.setItem(SAVE_KEY, JSON.stringify(data))
+          localStorage.setItem(SAVE_KEY, JSON.stringify(migrated))
         }
       } else {
-        localStorage.setItem(SAVE_KEY, JSON.stringify(data))
+        localStorage.setItem(SAVE_KEY, JSON.stringify(migrated))
       }
     }
   } catch {

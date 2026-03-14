@@ -37,9 +37,33 @@ function CSvg(sz,mood,tail){
 
 // ============ DATA ============
 var SK='uynhi3sub_v1';
+var OLD_SK='uynhi_corgi_math_v3';
 var D=load();
 function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{date:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0}}
-function load(){try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level)return d}catch(e){}return def()}
+function load(){
+  try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level)return d}catch(e){}
+  // Migrate from old math-only save
+  try{
+    var old=JSON.parse(localStorage.getItem(OLD_SK));
+    if(old&&old.level){
+      var n=def();
+      n.level=old.level||1;n.xp=old.xp||0;n.stars=old.stars||0;n.gems=old.gems||0;
+      n.streak=old.streak||0;n.lastPlay=old.last_play_date||old.lastPlay||null;
+      n.tc=old.total_correct||old.tc||0;n.tp=old.total_played||old.tp||0;
+      n.mc=old.max_combo||old.mc||0;n.ct=old.corgi_taps||old.ct||0;
+      // Migrate skill progress (old field: skill_progress or sp)
+      var osp=old.skill_progress||old.sp||{};
+      for(var k in osp){if(osp.hasOwnProperty(k))n.sp[k]=osp[k]}
+      // Migrate achievements
+      var oach=old.achievements||old.ach||{};
+      for(var k in oach){if(oach.hasOwnProperty(k))n.ach[k]=oach[k]}
+      // Save migrated data to new key
+      try{localStorage.setItem(SK,JSON.stringify(n))}catch(e){}
+      return n;
+    }
+  }catch(e){}
+  return def();
+}
 function save(){
   try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){}
   try{window.dispatchEvent(new CustomEvent('game-save'))}catch(e){}
