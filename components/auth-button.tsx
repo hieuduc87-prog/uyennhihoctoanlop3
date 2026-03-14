@@ -1,31 +1,27 @@
 'use client'
 
-import { createClient, isSupabaseConfigured } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import type { User } from '@supabase/supabase-js'
 
 export default function AuthButton() {
-  const [user, setUser] = useState<User | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
   const router = useRouter()
-  const configured = isSupabaseConfigured()
 
   useEffect(() => {
-    if (!configured) return
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => setUser(data.user))
-  }, [configured])
+    const u = localStorage.getItem('voicon_user')
+    if (u) setUsername(u)
+  }, [])
 
-  if (!configured) return null
-
-  const handleLogout = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    setUser(null)
-    router.refresh()
+  const handleLogout = () => {
+    localStorage.removeItem('voicon_user')
+    localStorage.removeItem('player_profile')
+    document.cookie = 'logged_in=0; path=/; max-age=0'
+    document.cookie = 'guest_mode=0; path=/; max-age=0'
+    setUsername(null)
+    router.push('/login')
   }
 
-  if (user) {
+  if (username) {
     return (
       <button
         onClick={handleLogout}
@@ -41,7 +37,7 @@ export default function AuthButton() {
           fontFamily: "'Nunito', sans-serif",
         }}
       >
-        ☁️ {user.email?.split('@')[0]} · Đăng xuất
+        ☁️ {username} · Đăng xuất
       </button>
     )
   }

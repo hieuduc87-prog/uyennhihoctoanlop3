@@ -1,8 +1,11 @@
 'use client'
 
-import { createClient } from '@/lib/supabase'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
+
+const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const SB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const sbH = { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' }
 
 function LoginContent() {
   const router = useRouter()
@@ -19,29 +22,25 @@ function LoginContent() {
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const toEmail = (u: string) => `${u.toLowerCase().trim()}@belop3.app`
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!username.trim() || !password) { setError('Nhập đầy đủ tên đăng nhập và mật khẩu nhé!'); return }
     setLoading(true); setError(''); setSuccess('')
     try {
-      const supabase = createClient()
-      // Try new domain first, fallback to old @belop3.game for existing users
-      let { error: authError } = await supabase.auth.signInWithPassword({
-        email: toEmail(username),
-        password
-      })
-      if (authError) {
-        const oldEmail = `${username.toLowerCase().trim()}@belop3.game`
-        const fallback = await supabase.auth.signInWithPassword({ email: oldEmail, password })
-        if (fallback.error) {
-          setError('Sai tên đăng nhập hoặc mật khẩu!')
-          setLoading(false)
-          return
-        }
+      const u = username.trim().toLowerCase()
+      const r = await fetch(`${SB_URL}/rest/v1/users?username=eq.${encodeURIComponent(u)}&password=eq.${encodeURIComponent(password)}&limit=1`, { headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } })
+      const rows = await r.json()
+      if (!rows || rows.length === 0) {
+        setError('Sai tên đăng nhập hoặc mật khẩu!')
+        setLoading(false)
+        return
       }
+      const user = rows[0]
+      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet }
+      localStorage.setItem('player_profile', JSON.stringify(profile))
+      localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
+      document.cookie = 'logged_in=1; path=/; max-age=31536000'
       router.push('/')
     } catch {
       setError('Lỗi kết nối. Thử lại nhé!')
@@ -58,48 +57,39 @@ function LoginContent() {
     if (!password || password.length < 6) { setError('Mật khẩu cần ít nhất 6 ký tự!'); return }
     setLoading(true); setError(''); setSuccess('')
     try {
-      const supabase = createClient()
-      const profile = {
-        name: childName.trim(),
-        gender,
-        avatar: gender === 'girl' ? 'uyennhi' : 'voi',
-        pet
-      }
-      const { error: authError } = await supabase.auth.signUp({
-        email: toEmail(username),
+      const body: Record<string, unknown> = {
+        username: username.trim().toLowerCase(),
         password,
-        options: {
-          data: {
-            display_name: childName.trim(),
-            recovery_email: email.trim() || null,
-            profile
-          }
-        }
+        display_name: childName.trim(),
+        gender,
+        pet,
+        grade: 3
+      }
+      if (email.trim()) body.email = email.trim()
+      const r = await fetch(`${SB_URL}/rest/v1/users`, {
+        method: 'POST',
+        headers: { ...sbH, 'Prefer': 'return=representation' },
+        body: JSON.stringify(body)
       })
-      if (authError) {
-        if (authError.message.includes('already registered')) {
+      if (!r.ok) {
+        const e = await r.json()
+        if (e.message?.includes('unique') || e.message?.includes('duplicate')) {
           setError('Tên đăng nhập này đã có người dùng rồi!')
         } else {
-          setError('Lỗi đăng ký: ' + authError.message)
+          setError('Lỗi đăng ký: ' + (e.message || 'Thử lại nhé!'))
         }
         setLoading(false)
         return
       }
-      // Save profile to localStorage for game.js
+      const rows = await r.json()
+      const user = Array.isArray(rows) ? rows[0] : rows
+      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet }
       localStorage.setItem('player_profile', JSON.stringify(profile))
+      localStorage.setItem('voicon_user', user.username)
+      document.cookie = 'guest_mode=0; path=/; max-age=0'
+      document.cookie = 'logged_in=1; path=/; max-age=31536000'
       setSuccess('Đăng ký thành công! Đang đăng nhập...')
-      const { error: loginErr } = await supabase.auth.signInWithPassword({
-        email: toEmail(username),
-        password
-      })
-      if (!loginErr) {
-        document.cookie = 'guest_mode=0; path=/; max-age=0'
-        router.push('/')
-      } else {
-        setSuccess('Đăng ký thành công! Hãy đăng nhập.')
-        setMode('login')
-        setLoading(false)
-      }
+      router.push('/')
     } catch {
       setError('Lỗi kết nối. Thử lại nhé!')
       setLoading(false)
@@ -107,6 +97,7 @@ function LoginContent() {
   }
 
   const handleGuest = () => {
+    document.cookie = 'logged_in=0; path=/; max-age=0'
     document.cookie = 'guest_mode=1; path=/; max-age=31536000'
     router.push('/')
   }

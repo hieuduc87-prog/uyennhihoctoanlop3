@@ -1,39 +1,24 @@
-import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  // Skip if Supabase not configured
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!url || !key || url === 'your-supabase-url') {
+  const pathname = request.nextUrl.pathname
+
+  // Allow these paths without auth
+  if (pathname.startsWith('/login') || pathname.startsWith('/auth') || pathname.startsWith('/api')) {
     return NextResponse.next()
   }
 
-  let supabaseResponse = NextResponse.next({ request })
+  // Allow if logged in (cookie set on login) or guest mode
+  if (request.cookies.get('logged_in')?.value === '1' || request.cookies.get('guest_mode')?.value === '1') {
+    return NextResponse.next()
+  }
 
-  const supabase = createServerClient(url, key, {
-    cookies: {
-      getAll() {
-        return request.cookies.getAll()
-      },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value }) =>
-          request.cookies.set(name, value)
-        )
-        supabaseResponse = NextResponse.next({ request })
-        cookiesToSet.forEach(({ name, value, options }) =>
-          supabaseResponse.cookies.set(name, value, options)
-        )
-      },
-    },
-  })
-
-  // Refresh session
-  await supabase.auth.getUser()
-
-  return supabaseResponse
+  // Redirect to login if not authenticated
+  const loginUrl = request.nextUrl.clone()
+  loginUrl.pathname = '/login'
+  return NextResponse.redirect(loginUrl)
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|js|css)$).*)'],
 }
