@@ -30,7 +30,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradi
 .screen.active{display:flex}
 
 .corgi-wrap{position:relative;display:inline-block}
-.corgi-wrap svg{filter:drop-shadow(0 5px 15px rgba(251,191,36,0.3))}
+.corgi-wrap svg,.corgi-wrap img{filter:drop-shadow(0 5px 15px rgba(251,191,36,0.3))}
 .corgi-bounce{animation:corgiBounce 0.6s ease}
 @keyframes corgiBounce{0%{transform:translateY(0)}30%{transform:translateY(-20px) rotate(-5deg)}60%{transform:translateY(-5px) rotate(3deg)}100%{transform:translateY(0) rotate(0)}}
 .corgi-happy{animation:corgiHappy 0.8s ease}
@@ -193,6 +193,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradi
 
 .paw-trail{position:fixed;pointer-events:none;z-index:0;font-size:14px;opacity:0;animation:pawFade 2s ease forwards}
 @keyframes pawFade{0%{opacity:0.6;transform:scale(0.5) rotate(var(--rot,0deg))}50%{opacity:0.3}100%{opacity:0;transform:scale(1) rotate(var(--rot,0deg))}}
+
+#loginUser:focus,#loginPass:focus{border-color:var(--pink);box-shadow:0 0 15px rgba(255,107,157,0.3)}
+#loginUser::placeholder,#loginPass::placeholder{color:rgba(255,255,255,0.3)}
+
+.wheel-outer{position:relative;width:280px;height:280px;margin:0 auto}
+.wheel-pointer{position:absolute;top:-16px;left:50%;transform:translateX(-50%);z-index:10;font-size:30px;color:var(--gold);filter:drop-shadow(0 2px 8px rgba(251,191,36,0.7));line-height:1}
+.wheel-spin{width:100%;height:100%;border-radius:50%;position:relative;border:5px solid var(--gold);box-shadow:0 0 40px rgba(251,191,36,0.35),0 0 80px rgba(255,107,157,0.15),inset 0 0 20px rgba(0,0,0,0.2);overflow:hidden}
+.wheel-center-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;background:linear-gradient(135deg,var(--bg),var(--bg2));border:3px solid var(--gold);border-radius:50%;z-index:5;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 15px rgba(251,191,36,0.5)}
+.spin-glow{animation:spinGlow 2s ease-in-out infinite}
+@keyframes spinGlow{0%,100%{box-shadow:0 0 40px rgba(251,191,36,0.35),0 0 80px rgba(255,107,157,0.15)}50%{box-shadow:0 0 60px rgba(251,191,36,0.5),0 0 100px rgba(255,107,157,0.25)}}
+.prize-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px;text-align:center;font-size:11px}
+.prize-card .pem{font-size:24px}
+.prize-card .pnm{font-weight:700;margin-top:2px;font-size:10px}
+.prize-card .pvl{color:var(--gold);font-weight:800;font-size:10px}
+.level-complete-banner{background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(255,107,157,0.2));border:2px solid var(--gold);border-radius:20px;padding:20px;text-align:center;animation:bannerPop 0.6s ease}
+@keyframes bannerPop{0%{opacity:0;transform:scale(0.5)}60%{transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
 `
 
 const gameHTML = `
@@ -209,7 +225,21 @@ const gameHTML = `
   <div class="splash-title">Vương Quốc Toán Học</div>
   <div class="splash-name">✨ Uyển Nhi & Corgi ✨</div>
   <div class="splash-sub">Cùng bạn Corgi béo ú chinh phục Toán lớp 3!</div>
-  <button class="btn-play" onclick="startGame()">🐾 Chơi nào!</button>
+
+  <!-- Login form (shown first) -->
+  <div id="loginBox" style="margin:0 auto 16px;width:100%;max-width:280px">
+    <input id="loginUser" type="text" placeholder="Tên đăng nhập" autocomplete="username"
+      style="width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:16px;font-family:'Nunito',sans-serif;font-weight:600;text-align:center;margin-bottom:8px;outline:none" />
+    <input id="loginPass" type="password" placeholder="Mật khẩu" autocomplete="current-password"
+      style="width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:16px;font-family:'Nunito',sans-serif;font-weight:600;text-align:center;margin-bottom:8px;outline:none"
+      onkeydown="if(event.key==='Enter')doLogin()" />
+    <div id="loginError" style="color:var(--coral);font-size:13px;margin-bottom:8px;display:none">Sai tên hoặc mật khẩu!</div>
+    <button class="btn-play" onclick="doLogin()" style="width:100%">🔑 Đăng nhập</button>
+  </div>
+
+  <!-- Play button (shown after login) -->
+  <button id="btnPlay" class="btn-play" onclick="startGame()" style="display:none">🐾 Chơi nào!</button>
+  <div id="loggedInAs" style="display:none;font-size:12px;color:var(--dim);margin-top:8px"></div>
 </div>
 
 <!-- ==================== MAP ==================== -->
@@ -225,6 +255,7 @@ const gameHTML = `
     <div style="display:flex;gap:6px">
       <div class="stat-pill"><span class="ic">⭐</span><span id="starC">0</span></div>
       <div class="stat-pill"><span class="ic">💎</span><span id="gemC">0</span></div>
+      <div class="stat-pill"><span class="ic">🪙</span><span id="xuC">0</span></div>
       <div class="stat-pill"><span class="ic">🔥</span><span id="streakC">0</span></div>
     </div>
   </div>
@@ -257,9 +288,10 @@ const gameHTML = `
     <div class="r-stat"><div class="num" id="rAcc">0%</div><div class="lbl">Chính xác</div></div>
     <div class="r-stat"><div class="num" id="rXP">+0</div><div class="lbl">XP</div></div>
     <div class="r-stat"><div class="num" id="rGem">+0</div><div class="lbl">💎</div></div>
+    <div class="r-stat"><div class="num" id="rXu" style="color:var(--mint)">+0</div><div class="lbl">🪙 Xu</div></div>
   </div>
   <div class="btn-group">
-    <button class="btn-sec" onclick="showScreen('map')">🗺️ Bản đồ</button>
+    <button class="btn-sec" onclick="backToMap()">🗺️ Bản đồ</button>
     <button class="btn-pri" onclick="replaySkill()">🔄 Chơi lại</button>
   </div>
 </div>
@@ -274,6 +306,7 @@ const gameHTML = `
     <div style="display:flex;gap:6px">
       <div class="stat-pill"><span class="ic">⭐</span><span id="starC2">0</span></div>
       <div class="stat-pill"><span class="ic">💎</span><span id="gemC2">0</span></div>
+      <div class="stat-pill"><span class="ic">🪙</span><span id="xuC2">0</span></div>
     </div>
   </div>
   <div class="daily-hero">
@@ -296,12 +329,36 @@ const gameHTML = `
     <div class="xp-bar-full"><div class="fill" id="xpFull" style="width:0%"></div></div>
     <div style="font-size:11px;color:var(--dim);margin-top:4px"><span id="xpCur">0</span>/<span id="xpNeed">100</span> XP</div>
   </div>
-  <div class="streak-card">
-    <div class="streak-num" id="profStreak">0</div>
-    <div class="streak-lbl">ngày chơi liên tục 🔥</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+    <div class="streak-card" style="margin-top:0">
+      <div class="streak-num" id="profStreak">0</div>
+      <div class="streak-lbl">ngày chơi liên tục 🔥</div>
+    </div>
+    <div class="streak-card" style="margin-top:0;background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(251,191,36,0.1));border-color:var(--mint)">
+      <div class="streak-num" id="profXu" style="color:var(--mint)">0</div>
+      <div class="streak-lbl">🪙 Xu tích lũy</div>
+      <div id="profXuValue" style="font-size:11px;color:var(--gold);margin-top:4px"></div>
+    </div>
   </div>
   <h3 style="margin-top:20px;font-family:'Baloo 2',cursive;font-size:18px">🏆 Thành Tựu</h3>
   <div class="ach-grid" id="achGrid"></div>
+  <h3 style="margin-top:20px;font-family:'Baloo 2',cursive;font-size:18px">🎁 Phần Thưởng Đã Nhận</h3>
+  <div id="prizeHistory" style="margin-top:8px"></div>
+</div>
+
+<!-- ==================== SPIN WHEEL ==================== -->
+<div id="spinWheel" class="screen" style="justify-content:center;align-items:center;text-align:center;padding:20px;gap:8px">
+  <div style="font-family:'Baloo 2',cursive;font-size:28px;background:linear-gradient(135deg,var(--gold),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent">🎰 VÒNG XOAY MAY MẮN</div>
+  <div style="color:var(--dim);font-size:13px;margin-bottom:8px">Hoàn thành <span id="spinLevelText" style="color:var(--gold);font-weight:800">Level 1</span> tất cả 12 môn!</div>
+  <div class="wheel-outer">
+    <div class="wheel-pointer">▼</div>
+    <div class="wheel-spin spin-glow" id="wheelInner"></div>
+    <div class="wheel-center-dot">🐾</div>
+  </div>
+  <div style="margin-top:14px">
+    <button id="spinBtn" class="btn-play" style="font-size:20px;padding:14px 44px">🎰 QUAY THƯỞNG!</button>
+  </div>
+  <div id="spinResultBox" style="display:none;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);border-radius:20px;padding:20px;margin-top:10px;width:100%;max-width:320px"></div>
 </div>
 
 <!-- BOTTOM NAV -->
