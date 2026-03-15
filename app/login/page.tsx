@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
 import { GRADE_REGISTRY } from '@/lib/grade-registry'
+import { trackLogin, trackRegister } from '@/lib/analytics'
 
 function LoginContent() {
   const router = useRouter()
@@ -53,6 +54,7 @@ function LoginContent() {
       localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
       document.cookie = 'logged_in=1; path=/; max-age=31536000'
+      trackLogin('password')
       router.push(gradeId ? '/' + gradeId : '/')
     } catch {
       setError('Lỗi kết nối. Thử lại nhé!')
@@ -103,6 +105,7 @@ function LoginContent() {
       localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
       document.cookie = 'logged_in=1; path=/; max-age=31536000'
+      trackRegister()
       setSuccess('Đăng ký thành công! Đang vào game...')
       router.push('/' + gradeId)
     } catch {

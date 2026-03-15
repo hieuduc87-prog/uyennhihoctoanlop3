@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { track } from '@/lib/analytics'
 
 interface GameShellProps {
   gradeScript: string
@@ -37,7 +38,26 @@ export default function GameShell({ gradeScript, saveKey }: GameShellProps) {
     }
     window.addEventListener('game-save', handleSave)
 
+    // Analytics: track game events from engine.js
+    const gradeId = SAVE_KEY.replace('vuongquoc_', '')
+    const sessionStart = Date.now()
+    const handleAnalytics = (e: Event) => {
+      const d = (e as CustomEvent).detail || {}
+      track(d.event || 'game_event', { grade: gradeId, ...d })
+    }
+    window.addEventListener('game-analytics', handleAnalytics)
+
+    // Track session duration on unload
+    const handleUnload = () => {
+      const secs = Math.round((Date.now() - sessionStart) / 1000)
+      if (secs > 5) track('session_duration', { grade: gradeId, duration_seconds: secs })
+    }
+    window.addEventListener('beforeunload', handleUnload)
+
     return () => {
+      handleUnload()
+      window.removeEventListener('game-analytics', handleAnalytics)
+      window.removeEventListener('beforeunload', handleUnload)
       window.removeEventListener('game-save', handleSave)
       clearTimeout(saveTimer)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1324,10 +1344,96 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .evo-subtitle{font-size:18px}
 }
 
+/* ========== SCREEN TRANSITIONS ========== */
+/* Iris wipe — circle expanding/contracting */
+.iris-transition{position:fixed;inset:0;z-index:10000;pointer-events:none}
+.iris-transition .iris-circle{position:absolute;top:50%;left:50%;width:0;height:0;
+  border-radius:50%;transform:translate(-50%,-50%);
+  box-shadow:0 0 0 200vmax var(--iris-bg,#1b0a3c);
+  transition:none}
+.iris-transition.iris-close .iris-circle{
+  animation:irisClose .4s cubic-bezier(.4,0,.2,1) forwards}
+.iris-transition.iris-open .iris-circle{
+  width:300vmax;height:300vmax;
+  animation:irisOpen .4s .05s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes irisClose{
+  0%{width:300vmax;height:300vmax;box-shadow:0 0 0 0 var(--iris-bg,#1b0a3c)}
+  100%{width:0;height:0;box-shadow:0 0 0 200vmax var(--iris-bg,#1b0a3c)}}
+@keyframes irisOpen{
+  0%{width:0;height:0;box-shadow:0 0 0 200vmax var(--iris-bg,#1b0a3c)}
+  100%{width:300vmax;height:300vmax;box-shadow:0 0 0 0 var(--iris-bg,#1b0a3c)}}
+
+/* Curtain split */
+.curtain-transition{position:fixed;inset:0;z-index:10000;pointer-events:none;display:flex}
+.curtain-left,.curtain-right{width:50%;height:100%;background:linear-gradient(180deg,#2d1463,#1b0a3c)}
+.curtain-transition.curtain-close .curtain-left{animation:curtainCloseL .35s ease-in forwards}
+.curtain-transition.curtain-close .curtain-right{animation:curtainCloseR .35s ease-in forwards}
+.curtain-transition.curtain-open .curtain-left{animation:curtainOpenL .35s .05s ease-out forwards}
+.curtain-transition.curtain-open .curtain-right{animation:curtainOpenR .35s .05s ease-out forwards}
+@keyframes curtainCloseL{0%{transform:translateX(-100%)}100%{transform:translateX(0)}}
+@keyframes curtainCloseR{0%{transform:translateX(100%)}100%{transform:translateX(0)}}
+@keyframes curtainOpenL{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+@keyframes curtainOpenR{0%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* ========== WELCOME ANIMATIONS ========== */
+/* Letter pop title */
+.letter-pop span{display:inline-block;opacity:0;transform:translateY(20px) scale(0);
+  animation:letterPop .4s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes letterPop{0%{opacity:0;transform:translateY(20px) scale(0) rotate(-10deg)}
+  60%{transform:translateY(-4px) scale(1.2) rotate(3deg)}
+  100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+
+/* Sparkle burst */
+.sparkle-burst{position:absolute;pointer-events:none;z-index:10}
+.sparkle-burst .sb-particle{position:absolute;width:8px;height:8px;border-radius:50%;
+  animation:sbExplode .8s cubic-bezier(.25,.46,.45,.94) forwards}
+@keyframes sbExplode{0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--sb-x,50px),var(--sb-y,-50px)) scale(0)}}
+
+/* Bounce-in for splash character */
+.bounce-in{animation:bounceIn .8s cubic-bezier(.34,1.56,.64,1)}
+@keyframes bounceIn{0%{opacity:0;transform:translateY(80px) scale(.3)}
+  50%{transform:translateY(-10px) scale(1.05)}
+  70%{transform:translateY(5px) scale(.98)}
+  100%{opacity:1;transform:translateY(0) scale(1)}}
+
+/* ========== CELEBRATION EFFECTS ========== */
+/* Star fly to target */
+.star-fly{position:fixed;z-index:10001;font-size:24px;pointer-events:none;
+  filter:drop-shadow(0 0 8px rgba(255,194,51,.6));
+  animation:starFly var(--fly-dur,.8s) cubic-bezier(.25,.1,.25,1) forwards}
+@keyframes starFly{0%{opacity:1;transform:translate(0,0) scale(1.5)}
+  70%{opacity:1;transform:translate(var(--fly-x,0),var(--fly-y,0)) scale(.8)}
+  100%{opacity:0;transform:translate(var(--fly-x,0),var(--fly-y,0)) scale(0)}}
+
+/* Combo fire particles */
+.combo-fire{position:fixed;pointer-events:none;z-index:300}
+.fire-particle{position:absolute;border-radius:50%;
+  animation:fireRise var(--fire-dur,.6s) ease-out forwards}
+@keyframes fireRise{0%{opacity:1;transform:translateY(0) scale(1)}
+  100%{opacity:0;transform:translateY(var(--fire-y,-40px)) scale(0)}}
+
+/* Level complete flash */
+.level-flash{position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.4),rgba(255,194,51,.15),transparent 70%);
+  animation:flashBoom .5s ease-out forwards}
+@keyframes flashBoom{0%{opacity:0;transform:scale(.5)}30%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.5)}}
+
+/* Badge reveal */
+.badge-reveal{animation:badgeReveal .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes badgeReveal{0%{opacity:0;transform:scale(0) rotate(-180deg)}
+  60%{transform:scale(1.3) rotate(10deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+
+/* Screen shake for wrong answers */
+.screen-shake{animation:screenShake .3s ease}
+@keyframes screenShake{0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-4px)}40%{transform:translateX(4px)}
+  60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+
 /* ========== REDUCED MOTION ========== */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
-  .sparkle,.fstar,.conf,.corgi-tap-effect,.paw-trail{display:none!important}
+  .sparkle,.fstar,.conf,.corgi-tap-effect,.paw-trail,.iris-transition,.curtain-transition,.sparkle-burst,.star-fly,.combo-fire,.fire-particle,.level-flash{display:none!important}
 }
 `
 

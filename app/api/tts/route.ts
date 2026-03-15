@@ -16,12 +16,13 @@ export async function GET(req: NextRequest) {
     const tts = new MsEdgeTTS()
     await tts.setMetadata(lang === 'en' ? VOICE_EN : VOICE_VI, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3)
 
-    const readable = tts.toStream(text)
+    const result = tts.toStream(text)
+    const readable = result.audioStream
     const chunks: Buffer[] = []
 
     await new Promise<void>((resolve, reject) => {
-      readable.on('data', (chunk: { audio: Buffer }) => {
-        chunks.push(chunk.audio)
+      readable.on('data', (chunk: Buffer) => {
+        chunks.push(chunk)
       })
       readable.on('end', () => resolve())
       readable.on('error', reject)
