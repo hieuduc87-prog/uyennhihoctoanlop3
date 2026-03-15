@@ -77,14 +77,16 @@ function voiceReadQuestion(text){
   try{
     _speechSynth.cancel();
     var clean=text.replace(/[◻️⬜️🔴🔵💛💚🐱🐕🐟🌍🏠📚🎨🐾🌤️🧒💕🙏⭐🧼🔢📖✍️📝🔤💬✏️📚❓⚖️🔀🔷🕐➕➖✖️➗❗📐📏🧮🍕📊🏷️💡🔍🌳🏫🦊🌱🧪⚡🌿🍄💪🌏🎯✅🏡🤝👨‍👩‍👧👗😊📍🚌💻📊🛡️🖥️🌐📝🐱🔒🎬🚀💻🧒👑🗺️🌴🕊️✊🏛️🔬🏥📜⏰🏃💪⏪⏩⚠️📖🌐⏰📦🚗⭕📐📏🧮📝🔗🔤🔀]/g,'');
-    // Replace math symbols with spoken words before cleaning whitespace
-    clean=clean.replace(/\+/g,' cộng ').replace(/\-/g,' trừ ').replace(/×/g,' nhân ').replace(/(\d)\s*x\s*(\d)/gi,'$1 nhân $2').replace(/÷/g,' chia ').replace(/:/g,' chia ').replace(/=/g,' bằng ').replace(/>/g,' lớn hơn ').replace(/<(?![a-zA-Z\/])/g,' nhỏ hơn ').replace(/≥/g,' lớn hơn hoặc bằng ').replace(/≤/g,' nhỏ hơn hoặc bằng ').replace(/≠/g,' khác ').replace(/\?/g,' ');
+    // Detect English by skill ID (e_, e1_, e2_, e4_, e5_)
+    var isEng=curSkill&&/^e[_\d]/.test(curSkill.id);
+    // Replace math symbols with Vietnamese spoken words (non-English only)
+    if(!isEng){
+      clean=clean.replace(/\+/g,' cộng ').replace(/\-/g,' trừ ').replace(/×/g,' nhân ').replace(/(\d)\s*x\s*(\d)/gi,'$1 nhân $2').replace(/÷/g,' chia ').replace(/:/g,' chia ').replace(/=/g,' bằng ').replace(/>/g,' lớn hơn ').replace(/<(?![a-zA-Z\/])/g,' nhỏ hơn ').replace(/≥/g,' lớn hơn hoặc bằng ').replace(/≤/g,' nhỏ hơn hoặc bằng ').replace(/≠/g,' khác ').replace(/\?/g,' ');
+    }
     clean=clean.replace(/\n/g,'. ').replace(/\s+/g,' ').trim();
     if(!clean)return;
-    // Detect language: if mostly ASCII → English
-    var asciiRatio=clean.replace(/[^a-zA-Z]/g,'').length/clean.length;
     var u=new SpeechSynthesisUtterance(clean);
-    u.lang=asciiRatio>0.5?'en-US':'vi-VN';
+    u.lang=isEng?'en-US':'vi-VN';
     u.rate=0.9;u.pitch=1.1;u.volume=0.7;
     _speechSynth.speak(u);
   }catch(e){}
