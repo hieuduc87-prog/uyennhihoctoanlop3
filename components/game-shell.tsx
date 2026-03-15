@@ -522,6 +522,10 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .report-sk-stats{font-size:10px;font-weight:700;color:var(--dim);text-align:right;min-width:60px;flex-shrink:0}
 .report-sk-lv{font-size:9px;font-weight:800;color:var(--gold);background:rgba(255,194,51,.15);
   padding:2px 6px;border-radius:8px;display:inline-block;margin-top:2px}
+/* ========== DIFFICULTY BADGE ========== */
+.diff-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:800;
+  letter-spacing:.3px;margin-bottom:8px;border:1.5px solid;
+  box-shadow:0 2px 0 rgba(0,0,0,.1);text-align:center}
 /* ========== CHARACTER & PET EVOLUTION ========== */
 .char-pet-card{margin-top:14px}
 .cp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}

@@ -73,6 +73,31 @@ function getPetBonus(){
   return{type:'speed',label:'+2s Timer',timerAdd:2};
 }
 
+// ============ ADAPTIVE DIFFICULTY ============
+var DIFF_NAMES=['⭐ Dễ','⭐⭐ Trung Bình','⭐⭐⭐ Khó','🔥 Siêu Khó','🏆 Thách Đấu'];
+var DIFF_COLORS=['#34D399','#60A5FA','#FBBF24','#F43F5E','#8B5CF6'];
+var DIFF_XP_MULT=[0.8,1.0,1.3,1.6,2.0];
+function getDifficulty(){if(!D.difficulty)D.difficulty=1;return Math.max(1,Math.min(5,D.difficulty))}
+function getEffectiveLevel(skillLevel){
+  var diff=getDifficulty();
+  // Difficulty shifts the effective level: diff 1=same, diff 3=+1, diff 5=+2
+  var bonus=Math.floor((diff-1)/2);
+  return Math.min(skillLevel+bonus,GC.maxSkillLevel||5);
+}
+function checkDifficultyAdjust(){
+  if(!D.diffHistory)D.diffHistory=[];
+  if(D.settings&&D.settings.diffMode==='manual')return;
+  if(D.diffHistory.length<10)return;
+  var recent=D.diffHistory.slice(-20);
+  var correctPct=recent.filter(function(x){return x===1}).length/recent.length*100;
+  if(correctPct>=85&&D.difficulty<5){D.difficulty++;save()}
+  else if(correctPct<50&&D.difficulty>1){D.difficulty--;save()}
+}
+function getDiffBadgeHtml(){
+  var d=getDifficulty();
+  return '<div class="diff-badge" style="background:'+DIFF_COLORS[d-1]+'22;color:'+DIFF_COLORS[d-1]+';border-color:'+DIFF_COLORS[d-1]+'44">'+DIFF_NAMES[d-1]+'</div>';
+}
+
 // ============ ART (dynamic from profile) ============
 function CSvg(sz){
   if(!sz)sz=100;
@@ -96,7 +121,7 @@ var SUBJECTS=GC.subjects||[];
 var SK=GC.saveKey||'uynhi3sub_v1';
 var OLD_SK=GC.oldSaveKey||'';
 var D=load();
-function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1}}
+function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1,difficulty:1,diffHistory:[]}}
 function load(){
   try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};return d}}catch(e){}
   // Migrate from old math-only save
@@ -189,7 +214,7 @@ function checkLevelReward(){
 function renderGrid(){
   var sub=SUBJECTS[curSubject];
   var titles=SUBJECTS.map(function(s){return s.emoji+' '+s.name});
-  document.getElementById('mapTitle').innerHTML=titles[curSubject];
+  document.getElementById('mapTitle').innerHTML=titles[curSubject]+' '+getDiffBadgeHtml();
   var grid=document.getElementById('skillGrid');
   var maxLv=GC.maxSkillLevel||5;
   var pass=GC.passThreshold||80;
@@ -278,7 +303,8 @@ function startSkill(id,subIdx){
   curSkill=sk;
   if(D.settings&&D.settings.qPerRound)Q_CT=D.settings.qPerRound;
   var pr=D.sp[id]||{level:1,correct:0,total:0};curLv=pr.level;
-  questions=[];for(var i=0;i<Q_CT;i++)questions.push(sk.gen(curLv));
+  var effLv=getEffectiveLevel(curLv);
+  questions=[];for(var i=0;i<Q_CT;i++)questions.push(sk.gen(effLv));
   qIdx=0;correct=0;combo=0;_lives=GC.hasLives?(GC.livesCount||3):999;
   window._roundStart=Date.now();
   showScreen('game');
@@ -298,6 +324,7 @@ function showQ(){
   var fs=q.text.length>60?'16px':q.text.length>35?'22px':'28px';
   var singleCol=q.isText&&q.options.some(function(o){return o.length>12});
   area.innerHTML='<div class="timer-bar"><div class="fill" id="tF" style="width:100%"></div></div>'
+    +getDiffBadgeHtml()
     +'<div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;justify-content:center">'
     +'<div class="g-stat"><div class="lb">C\u00e2u</div><div class="vl" style="color:var(--gold)">'+(qIdx+1)+'/'+Q_CT+'</div></div>'
     +'<div class="g-stat"><div class="lb">Combo</div><div class="vl" style="color:var(--mint)">'+combo+'\ud83d\udd25</div></div>'
@@ -350,6 +377,7 @@ function checkA(btn){
 
 function handleC(){
   correct++;combo++;if(combo>D.mc)D.mc=combo;D.tc++;
+  if(!D.diffHistory)D.diffHistory=[];D.diffHistory.push(1);if(D.diffHistory.length>20)D.diffHistory=D.diffHistory.slice(-20);
   document.getElementById('cC').textContent=correct;
   var cg=document.getElementById('corgiG');
   cg.innerHTML=CSvg(55);
@@ -362,6 +390,7 @@ function handleC(){
 }
 function handleW(){
   combo=0;sndWrong();
+  if(!D.diffHistory)D.diffHistory=[];D.diffHistory.push(0);if(D.diffHistory.length>20)D.diffHistory=D.diffHistory.slice(-20);
   if(GC.hasLives)_lives--;
   var cg=document.getElementById('corgiG');
   cg.innerHTML=CSvg(55);
@@ -382,7 +411,9 @@ function endRound(){
   try{document.getElementById('corgiG').style.display='none'}catch(e){}
   var acc=Math.round(correct/Q_CT*100);
   var stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
-  var xpE=correct*10+stars*15;if(D.x2xp){xpE*=2;D.x2xp=false}var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
+  var diffMult=DIFF_XP_MULT[getDifficulty()-1]||1;
+  var xpE=Math.round((correct*10+stars*15)*diffMult);if(D.x2xp){xpE*=2;D.x2xp=false}var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
+  gemE=Math.round(gemE*diffMult);
   D.xp+=xpE;D.stars+=stars;D.gems+=gemE;D.tp+=Q_CT;
   // Track study time
   if(!D.studyTime)D.studyTime=0;
@@ -396,8 +427,12 @@ function endRound(){
   var _safe=0;while(D.xp>=D.level*(GC.xpPerLevel||100)&&_safe<100){_safe++;D.xp-=D.level*(GC.xpPerLevel||100);D.level++}
   if(curSkill){var p=D.sp[curSkill.id]||{level:1,correct:0,total:0};p.correct+=correct;p.total+=Q_CT;if(acc>=(GC.passThreshold||80)&&p.level<(GC.maxSkillLevel||5))p.level++;D.sp[curSkill.id]=p}
   // Award character & pet XP
-  var charXpEarned=correct*10+(acc>=90?50:acc>=70?20:0)+(combo>=5?30:combo>=3?15:0);
+  var charXpEarned=Math.round((correct*10+(acc>=90?50:acc>=70?20:0)+(combo>=5?30:combo>=3?15:0))*diffMult);
   awardCharXP(charXpEarned);
+  // Adaptive difficulty check
+  var oldDiff=getDifficulty();
+  checkDifficultyAdjust();
+  var newDiff=getDifficulty();
   try{updateDaily(correct)}catch(e){}
   var lvReward=checkLevelReward();
   save();showScreen('result');
@@ -414,9 +449,18 @@ function endRound(){
   document.getElementById('rSpeech').innerHTML='<div class="speech-bubble" style="margin:8px auto">'+sp[R(0,sp.length-1)]+'</div>';
   document.getElementById('rCor').textContent=correct+'/'+Q_CT;
   document.getElementById('rAcc').textContent=acc+'%';
-  document.getElementById('rXP').textContent='+'+xpE;
+  document.getElementById('rXP').textContent='+'+xpE+(diffMult>1?' (x'+diffMult+')':'');
   document.getElementById('rGem').textContent='+'+gemE;
   if(stars>=2)spawnConfetti();
+  // Show difficulty change
+  if(newDiff!==oldDiff){
+    var diffEl=document.createElement('div');
+    diffEl.style.cssText='margin-top:12px;padding:12px 16px;border-radius:16px;text-align:center;animation:encBounce .6s ease;border:2px solid '+DIFF_COLORS[newDiff-1]+'66;background:'+DIFF_COLORS[newDiff-1]+'15';
+    diffEl.innerHTML='<div style="font-size:22px">'+(newDiff>oldDiff?'⬆️':'⬇️')+'</div>'+
+      '<div style="font-family:Baloo 2,cursive;font-size:15px;color:'+DIFF_COLORS[newDiff-1]+'">Độ khó: '+DIFF_NAMES[newDiff-1]+'</div>'+
+      '<div style="font-size:11px;color:var(--dim);margin-top:2px">'+(newDiff>oldDiff?'Giỏi quá! Tăng độ khó':'Giảm để luyện thêm')+'</div>';
+    document.getElementById('result').appendChild(diffEl);
+  }
   if(lvReward){
     sndLevelUp();
     var rb=document.createElement('div');
@@ -690,6 +734,9 @@ function renderSettings(){
       '<button class="set-pill '+(s.diffMode==='auto'?'active':'')+'" onclick="setDiffMode(\'auto\',this)">Tự động</button>'+
       '<button class="set-pill '+(s.diffMode==='manual'?'active':'')+'" onclick="setDiffMode(\'manual\',this)">Thủ công</button>'+
     '</div></div>'+
+    (s.diffMode==='manual'?'<div class="set-row"><span class="set-lbl">📊 Mức '+DIFF_NAMES[getDifficulty()-1]+'</span><div class="set-pills">'+
+      [1,2,3,4,5].map(function(n){return '<button class="set-pill '+(getDifficulty()===n?'active':'')+'" style="'+(getDifficulty()===n?'background:'+DIFF_COLORS[n-1]+';border-color:'+DIFF_COLORS[n-1]:'')+'" onclick="setDiffLevel('+n+',this)">'+n+'</button>'}).join('')+
+    '</div></div>':'')+
     '</div>'+
     '<div class="set-group"><div class="set-title">👤 Tài khoản</div>'+
     '<div class="set-row"><span class="set-lbl">📛 Tên</span><div style="display:flex;gap:6px;flex:1;justify-content:flex-end">'+
@@ -719,8 +766,11 @@ function setQPerRound(n,btn){
 }
 function setDiffMode(mode,btn){
   if(!D.settings)D.settings={};D.settings.diffMode=mode;save();sndTap();
-  btn.parentElement.querySelectorAll('.set-pill').forEach(function(p){p.classList.remove('active')});
-  btn.classList.add('active');
+  renderSettings();
+}
+function setDiffLevel(n,btn){
+  D.difficulty=n;save();sndTap();
+  renderSettings();
 }
 function saveName(){
   var n=document.getElementById('setName').value.trim();if(!n)return;
