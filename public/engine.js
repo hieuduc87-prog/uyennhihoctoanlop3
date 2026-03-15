@@ -121,9 +121,12 @@ var SUBJECTS=GC.subjects||[];
 var SK=GC.saveKey||'uynhi3sub_v1';
 var OLD_SK=GC.oldSaveKey||'';
 var D=load();
-function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1,difficulty:1,diffHistory:[]}}
+function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1,difficulty:1,diffHistory:[],weekly:{w:null,m:[]},streakFreeze:0,lastStreakFreeze:null}}
 function load(){
-  try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};return d}}catch(e){}
+  try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};
+  // Migrate boolean ach to tier 1
+  if(d.ach)for(var ak in d.ach){if(d.ach[ak]===true)d.ach[ak]=1}
+  return d}}catch(e){}
   // Migrate from old math-only save
   try{
     var old=JSON.parse(localStorage.getItem(OLD_SK));
@@ -412,7 +415,8 @@ function endRound(){
   var acc=Math.round(correct/Q_CT*100);
   var stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
   var diffMult=DIFF_XP_MULT[getDifficulty()-1]||1;
-  var xpE=Math.round((correct*10+stars*15)*diffMult);if(D.x2xp){xpE*=2;D.x2xp=false}var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
+  var streakM=getStreakMult();
+  var xpE=Math.round((correct*10+stars*15)*diffMult*streakM);if(D.x2xp){xpE*=2;D.x2xp=false}var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
   gemE=Math.round(gemE*diffMult);
   D.xp+=xpE;D.stars+=stars;D.gems+=gemE;D.tp+=Q_CT;
   // Track study time
@@ -482,31 +486,146 @@ function endRound(){
   updateUI();
 }
 
-// ============ DAILY (same format as Voi Con) ============
+// ============ DAILY QUEST POOL ============
+var QUEST_POOL=[
+  {i:'p3',n:'Chơi 3 lượt',d:'3 lượt bất kỳ',t:3,r:5,e:'🎮',cat:'play'},
+  {i:'p5',n:'Chơi 5 lượt',d:'5 lượt bất kỳ',t:5,r:8,e:'🎮',cat:'play'},
+  {i:'c10',n:'Đúng 10 câu',d:'10 câu đúng',t:10,r:5,e:'✅',cat:'correct'},
+  {i:'c20',n:'Đúng 20 câu',d:'20 câu đúng',t:20,r:10,e:'✅',cat:'correct'},
+  {i:'c30',n:'Đúng 30 câu',d:'30 câu đúng',t:30,r:15,e:'🎯',cat:'correct'},
+  {i:'pf',n:'3 sao!',d:'1 lượt 3 sao',t:1,r:10,e:'⭐',cat:'perfect'},
+  {i:'pf2',n:'2 lần 3 sao',d:'2 lượt đạt 3 sao',t:2,r:15,e:'🌟',cat:'perfect'},
+  {i:'cb5',n:'Combo 5',d:'Combo 5 câu liên tiếp',t:1,r:8,e:'🔥',cat:'combo'},
+  {i:'cb10',n:'Combo 10',d:'Combo 10 câu liên tiếp',t:1,r:15,e:'💥',cat:'combo'},
+  {i:'sp',n:'Quay 1 lần',d:'Dùng vòng quay',t:1,r:5,e:'🎡',cat:'spin'},
+  {i:'sub2',n:'Học 2 môn',d:'Chơi ít nhất 2 môn',t:2,r:10,e:'📚',cat:'multi'},
+  {i:'t15',n:'Học 15 phút',d:'Học tổng 15 phút',t:900,r:12,e:'⏱️',cat:'time'},
+];
 function getDaily(){
   var t=new Date().toDateString();
-  if(D.daily.d!==t){D.daily={d:t,m:[
-    {i:'p3',n:'Ch\u01a1i 3 l\u01b0\u1ee3t',d:'3 l\u01b0\u1ee3t b\u1ea5t k\u1ef3',t:3,p:0,r:5,e:'\ud83c\udfae'},
-    {i:'c15',n:'\u0110\u00fang 15 c\u00e2u',d:'15 c\u00e2u \u0111\u00fang',t:15,p:0,r:8,e:'\u2705'},
-    {i:'pf',n:'3 sao!',d:'1 l\u01b0\u1ee3t 3 sao',t:1,p:0,r:10,e:'\u2b50'},
-    {i:'sp',n:'Quay 1 l\u1ea7n',d:'D\u00f9ng v\u00f2ng quay',t:1,p:0,r:5,e:'\ud83c\udfa1'},
-  ]};save()}return D.daily.m
+  if(D.daily.d!==t){
+    // Seed random from date for consistent daily quests
+    var seed=0;for(var i=0;i<t.length;i++)seed=(seed*31+t.charCodeAt(i))&0x7fffffff;
+    var pool=QUEST_POOL.slice();
+    // Shuffle with seed
+    for(var j=pool.length-1;j>0;j--){seed=(seed*1103515245+12345)&0x7fffffff;var k=seed%(j+1);var tmp=pool[j];pool[j]=pool[k];pool[k]=tmp}
+    // Pick 4 ensuring variety of categories
+    var picked=[],cats={};
+    for(var p2=0;p2<pool.length&&picked.length<4;p2++){
+      if(!cats[pool[p2].cat]||Object.keys(cats).length>=3){
+        picked.push({i:pool[p2].i,n:pool[p2].n,d:pool[p2].d,t:pool[p2].t,p:0,r:pool[p2].r,e:pool[p2].e});
+        cats[pool[p2].cat]=true;
+      }
+    }
+    D.daily={d:t,m:picked};save()
+  }
+  return D.daily.m
 }
+// ============ WEEKLY QUESTS ============
+function getWeeklyId(){var d=new Date();var day=d.getDay()||7;var mon=new Date(d.getTime()-(day-1)*864e5);return mon.toISOString().slice(0,10)}
+function getWeekly(){
+  if(!D.weekly)D.weekly={w:null,m:[]};
+  var wid=getWeeklyId();
+  if(D.weekly.w!==wid){
+    D.weekly={w:wid,m:[
+      {i:'wc50',n:'50 câu đúng/tuần',d:'Trả lời đúng 50 câu',t:50,p:0,r:20,e:'🏅'},
+      {i:'wp10',n:'10 lượt/tuần',d:'Chơi 10 lượt trong tuần',t:10,p:0,r:15,e:'🎮'},
+      {i:'ws3',n:'3 ngày liên tiếp',d:'Học 3 ngày liên tiếp trong tuần',t:3,p:0,r:25,e:'🔥'},
+    ]};save()
+  }
+  return D.weekly.m;
+}
+// ============ STREAK MULTIPLIER ============
+function getStreakMult(){
+  var s=D.streak||0;
+  if(s>=30)return 2.5;if(s>=14)return 2.0;if(s>=7)return 1.5;if(s>=3)return 1.2;return 1.0;
+}
+function getStreakMultLabel(){var m=getStreakMult();return m>1?'x'+m+' 🔥':'x1.0'}
+function useStreakFreeze(){
+  if(!D.streakFreeze||D.streakFreeze<=0)return false;
+  D.streakFreeze--;D.lastStreakFreeze=new Date().toDateString();save();return true;
+}
+// ============ UPDATE DAILY ============
 function updateDaily(c){
-  var ms=getDaily();
+  var ms=getDaily();var wk=getWeekly();
+  // Track subjects played this session
+  if(!window._dailySubjects)window._dailySubjects={};
+  if(curSkill)window._dailySubjects[curSubject]=true;
   ms.forEach(function(m){if(m.p>=m.t)return;
-    if(m.i==='p3')m.p++;
-    if(m.i==='c15')m.p=Math.min(m.t,m.p+c);
-    if(m.i==='pf'&&c>=Q_CT)m.p=1;
+    if(m.i==='p3'||m.i==='p5')m.p++;
+    if(m.i.charAt(0)==='c')m.p=Math.min(m.t,m.p+c);
+    if((m.i==='pf'||m.i==='pf2')&&c>=Q_CT)m.p++;
+    if(m.i==='cb5'&&D.mc>=5)m.p=1;
+    if(m.i==='cb10'&&D.mc>=10)m.p=1;
+    if(m.i==='sub2')m.p=Object.keys(window._dailySubjects||{}).length;
+    if(m.i==='t15'){var today=new Date().toISOString().slice(0,10);var dl=D.dailyLog&&D.dailyLog[today];m.p=dl?dl.t:0}
   });
-  ms.forEach(function(m){if(m.p>=m.t&&!m.cl){m.cl=true;D.gems+=m.r;sndCorrect()}});save()
+  ms.forEach(function(m){if(m.p>=m.t&&!m.cl){m.cl=true;D.gems+=m.r;sndCorrect()}});
+  // Update weekly
+  wk.forEach(function(w){if(w.p>=w.t)return;
+    if(w.i==='wc50')w.p=Math.min(w.t,w.p+c);
+    if(w.i==='wp10')w.p++;
+    if(w.i==='ws3')w.p=Math.min(w.t,D.streak||0);
+  });
+  wk.forEach(function(w){if(w.p>=w.t&&!w.cl){w.cl=true;D.gems+=w.r;sndCorrect()}});
+  save()
 }
+// ============ ACHIEVEMENT TIERS ============
+var ACH_TIERS=['🥉','🥈','🥇','💎','👑'];
+var ACH_TIER_NAMES=['Bronze','Silver','Gold','Platinum','Diamond'];
+var ACH_DEFS=[
+  {id:'f',em:'🎮',nm:'Bắt đầu',ck:function(t){return[1,10,30,100,500][t]},val:function(){return D.tp}},
+  {id:'c',em:'✅',nm:'Câu đúng',ck:function(t){return[50,200,500,1500,5000][t]},val:function(){return D.tc}},
+  {id:'s',em:'🔥',nm:'Streak',ck:function(t){return[3,7,14,30,60][t]},val:function(){return D.streak}},
+  {id:'l',em:'⭐',nm:'Level',ck:function(t){return[5,10,15,25,50][t]},val:function(){return D.level}},
+  {id:'sk',em:'🏆',nm:'Skills',ck:function(t){return[5,10,15,25,40][t]},val:function(){return Object.keys(D.sp).length}},
+  {id:'m',em:'🎓',nm:'Master',ck:function(t){return[1,3,5,10,20][t]},val:function(){return Object.values(D.sp).filter(function(p){return p.level>=(GC.maxSkillLevel||5)}).length}},
+  {id:'g',em:'💰',nm:'Gems',ck:function(t){return[50,200,500,2000,10000][t]},val:function(){return D.gems}},
+  {id:'cb',em:'⚡',nm:'Combo',ck:function(t){return[5,10,15,25,50][t]},val:function(){return D.mc}},
+];
+function getAchTier(id){
+  if(!D.ach)D.ach={};
+  return typeof D.ach[id]==='number'?D.ach[id]:(D.ach[id]===true?1:0);
+}
+function checkAchievements(){
+  ACH_DEFS.forEach(function(a){
+    var cur=getAchTier(a.id);
+    if(cur>=5)return;
+    var val=a.val();
+    for(var t=cur;t<5;t++){
+      if(val>=a.ck(t)){D.ach[a.id]=t+1;if(t===cur)sndCorrect()}
+      else break;
+    }
+  });
+}
+// ============ RENDER DAILY ============
 function renderDaily(){
-  var ms=getDaily();
-  document.getElementById('dailyMissions').innerHTML=ms.map(function(m){
+  var ms=getDaily();var wk=getWeekly();
+  var smult=getStreakMult();
+  var html='';
+  // Streak info
+  html+='<div class="streak-info-card">'+
+    '<div class="streak-info-row">'+
+      '<div class="streak-info-num">'+(D.streak||0)+'</div>'+
+      '<div class="streak-info-meta"><div class="streak-info-lbl">ngày liên tiếp 🔥</div>'+
+        '<div class="streak-info-mult">Bonus: '+getStreakMultLabel()+'</div></div>'+
+    '</div>'+
+    (D.streakFreeze>0?'<div class="streak-freeze">🧊 Streak Freeze: '+D.streakFreeze+' lần</div>':'')+
+  '</div>';
+  // Daily missions
+  html+='<div class="quest-section-title">📋 Nhiệm vụ ngày</div>';
+  html+=ms.map(function(m){
     var dn=m.p>=m.t;
-    return '<div class="mission-card '+(dn?'done':'')+'"><div class="em">'+m.e+'</div><div class="info"><div class="tt">'+m.n+'</div><div class="ds">'+m.d+'</div><div class="m-prog"><div class="fill" style="width:'+Math.min(100,m.p/m.t*100)+'%"></div></div><div style="font-size:9px;color:var(--dim);margin-top:2px">'+m.p+'/'+m.t+'</div></div><div class="rw">+'+m.r+'\ud83d\udc8e</div></div>';
-  }).join('');updateUI()
+    return '<div class="mission-card '+(dn?'done':'')+'"><div class="em">'+m.e+'</div><div class="info"><div class="tt">'+m.n+'</div><div class="ds">'+m.d+'</div><div class="m-prog"><div class="fill" style="width:'+Math.min(100,m.p/m.t*100)+'%"></div></div><div style="font-size:9px;color:var(--dim);margin-top:2px">'+m.p+'/'+m.t+'</div></div><div class="rw">+'+m.r+'💎</div></div>';
+  }).join('');
+  // Weekly missions
+  html+='<div class="quest-section-title" style="margin-top:14px">📅 Nhiệm vụ tuần</div>';
+  html+=wk.map(function(w){
+    var dn=w.p>=w.t;
+    return '<div class="mission-card '+(dn?'done':'')+'"><div class="em">'+w.e+'</div><div class="info"><div class="tt">'+w.n+'</div><div class="ds">'+w.d+'</div><div class="m-prog"><div class="fill" style="width:'+Math.min(100,w.p/w.t*100)+'%"></div></div><div style="font-size:9px;color:var(--dim);margin-top:2px">'+w.p+'/'+w.t+'</div></div><div class="rw">+'+w.r+'💎</div></div>';
+  }).join('');
+  document.getElementById('dailyMissions').innerHTML=html;
+  updateUI()
 }
 
 // ============ PROFILE ============
@@ -530,21 +649,19 @@ function renderProfile(){
   document.getElementById('profAv').innerHTML=avHtml;
   // Render char/pet evolution card
   renderCharCard(cStage,pStage);
-  var ads=[
-    {id:'f',em:'\ud83c\udfae',nm:'B\u1eaft \u0111\u1ea7u',ck:function(){return D.tp>0}},
-    {id:'c50',em:'\u2705',nm:'50 \u0111\u00fang',ck:function(){return D.tc>=50}},
-    {id:'c200',em:'\ud83c\udfc5',nm:'200 \u0111\u00fang',ck:function(){return D.tc>=200}},
-    {id:'c500',em:'\ud83d\udc51',nm:'500 \u0111\u00fang',ck:function(){return D.tc>=500}},
-    {id:'s3',em:'\ud83d\udd25',nm:'3 ng\u00e0y',ck:function(){return D.streak>=3}},
-    {id:'s7',em:'\ud83d\udca5',nm:'7 ng\u00e0y',ck:function(){return D.streak>=7}},
-    {id:'l5',em:'\u2b50',nm:'Level 5',ck:function(){return D.level>=5}},
-    {id:'l10',em:'\ud83c\udf1f',nm:'Level 10',ck:function(){return D.level>=10}},
-    {id:'sk10',em:'\ud83c\udfc6',nm:'10 skills',ck:function(){return Object.keys(D.sp).length>=10}},
-    {id:'m1',em:'\ud83d\udc8e',nm:'Master 1',ck:function(){return Object.values(D.sp).some(function(pp){return pp.level>=5})}},
-    {id:'g50',em:'\ud83d\udcb0',nm:'50 gems',ck:function(){return D.gems>=50}},
-    {id:'cb10',em:'\u26a1',nm:'Combo 10',ck:function(){return D.mc>=10}},
-  ];
-  document.getElementById('achGrid').innerHTML=ads.map(function(a){var u=a.ck();if(u)D.ach[a.id]=true;return '<div class="ach '+(u?'':'locked')+'">'+a.em+'<div class="anm">'+a.nm+'</div></div>'}).join('');
+  // Tiered achievements
+  checkAchievements();
+  document.getElementById('achGrid').innerHTML=ACH_DEFS.map(function(a){
+    var tier=getAchTier(a.id);var maxed=tier>=5;
+    var val=a.val();var nextReq=tier<5?a.ck(tier):a.ck(4);
+    var prog=tier<5?Math.min(100,Math.round(val/Math.max(nextReq,1)*100)):100;
+    var tierIcon=tier>0?ACH_TIERS[tier-1]:'🔒';
+    return '<div class="ach '+(tier>0?'':'locked')+(maxed?' maxed':'')+'" title="'+a.nm+(tier>0?' '+ACH_TIER_NAMES[tier-1]:'')+'">'+
+      a.em+'<div class="anm">'+a.nm+'</div>'+
+      '<div class="ach-tier">'+tierIcon+'</div>'+
+      (tier>0&&!maxed?'<div class="ach-prog"><div class="fill" style="width:'+prog+'%"></div></div>':'')+
+    '</div>'
+  }).join('');
   updateGemExchange();
   renderReport();
   save();updateUI()

@@ -522,6 +522,25 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .report-sk-stats{font-size:10px;font-weight:700;color:var(--dim);text-align:right;min-width:60px;flex-shrink:0}
 .report-sk-lv{font-size:9px;font-weight:800;color:var(--gold);background:rgba(255,194,51,.15);
   padding:2px 6px;border-radius:8px;display:inline-block;margin-top:2px}
+/* ========== QUEST/STREAK ENHANCEMENTS ========== */
+.streak-info-card{background:linear-gradient(135deg,rgba(255,90,158,.12),rgba(255,194,51,.08));
+  border:1.5px solid rgba(255,90,158,.2);border-radius:18px;padding:14px;margin-bottom:14px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12),var(--shine)}
+.streak-info-row{display:flex;align-items:center;gap:14px}
+.streak-info-num{font-family:'Baloo 2',cursive;font-size:42px;font-weight:800;color:var(--coral);
+  text-shadow:0 3px 10px rgba(255,107,122,.4);min-width:52px;text-align:center}
+.streak-info-meta{flex:1}
+.streak-info-lbl{font-size:14px;font-weight:800;color:var(--text)}
+.streak-info-mult{font-size:12px;font-weight:700;color:var(--gold);margin-top:2px}
+.streak-freeze{font-size:12px;font-weight:700;color:var(--sky);margin-top:8px;
+  padding:6px 10px;background:rgba(61,194,255,.1);border-radius:10px;text-align:center}
+.quest-section-title{font-family:'Baloo 2',cursive;font-size:15px;color:var(--peach);
+  margin-bottom:8px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
+.ach-tier{font-size:12px;margin-top:2px}
+.ach-prog{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-top:3px;width:80%;margin-left:auto;margin-right:auto}
+.ach-prog .fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--mint));transition:width .4s}
+.ach.maxed{border-color:var(--gold);background:rgba(255,194,51,.1);
+  box-shadow:0 3px 0 rgba(180,120,0,.3),0 0 12px rgba(255,194,51,.15),var(--shine)}
 /* ========== DIFFICULTY BADGE ========== */
 .diff-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:800;
   letter-spacing:.3px;margin-bottom:8px;border:1.5px solid;
