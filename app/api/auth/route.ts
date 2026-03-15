@@ -109,7 +109,13 @@ export async function POST(req: NextRequest) {
     const display_name = typeof body.display_name === 'string' ? sanitize(body.display_name, 30) : ''
     const gender = body.gender === 'boy' ? 'boy' : 'girl'
     const pet = ['corgi', 'cat', 'trex', 'dragon'].includes(body.pet as string) ? body.pet : 'corgi'
-    const grade = typeof body.grade === 'number' && body.grade >= 1 && body.grade <= 5 ? body.grade : 1
+    // Accept string grade ID (pre_4, pre_5, lop1-5) or legacy number (1-5 → lop1-5)
+    let grade: string = 'lop1'
+    if (typeof body.grade === 'string' && VALID_GRADE_IDS.includes(body.grade)) {
+      grade = body.grade
+    } else if (typeof body.grade === 'number' && body.grade >= 1 && body.grade <= 5) {
+      grade = 'lop' + body.grade
+    }
     const email = typeof body.email === 'string' ? sanitize(body.email, 100) : ''
 
     if (!username || !password || !display_name) {

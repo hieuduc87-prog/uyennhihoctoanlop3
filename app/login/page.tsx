@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
+import { GRADE_REGISTRY } from '@/lib/grade-registry'
 
 function LoginContent() {
   const router = useRouter()
@@ -14,7 +15,7 @@ function LoginContent() {
   const [childName, setChildName] = useState('')
   const [gender, setGender] = useState<'girl' | 'boy'>('girl')
   const [pet, setPet] = useState<'corgi' | 'cat' | 'trex' | 'dragon'>('corgi')
-  const [grade, setGrade] = useState(1)
+  const [grade, setGrade] = useState('lop1')
   const [error, setError] = useState(urlError ? 'Đăng nhập thất bại. Thử lại nhé!' : '')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
@@ -43,7 +44,10 @@ function LoginContent() {
       }
       // Restore profile + lastGrade from user data
       const existingProfile = (() => { try { return JSON.parse(localStorage.getItem('player_profile') || '{}') } catch { return {} } })()
-      const gradeId = user.grade ? 'lop' + user.grade : existingProfile.lastGrade
+      // grade can be string ID (pre_4, lop1) or legacy number (1-5)
+      const gradeId = user.grade
+        ? (typeof user.grade === 'number' ? 'lop' + user.grade : user.grade)
+        : existingProfile.lastGrade
       const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'nhinhi' : 'anan', pet: user.pet, lastGrade: gradeId || existingProfile.lastGrade }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
@@ -91,7 +95,9 @@ function LoginContent() {
         setLoading(false)
         return
       }
-      const gradeId = 'lop' + (user.grade || grade || 1)
+      // grade is now a string ID (pre_4, pre_5, lop1-5)
+      const userGrade = user.grade || grade || 'lop1'
+      const gradeId = typeof userGrade === 'number' ? 'lop' + userGrade : userGrade
       const profile = { name: user.display_name || childName.trim(), gender: user.gender || gender, avatar: (user.gender || gender) === 'girl' ? 'nhinhi' : 'anan', pet: user.pet || pet, lastGrade: gradeId }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
@@ -189,12 +195,12 @@ function LoginContent() {
                   </div>
                 </div>
                 <div className="pick-section">
-                  <p className="pick-label">Chọn lớp:</p>
+                  <p className="pick-label">Chọn lớp / độ tuổi:</p>
                   <div className="pick-row grade-row">
-                    {[1,2,3,4,5].map(g => (
-                      <button key={g} type="button" className={`pick-card grade-pick ${grade === g ? 'selected' : ''}`} onClick={() => setGrade(g)}>
-                        <span className="grade-num">{['🐘','🦊','🐕','🐱','🦁'][g-1]}</span>
-                        <span>Lớp {g}</span>
+                    {[...GRADE_REGISTRY].sort((a, b) => a.order - b.order).map(g => (
+                      <button key={g.id} type="button" className={`pick-card grade-pick ${grade === g.id ? 'selected' : ''}`} onClick={() => setGrade(g.id)} style={{ '--gc': g.color } as React.CSSProperties}>
+                        <span className="grade-num">{g.emoji}</span>
+                        <span>{g.name}</span>
                       </button>
                     ))}
                   </div>
@@ -357,7 +363,7 @@ const loginCSS = `
   padding:10px 18px;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.5);
   font-size:12px;font-weight:800;font-family:'Nunito',sans-serif}
 .pick-card:hover{background:rgba(255,255,255,.1)}
-.pick-card.selected{border-color:var(--coral,#ff5a9e);background:rgba(255,90,158,.15);color:#fff;
+.pick-card.selected{border-color:var(--gc,#ff5a9e);background:rgba(255,90,158,.15);color:#fff;
   box-shadow:0 0 16px rgba(255,90,158,.25)}
 .pick-card img{filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
 .pet-row{flex-wrap:wrap;gap:8px}
