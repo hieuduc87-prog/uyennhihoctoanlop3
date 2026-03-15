@@ -77,6 +77,8 @@ function voiceReadQuestion(text){
   try{
     _speechSynth.cancel();
     var clean=text.replace(/[◻️⬜️🔴🔵💛💚🐱🐕🐟🌍🏠📚🎨🐾🌤️🧒💕🙏⭐🧼🔢📖✍️📝🔤💬✏️📚❓⚖️🔀🔷🕐➕➖✖️➗❗📐📏🧮🍕📊🏷️💡🔍🌳🏫🦊🌱🧪⚡🌿🍄💪🌏🎯✅🏡🤝👨‍👩‍👧👗😊📍🚌💻📊🛡️🖥️🌐📝🐱🔒🎬🚀💻🧒👑🗺️🌴🕊️✊🏛️🔬🏥📜⏰🏃💪⏪⏩⚠️📖🌐⏰📦🚗⭕📐📏🧮📝🔗🔤🔀]/g,'');
+    // Replace math symbols with spoken words before cleaning whitespace
+    clean=clean.replace(/\+/g,' cộng ').replace(/\-/g,' trừ ').replace(/×/g,' nhân ').replace(/÷/g,' chia ').replace(/=/g,' bằng ').replace(/>/g,' lớn hơn ').replace(/<(?![a-zA-Z\/])/g,' nhỏ hơn ').replace(/≥/g,' lớn hơn hoặc bằng ').replace(/≤/g,' nhỏ hơn hoặc bằng ').replace(/≠/g,' khác ').replace(/\?/g,' ');
     clean=clean.replace(/\n/g,'. ').replace(/\s+/g,' ').trim();
     if(!clean)return;
     // Detect language: if mostly ASCII → English
