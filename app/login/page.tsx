@@ -3,10 +3,6 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState } from 'react'
 
-const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const SB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-const sbH = { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' }
-
 function LoginContent() {
   const router = useRouter()
   const params = useSearchParams()
@@ -27,15 +23,18 @@ function LoginContent() {
     if (!username.trim() || !password) { setError('Nhập đầy đủ tên đăng nhập và mật khẩu nhé!'); return }
     setLoading(true); setError(''); setSuccess('')
     try {
-      const u = username.trim().toLowerCase()
-      const r = await fetch(`${SB_URL}/rest/v1/users?username=eq.${encodeURIComponent(u)}&password=eq.${encodeURIComponent(password)}&limit=1`, { headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` } })
-      const rows = await r.json()
-      if (!rows || rows.length === 0) {
-        setError('Sai tên đăng nhập hoặc mật khẩu!')
+      const r = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', username: username.trim().toLowerCase(), password })
+      })
+      const data = await r.json()
+      if (!r.ok) {
+        setError(data.error || 'Sai tên đăng nhập hoặc mật khẩu!')
         setLoading(false)
         return
       }
-      const user = rows[0]
+      const user = data.user
       const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
@@ -57,32 +56,27 @@ function LoginContent() {
     if (!password || password.length < 6) { setError('Mật khẩu cần ít nhất 6 ký tự!'); return }
     setLoading(true); setError(''); setSuccess('')
     try {
-      const body: Record<string, unknown> = {
-        username: username.trim().toLowerCase(),
-        password,
-        display_name: childName.trim(),
-        gender,
-        pet,
-        grade: 0
-      }
-      if (email.trim()) body.email = email.trim()
-      const r = await fetch(`${SB_URL}/rest/v1/users`, {
+      const r = await fetch('/api/auth', {
         method: 'POST',
-        headers: { ...sbH, 'Prefer': 'return=representation' },
-        body: JSON.stringify(body)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'register',
+          username: username.trim().toLowerCase(),
+          password,
+          display_name: childName.trim(),
+          gender,
+          pet,
+          grade: 0,
+          email: email.trim() || undefined
+        })
       })
+      const data = await r.json()
       if (!r.ok) {
-        const e = await r.json()
-        if (e.message?.includes('unique') || e.message?.includes('duplicate')) {
-          setError('Tên đăng nhập này đã có người dùng rồi!')
-        } else {
-          setError('Lỗi đăng ký: ' + (e.message || 'Thử lại nhé!'))
-        }
+        setError(data.error || 'Lỗi đăng ký. Thử lại nhé!')
         setLoading(false)
         return
       }
-      const rows = await r.json()
-      const user = Array.isArray(rows) ? rows[0] : rows
+      const user = data.user
       const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)

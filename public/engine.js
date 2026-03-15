@@ -30,6 +30,7 @@ function getPetSrc(){return PP.pet==='cat'?'/cat.png':PP.pet==='elephant'?'/voi.
 function getPetName(){return PP.pet==='cat'?'Mèo Bông':PP.pet==='elephant'?'Voi Con':'Corgi Béo'}
 function getCharName(){return PP.gender==='boy'?'Bin':'Uyển Nhi'}
 function getPlayerName(){return PP.name||'Bé'}
+function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
 // ============ CHARACTER & PET EVOLUTION ============
 var CHAR_LEVELS=[0,100,300,600,1000,1500,2100,2800,3600,4500];
@@ -48,7 +49,7 @@ function awardCharXP(xpAmount){
   D.charLevel=getCharLevel(D.charXP);D.petLevel=getCharLevel(D.petXP);
   var evolved=false;
   if(D.charLevel>oldCharLv){evolved=true;showEvolution('character',D.charLevel)}
-  if(D.petLevel>oldPetLv){evolved=true;if(!D.charLevel>oldCharLv)showEvolution('pet',D.petLevel)}
+  if(D.petLevel>oldPetLv){evolved=true;if(!(D.charLevel>oldCharLv))showEvolution('pet',D.petLevel)}
   return evolved;
 }
 function showEvolution(type,newLevel){
@@ -58,7 +59,7 @@ function showEvolution(type,newLevel){
     '<div class="evo-sparkles">✨🌟⭐✨🌟⭐</div>'+
     '<div class="evo-icon" style="color:'+stage.color+'">'+stage.badge+'</div>'+
     '<div class="evo-title">TIẾN HÓA!</div>'+
-    '<div class="evo-detail">'+(type==='character'?getPlayerName():'Thú cưng')+' đạt Level '+newLevel+'</div>'+
+    '<div class="evo-detail">'+(type==='character'?escHtml(getPlayerName()):'Thú cưng')+' đạt Level '+newLevel+'</div>'+
     '<div class="evo-subtitle" style="color:'+stage.color+'">'+stage.title+'</div>'+
     (stage.hasCrown?'<div class="evo-bonus">👑 Vương miện!</div>':stage.hasGlow?'<div class="evo-bonus">✨ Phát sáng!</div>':stage.hasCape?'<div class="evo-bonus">🧥 Áo choàng!</div>':stage.hasHat?'<div class="evo-bonus">🎩 Nón phép!</div>':'')+
     '</div>';
@@ -105,7 +106,7 @@ function CSvg(sz){
 }
 function UNhi(sz){
   if(!sz)sz=100;
-  return '<img src="'+getAvatarSrc()+'" width="'+Math.round(sz*0.75)+'" height="'+sz+'" style="object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))" alt="'+getPlayerName()+'">';
+  return '<img src="'+getAvatarSrc()+'" width="'+Math.round(sz*0.75)+'" height="'+sz+'" style="object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))" alt="'+escHtml(getPlayerName())+'">';
 }
 // Mini pet face for avatar
 function CMini(sz){
@@ -122,11 +123,15 @@ var SK=GC.saveKey||'uynhi3sub_v1';
 var OLD_SK=GC.oldSaveKey||'';
 var D=load();
 function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1,difficulty:1,diffHistory:[],weekly:{w:null,m:[]},streakFreeze:0,lastStreakFreeze:null,coins:0,inventory:[],equipped:{frame:null,title:null}}}
-function load(){
-  try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};
-  // Migrate boolean ach to tier 1
+function _loadSave(key){
+  try{var d=JSON.parse(localStorage.getItem(key));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};
   if(d.ach)for(var ak in d.ach){if(d.ach[ak]===true)d.ach[ak]=1}
-  return d}}catch(e){}
+  return d}}catch(e){}return null;
+}
+function load(){
+  var d=_loadSave(SK);
+  if(!d)d=_loadSave(SK+'_bak');
+  if(d)return d;
   // Migrate from old math-only save
   try{
     var old=JSON.parse(localStorage.getItem(OLD_SK));
@@ -147,7 +152,7 @@ function load(){
   return def();
 }
 function save(){
-  try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){}
+  try{var json=JSON.stringify(D);localStorage.setItem(SK,json);localStorage.setItem(SK+'_bak',json)}catch(e){}
   try{window.dispatchEvent(new CustomEvent('game-save'))}catch(e){}
 }
 function resetProgress(){if(confirm('X\u00f3a to\u00e0n b\u1ed9?')){D=def();save();updateUI();renderGrid()}}
@@ -1147,15 +1152,12 @@ function doChangePass(){
   var user=localStorage.getItem('voicon_user');
   if(!user){msg.textContent='Cần đăng nhập để đổi!';msg.style.color='var(--coral)';return}
   msg.textContent='Đang xử lý...';msg.style.color='var(--gold)';
-  fetch('https://cvaqpwejuvqpnahsrjyy.supabase.co/rest/v1/users?username=eq.'+user+'&password=eq.'+encodeURIComponent(old),{
-    headers:{'apikey':'***REDACTED_ANON_KEY***'}
-  }).then(function(r){return r.json()}).then(function(data){
-    if(!data||data.length===0){msg.textContent='Mật khẩu cũ sai!';msg.style.color='var(--coral)';return}
-    return fetch('https://cvaqpwejuvqpnahsrjyy.supabase.co/rest/v1/users?username=eq.'+user,{
-      method:'PATCH',headers:{'apikey':'***REDACTED_ANON_KEY***','Content-Type':'application/json','Prefer':'return=minimal'},
-      body:JSON.stringify({password:nw})
-    })
-  }).then(function(){msg.textContent='✅ Đổi thành công!';msg.style.color='var(--mint)';sndCorrect()
+  fetch('/api/auth',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({action:'change-password',username:user,password:old,new_password:nw})
+  }).then(function(r){return r.json().then(function(d){return{ok:r.ok,data:d}})}).then(function(res){
+    if(!res.ok){msg.textContent=res.data.error||'Lỗi!';msg.style.color='var(--coral)';return}
+    msg.textContent='✅ Đổi thành công!';msg.style.color='var(--mint)';sndCorrect();
   }).catch(function(e){msg.textContent='Lỗi: '+e.message;msg.style.color='var(--coral)'});
 }
 function doLogout(){

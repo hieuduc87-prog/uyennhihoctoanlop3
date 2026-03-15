@@ -874,7 +874,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .q-text{font-size:20px!important;margin-bottom:4px}
   .q-hint{font-size:10px;margin-bottom:8px}
   .answers-grid{gap:6px}
-  .ans-btn{padding:8px 6px;font-size:14px;min-height:36px;border-radius:12px;
+  .ans-btn{padding:8px 6px;font-size:14px;min-height:48px;border-radius:12px;
     box-shadow:0 3px 0 rgba(0,0,0,.25),var(--shine)}
   .g-stat{padding:4px 8px;border-radius:10px}
   .g-stat .lb{font-size:8px}
@@ -975,6 +975,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .enc-sub{font-size:14px}
   .speech-bubble{padding:6px 12px;font-size:12px;max-width:220px;border-radius:16px}
   .combo-display{top:44px;font-size:16px;padding:2px 10px}
+}
+
+/* ========== REDUCED MOTION ========== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+  .sparkle,.fstar,.conf,.corgi-tap-effect,.paw-trail{display:none!important}
 }
 `
 
