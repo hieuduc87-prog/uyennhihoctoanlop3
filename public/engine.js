@@ -1001,8 +1001,142 @@ function renderCharCard(cStage,pStage){
     '<div class="cp-ability">'+
       '<span class="cp-ability-icon">'+(PP.pet==='cat'?'🐱':PP.pet==='trex'?'🦖':PP.pet==='dragon'?'🐉':'🐕')+'</span>'+
       '<span class="cp-ability-label">Năng lực: '+petBonus.label+'</span>'+
+    '</div>'+
+    '<div class="cp-roadmap-btns">'+
+      '<button class="cp-roadmap-btn" onclick="showEvolutionRoadmap(\'character\')" style="--btn-c:'+cStage.color+'">🗺️ Hành trình '+(PP.gender==='boy'?'Bin':'Uyển Nhi')+'</button>'+
+      '<button class="cp-roadmap-btn" onclick="showEvolutionRoadmap(\'pet\')" style="--btn-c:'+pStage.color+'">🗺️ Hành trình '+getPetName()+'</button>'+
     '</div>';
 }
+
+// ============ EVOLUTION ROADMAP ============
+function showEvolutionRoadmap(type){
+  // type: 'character' or 'pet'
+  var isPet=type==='pet';
+  var currentLv=isPet?(D.petLevel||1):(D.charLevel||1);
+  var currentXP=isPet?(D.petXP||0):(D.charXP||0);
+  var name=isPet?getPetName():(PP.gender==='boy'?'Bin':'Uyển Nhi');
+  var id=isPet?(PP.pet||'corgi'):(PP.gender==='boy'?'boy':'girl');
+  var folder=isPet?'pets':'characters';
+
+  var ov=document.createElement('div');ov.className='evo-roadmap-overlay';
+  var html='<div class="evo-roadmap">';
+  html+='<div class="evo-rm-header">';
+  html+='<div class="evo-rm-title">Hành Trình Tiến Hóa</div>';
+  html+='<div class="evo-rm-sub">'+escHtml(name)+'</div>';
+  html+='<button class="evo-rm-close" onclick="this.closest(\'.evo-roadmap-overlay\').remove()">✕</button>';
+  html+='</div>';
+
+  html+='<div class="evo-rm-path">';
+  for(var i=0;i<10;i++){
+    var lv=i+1;
+    var stage=getCharStage(lv);
+    var xpNeeded=CHAR_LEVELS[i];
+    var artLv=getArtLevel(lv);
+    var reached=currentLv>=lv;
+    var isCurrent=currentLv===lv;
+    var isNext=currentLv===lv-1;
+
+    // Unlock text
+    var unlock='';
+    if(lv===3) unlock='🎩 Nón phép thuật';
+    else if(lv===5) unlock='🧥 Áo choàng phép';
+    else if(lv===7) unlock='✨ Phát sáng';
+    else if(lv===8) unlock='👑 Vương miện';
+    else if(lv===9) unlock='🪽 Đôi cánh';
+    else if(lv===10) unlock='🏆 Thần Đồng tối thượng';
+
+    var cls='evo-rm-node';
+    if(reached) cls+=' reached';
+    if(isCurrent) cls+=' current';
+    if(isNext) cls+=' next';
+
+    html+='<div class="'+cls+'" style="--node-color:'+stage.color+'">';
+
+    // Connector line (not for first)
+    if(i>0) html+='<div class="evo-rm-line'+(reached?' reached':'')+'"></div>';
+
+    // Art image (show for art milestone levels: 1,2,3,4,5)
+    var showArt=(lv<=5);
+    html+='<div class="evo-rm-circle'+(showArt?' has-art':'')+'">';
+    if(showArt){
+      html+='<img src="/'+folder+'/'+id+'_level_'+lv+'.png" class="evo-rm-img'+(reached?'':' locked')+'" />';
+    } else {
+      html+='<div class="evo-rm-badge" style="background:'+stage.color+'">'+stage.badge+'</div>';
+    }
+    html+='</div>';
+
+    // Info
+    html+='<div class="evo-rm-info">';
+    html+='<div class="evo-rm-lv" style="color:'+stage.color+'">Lv.'+lv+'</div>';
+    html+='<div class="evo-rm-name">'+stage.badge+' '+stage.title+'</div>';
+    html+='<div class="evo-rm-xp">'+(lv===1?'Bắt đầu':xpNeeded+' XP')+'</div>';
+    if(unlock) html+='<div class="evo-rm-unlock">'+unlock+'</div>';
+    if(isCurrent){
+      var nextXP=lv<10?CHAR_LEVELS[lv]:0;
+      var prog=lv>=10?100:Math.round(((currentXP-xpNeeded)/Math.max(nextXP-xpNeeded,1))*100);
+      html+='<div class="evo-rm-progress"><div class="fill" style="width:'+prog+'%;background:'+stage.color+'"></div></div>';
+      html+='<div class="evo-rm-xp-detail">'+currentXP+(lv<10?' / '+nextXP:'')+' XP</div>';
+    }
+    html+='</div>';
+    html+='</div>';
+  }
+  html+='</div>';
+  html+='</div>';
+  ov.innerHTML=html;
+  ov.addEventListener('click',function(e){if(e.target===ov)ov.remove()});
+  document.body.appendChild(ov);
+  // Scroll to current level
+  setTimeout(function(){
+    var cur=ov.querySelector('.evo-rm-node.current');
+    if(cur) cur.scrollIntoView({behavior:'smooth',block:'center'});
+  },100);
+}
+
+// Add CSS for evolution roadmap
+(function(){
+  var s=document.createElement('style');
+  s.textContent='\
+.evo-roadmap-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;animation:fadeIn .2s}\
+.evo-roadmap{background:linear-gradient(170deg,#1b0a3c,#2d1463 40%,#3a1878 70%,#2a1260);border-radius:28px;border:2px solid rgba(255,255,255,.12);max-width:420px;width:100%;max-height:85vh;overflow-y:auto;padding:0;box-shadow:0 8px 0 rgba(0,0,0,.25),0 20px 60px rgba(0,0,0,.5)}\
+.evo-rm-header{position:sticky;top:0;z-index:2;background:linear-gradient(180deg,#2d1463,#2d1463ee,transparent);padding:24px 20px 16px;text-align:center}\
+.evo-rm-title{font-family:"Baloo 2",cursive;font-size:22px;font-weight:800;background:linear-gradient(135deg,#ff5a9e,#ffc233,#b44dff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:300% 300%;animation:gradShift 4s ease infinite}\
+.evo-rm-sub{font-size:13px;color:rgba(255,255,255,.5);font-weight:700;margin-top:2px}\
+.evo-rm-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}\
+.evo-rm-close:active{transform:scale(.9)}\
+.evo-rm-path{padding:0 20px 28px;display:flex;flex-direction:column;gap:0}\
+.evo-rm-node{display:flex;align-items:center;gap:14px;padding:12px 0;position:relative;opacity:.5;transition:all .3s}\
+.evo-rm-node.reached{opacity:.75}\
+.evo-rm-node.current{opacity:1;transform:scale(1.02)}\
+.evo-rm-node.next{opacity:.85}\
+.evo-rm-line{position:absolute;left:30px;top:-8px;width:3px;height:16px;background:rgba(255,255,255,.1);border-radius:2px}\
+.evo-rm-line.reached{background:var(--node-color,#b44dff);box-shadow:0 0 8px var(--node-color,#b44dff)}\
+.evo-rm-circle{width:60px;height:60px;min-width:60px;border-radius:50%;background:rgba(255,255,255,.06);border:2.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;position:relative}\
+.evo-rm-node.reached .evo-rm-circle{border-color:var(--node-color,#b44dff);box-shadow:0 0 12px rgba(180,77,255,.2)}\
+.evo-rm-node.current .evo-rm-circle{border-color:var(--node-color);box-shadow:0 0 20px var(--node-color),0 0 40px rgba(180,77,255,.15);animation:pulse 2s ease-in-out infinite}\
+@keyframes pulse{0%,100%{box-shadow:0 0 20px var(--node-color,#b44dff),0 0 40px rgba(180,77,255,.15)}50%{box-shadow:0 0 30px var(--node-color,#b44dff),0 0 60px rgba(180,77,255,.3)}}\
+.evo-rm-circle.has-art{border-radius:16px;width:64px;height:64px;min-width:64px}\
+.evo-rm-img{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}\
+.evo-rm-img.locked{filter:brightness(.3) grayscale(1);opacity:.5}\
+.evo-rm-badge{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}\
+.evo-rm-info{flex:1;min-width:0}\
+.evo-rm-lv{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px}\
+.evo-rm-name{font-size:15px;font-weight:800;color:#fff}\
+.evo-rm-xp{font-size:11px;color:rgba(255,255,255,.4);font-weight:700}\
+.evo-rm-unlock{font-size:12px;font-weight:800;color:#ffc233;margin-top:2px;text-shadow:0 0 8px rgba(255,194,51,.4)}\
+.evo-rm-progress{height:6px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:4px;overflow:hidden}\
+.evo-rm-progress .fill{height:100%;border-radius:3px;transition:width .5s}\
+.evo-rm-xp-detail{font-size:10px;color:rgba(255,255,255,.35);font-weight:700;margin-top:2px}\
+.evo-rm-node.current .evo-rm-name{text-shadow:0 0 12px var(--node-color,#b44dff)}\
+.evo-rm-node.next .evo-rm-circle{border-style:dashed;border-color:var(--node-color);animation:nextPulse 3s ease-in-out infinite}\
+@keyframes nextPulse{0%,100%{opacity:.6}50%{opacity:1}}\
+@media(min-width:768px){.evo-roadmap{max-width:480px;border-radius:32px}.evo-rm-header{padding:28px 24px 20px}.evo-rm-title{font-size:26px}.evo-rm-circle{width:72px;height:72px;min-width:72px}.evo-rm-circle.has-art{width:76px;height:76px;min-width:76px}.evo-rm-img{width:66px;height:66px}.evo-rm-name{font-size:17px}.evo-rm-path{padding:0 24px 32px}}\
+.cp-roadmap-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:center}\
+.cp-roadmap-btn{padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);font-size:12px;font-weight:800;font-family:"Nunito",sans-serif;cursor:pointer;transition:all .15s;box-shadow:0 2px 0 rgba(0,0,0,.15)}\
+.cp-roadmap-btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:var(--btn-c,#b44dff);box-shadow:0 0 12px var(--btn-c,rgba(180,77,255,.3))}\
+.cp-roadmap-btn:active{transform:translateY(2px);box-shadow:none}\
+';
+  document.head.appendChild(s);
+})();
 
 // ============ RADAR CHART ============
 function drawRadarChart(){
