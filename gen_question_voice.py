@@ -40,7 +40,7 @@ def clean_for_tts(text, is_english=False):
         clean = clean.replace('=', ' bằng ')
         clean = clean.replace('>', ' lớn hơn ')
         clean = clean.replace('<', ' nhỏ hơn ')
-        clean = clean.replace('?', ' ')
+        clean = clean.replace('?', ' bao nhiêu ')
         clean = clean.replace('²', ' bình phương ')
         clean = clean.replace('³', ' lập phương ')
         clean = clean.replace('%', ' phần trăm ')
