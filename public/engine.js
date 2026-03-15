@@ -48,7 +48,7 @@ function voiceReadEnabled(){
   try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceReadEnabled===false)return false}catch(e){}
   return true;
 }
-function getVoiceChar(){return PP.gender==='boy'?'boy':'girl'}
+function getVoiceChar(){return 'boy'}
 
 // Play a pre-recorded voice line
 function voicePlay(event,topicId){
