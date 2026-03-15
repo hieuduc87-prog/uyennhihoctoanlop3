@@ -415,4 +415,82 @@ const loginCSS = `
   .pick-card{padding:8px 14px}
   .pick-card img{width:40px!important;height:auto!important}
 }
+/* ========== TABLET (iPad portrait 768px+) ========== */
+@media(min-width:768px){
+  .login-card{max-width:480px;padding:36px 32px 32px;border-radius:36px}
+  .login-title{font-size:30px}
+  .login-sub{font-size:14px;margin:6px 0 16px}
+  .login-art img{width:90px!important;height:auto!important}
+  .login-input{padding:14px 16px 14px 46px;font-size:16px;border-radius:18px}
+  .input-icon{font-size:18px;left:16px}
+  .mode-tab{font-size:15px;padding:10px 16px}
+  .mode-tabs{border-radius:18px;padding:4px;margin-bottom:16px}
+  .btn-login{padding:16px 40px;font-size:18px;border-radius:56px}
+  .btn-guest{padding:12px 28px;font-size:14px}
+  .pick-card{padding:14px 22px;border-radius:20px}
+  .pick-card img{width:60px!important;height:auto!important}
+  .pick-card span{font-size:13px}
+  .pick-label{font-size:13px}
+  .login-hint{font-size:12px}
+  .login-footer{margin-top:28px}
+  .login-star{font-size:30px}
+  .running-chars{height:140px}
+  .run-char img{width:auto!important}
+  .run-girl img,.run-boy img{height:100px!important}
+  .run-cat img,.run-corgi img{height:65px!important}
+}
+/* ========== DESKTOP (1024px+) ========== */
+@media(min-width:1024px){
+  .login-card{max-width:520px;padding:40px 36px 36px;border-radius:40px}
+  .login-title{font-size:34px}
+  .login-sub{font-size:15px}
+  .login-art img{width:100px!important}
+  .login-input{padding:16px 18px 16px 50px;font-size:17px}
+  .btn-login{padding:18px 48px;font-size:19px}
+  .running-chars{height:160px}
+  .run-girl img,.run-boy img{height:120px!important}
+  .run-cat img,.run-corgi img{height:80px!important}
+}
+/* ========== PHONE LANDSCAPE ========== */
+@media(max-height:500px) and (orientation:landscape){
+  .login-page{padding:12px;justify-content:flex-start;overflow-y:auto}
+  .login-card{max-width:480px;padding:16px 20px 16px;border-radius:22px;max-height:none;
+    box-shadow:0 4px 0 rgba(0,0,0,.2),0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.2)}
+  .login-art{margin-bottom:2px}
+  .login-art img{width:40px!important;height:55px!important}
+  .login-title{font-size:18px}
+  .login-sub{font-size:10px;margin:2px 0 6px}
+  .mode-tabs{margin-bottom:6px}
+  .mode-tab{padding:6px 8px;font-size:11px}
+  .login-form{gap:6px;margin-bottom:6px}
+  .login-input{padding:8px 10px 8px 36px;font-size:13px;border-radius:12px}
+  .input-icon{font-size:14px;left:12px}
+  .btn-login{padding:10px 24px;font-size:14px;border-radius:40px}
+  .btn-guest{padding:6px 16px;font-size:11px}
+  .pick-section{margin:0}
+  .pick-label{font-size:10px;margin-bottom:3px}
+  .pick-row{gap:6px}
+  .pick-card{padding:6px 10px;border-radius:12px}
+  .pick-card img{width:30px!important;height:35px!important}
+  .pick-card span{font-size:10px}
+  .email-opt{margin-top:0}
+  .email-label{font-size:9px;margin-bottom:3px}
+  .login-hint{font-size:9px;margin-top:3px}
+  .login-footer{margin-top:8px}
+  .login-star{font-size:18px}
+  .running-chars{display:none}
+}
+/* ========== TABLET LANDSCAPE (iPad ngang) ========== */
+@media(min-width:768px) and (orientation:landscape){
+  .login-page{overflow-y:auto}
+  .login-card{max-width:500px;max-height:none}
+  .running-chars{height:100px}
+  .run-girl img,.run-boy img{height:80px!important}
+  .run-cat img,.run-corgi img{height:55px!important}
+}
+/* ========== REDUCED MOTION ========== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+  .login-sparkle,.run-char{display:none!important}
+}
 `

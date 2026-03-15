@@ -700,9 +700,9 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .rw-nm{flex:1;color:var(--text)}
 .rw-dt{font-size:10px;color:var(--dim);font-weight:600}
 .rw-empty{text-align:center;padding:16px;color:var(--dim);font-size:12px;font-weight:700}
-/* ========== DESKTOP (min-width:768px) ========== */
+/* ========== TABLET & DESKTOP (min-width:768px) ========== */
 @media(min-width:768px){
-  .screen{max-width:600px;margin:0 auto;left:0;right:0}
+  .screen{max-width:680px;margin:0 auto;left:0;right:0}
   #splash{padding:40px}
   .splash-title{font-size:44px}
   .splash-name{font-size:26px}
@@ -773,7 +773,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .rw-section{max-width:400px;margin:12px auto}
   .rw-list{max-height:200px}
   .rw-item{padding:10px 16px;font-size:14px;border-radius:14px}
-  .bottom-nav{max-width:600px;left:50%;transform:translateX(-50%);border-radius:20px 20px 0 0;
+  .bottom-nav{max-width:640px;left:50%;transform:translateX(-50%);border-radius:20px 20px 0 0;
     box-shadow:0 -4px 24px rgba(0,0,0,.3)}
   .nav-item{padding:8px 24px}
   .nav-item .ic{font-size:26px}
@@ -781,6 +781,185 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .corgi-game{bottom:24px;right:24px}
   .enc-text{font-size:52px}
   .enc-sub{font-size:20px}
+  /* Settings */
+  .set-group{padding:18px;border-radius:20px}
+  .set-title{font-size:16px}
+  .set-lbl{font-size:14px}
+  .set-toggle{padding:7px 18px;font-size:13px}
+  .set-pill{padding:6px 14px;font-size:13px}
+  .set-input{font-size:14px}
+  .set-input-full{font-size:14px;padding:12px 14px}
+  .set-btn{font-size:13px;padding:8px 18px}
+  .set-logout{padding:16px;font-size:16px;border-radius:20px}
+}
+/* ========== LARGE DESKTOP / iPad Pro (1024px+) ========== */
+@media(min-width:1024px){
+  .screen{max-width:760px}
+  #splash{padding:44px}
+  .splash-title{font-size:48px}
+  .splash-name{font-size:28px}
+  .splash-sub{font-size:16px}
+  .btn-play{padding:22px 68px;font-size:26px}
+  .top-bar{padding:14px 24px}
+  .stat-pill{padding:8px 18px;font-size:15px;border-radius:32px}
+  .stat-pill .ic{font-size:18px}
+  .avatar-mini{width:40px;height:40px;font-size:20px}
+  .lv-badge{font-size:12px;padding:3px 10px}
+  .xp-mini{width:72px;height:6px}
+  .subject-tabs{padding:10px 14px 12px}
+  .subject-tab .tab-icon{font-size:28px}
+  .subject-tab .tab-label{font-size:13px}
+  .map-header h2{font-size:28px}
+  .skill-grid{max-width:720px;gap:18px;padding:16px 24px}
+  .skill-card{padding:24px 18px 20px}
+  .skill-card .em{font-size:48px}
+  .skill-card .nm{font-size:17px}
+  .skill-card .prog{font-size:12px}
+  .game-area{max-width:640px;padding:24px}
+  .question-card{padding:32px 28px;border-radius:32px}
+  .q-text{font-size:34px}
+  .q-hint{font-size:14px}
+  .ans-btn{padding:20px 16px;font-size:22px;min-height:64px;border-radius:22px}
+  .answers-grid{gap:16px}
+  .g-stat{padding:8px 18px;border-radius:16px}
+  .g-stat .lb{font-size:10px}
+  .g-stat .vl{font-size:20px}
+  #result{padding:36px}
+  .result-title{font-size:38px}
+  .result-stars{font-size:56px;margin:10px 0}
+  .r-stat{padding:18px 26px;border-radius:22px}
+  .r-stat .num{font-size:30px}
+  .r-stat .lbl{font-size:11px}
+  .btn-group .btn-pri,.btn-group .btn-sec{padding:16px 36px;font-size:18px;border-radius:22px}
+  #daily,#profile{max-width:760px;padding:0 28px 110px}
+  .daily-hero h2{font-size:28px}
+  .mission-card{padding:18px 24px;border-radius:22px}
+  .mission-card .em{font-size:42px}
+  .mission-card .tt{font-size:17px}
+  .mission-card .ds{font-size:12px}
+  .mission-card .rw{font-size:13px;padding:6px 14px}
+  .profile-hero{padding:32px 0 22px}
+  .profile-name{font-size:30px}
+  .profile-lv{font-size:15px}
+  .xp-bar-full{height:10px;max-width:320px}
+  .streak-card{padding:28px;border-radius:28px}
+  .streak-num{font-size:56px}
+  .streak-lbl{font-size:14px}
+  .char-pet-card{margin-top:20px}
+  .cp-item{padding:18px;border-radius:22px}
+  .cp-badge{width:48px;height:48px;font-size:24px}
+  .cp-name{font-size:17px}
+  .cp-level{font-size:13px}
+  .cp-xp-bar{height:8px}
+  .cp-ability{padding:10px 16px;font-size:14px;margin-top:10px}
+  .gem-stats-card,.gem-exchange-card{padding:24px;border-radius:28px}
+  .gem-stats-card h3{font-size:20px}
+  .gem-stat-num{font-size:28px}
+  .gem-stat-lbl{font-size:12px}
+  .gem-exchange-card h3{font-size:20px}
+  .gem-rate{font-size:15px}
+  .gem-balance{font-size:15px}
+  .gem-val,.gem-vnd{font-size:18px}
+  .btn-exchange{padding:14px 32px;font-size:17px;border-radius:22px}
+  .ach-grid{grid-template-columns:repeat(5,1fr);gap:14px}
+  .ach{padding:16px 10px;font-size:32px;border-radius:20px}
+  .ach .anm{font-size:10px}
+  .report-overview{grid-template-columns:repeat(4,1fr);gap:14px}
+  .report-ov-card{padding:20px 16px;border-radius:22px}
+  .report-ov-icon{font-size:26px}
+  .report-ov-num{font-size:28px}
+  .report-ov-lbl{font-size:13px}
+  .report-chart-card{padding:24px;border-radius:24px}
+  .report-chart-card canvas{height:180px!important}
+  .report-chart-title{font-size:18px}
+  .report-sub-card{padding:20px;border-radius:24px}
+  .report-sub-emoji{font-size:36px}
+  .report-sub-name{font-size:20px}
+  .report-sub-meta{font-size:13px;gap:18px}
+  .report-sub-acc{font-size:24px}
+  .report-sk-row{padding:12px 16px;border-radius:16px}
+  .report-sk-nm{font-size:14px}
+  .report-sk-stats{font-size:12px;min-width:80px}
+  #wheel{padding:0 28px 110px}
+  .wh-wrap{width:300px!important;height:300px!important;margin:10px auto 14px!important}
+  .btn-spin{padding:16px 40px;font-size:20px}
+  .spin-result{font-size:26px;margin:12px 0}
+  .exchange-box{padding:12px 24px;max-width:400px;margin:10px auto;border-radius:22px}
+  .exchange-info{font-size:16px}
+  .exchange-btn{padding:12px 24px;font-size:15px;border-radius:16px}
+  .rw-section{max-width:440px;margin:14px auto}
+  .rw-list{max-height:240px}
+  .rw-item{padding:12px 18px;font-size:15px;border-radius:16px}
+  .bottom-nav{max-width:680px;padding:8px 0 max(8px,env(safe-area-inset-bottom));border-radius:24px 24px 0 0}
+  .nav-item{padding:10px 28px}
+  .nav-item .ic{font-size:28px}
+  .nav-item .lb{font-size:12px}
+  .speech-bubble{max-width:400px;font-size:17px;padding:16px 26px}
+  .enc-text{font-size:56px}
+  .enc-sub{font-size:22px}
+  .set-group{padding:20px;border-radius:22px}
+  .set-title{font-size:17px}
+  .set-lbl{font-size:15px}
+  .set-toggle{padding:8px 20px;font-size:14px}
+  .set-pill{padding:7px 16px;font-size:14px}
+  .set-logout{padding:16px;font-size:17px;border-radius:22px}
+}
+/* ========== WIDE DESKTOP (1280px+) ========== */
+@media(min-width:1280px){
+  .screen{max-width:860px}
+  .skill-grid{max-width:820px;grid-template-columns:repeat(4,1fr)}
+  #daily,#profile{max-width:860px}
+  .bottom-nav{max-width:760px}
+  .report-charts-row{flex-direction:row}
+  .report-overview{grid-template-columns:repeat(4,1fr)}
+}
+/* ========== iPad LANDSCAPE (1024+ landscape) ========== */
+@media(min-width:1024px) and (orientation:landscape){
+  .screen{max-width:860px}
+  /* Splash: side-by-side character + text */
+  #splash{flex-direction:row;gap:36px;padding:32px 48px;align-items:center}
+  #splash #splashScene{margin:0;flex-shrink:0}
+  .splash-title{font-size:40px}
+  .splash-name{font-size:24px}
+  .btn-play{padding:18px 56px;font-size:24px}
+  /* Map: 4 columns */
+  .skill-grid{grid-template-columns:repeat(4,1fr);max-width:820px;gap:16px}
+  .skill-card .em{font-size:44px}
+  /* Game: centered with comfortable width */
+  .game-area{max-width:680px}
+  .question-card{padding:28px 24px}
+  .ans-btn{min-height:60px;font-size:20px}
+  /* Result: wider stats row */
+  .result-stats{gap:14px}
+  /* Daily: wider mission cards */
+  #daily,#profile{max-width:860px}
+  .mission-card{padding:18px 24px}
+  /* Profile: two-column report overview */
+  .report-overview{grid-template-columns:repeat(4,1fr)}
+  .cp-row{gap:14px}
+  /* Wheel */
+  .wh-wrap{width:280px!important;height:280px!important}
+  /* Bottom nav */
+  .bottom-nav{max-width:740px}
+}
+/* ========== WIDER PHONE LANDSCAPE (>700px wide, short) ========== */
+@media(min-width:700px) and (max-height:500px) and (orientation:landscape){
+  .skill-grid{grid-template-columns:repeat(4,1fr);gap:8px}
+  .game-area{max-width:620px;margin:0 auto}
+  .question-card{padding:12px 18px;border-radius:18px}
+  .q-text{font-size:22px!important}
+  .ans-btn{min-height:48px;font-size:15px;padding:10px 8px}
+  .answers-grid{gap:8px;max-width:520px;margin:0 auto}
+  #result{max-width:620px;margin:0 auto}
+  .result-stats{gap:8px}
+  .r-stat{padding:8px 14px}
+  .r-stat .num{font-size:20px}
+  #daily,#profile{max-width:620px;margin:0 auto}
+  .mission-card{padding:10px 14px}
+  #wheel{max-width:620px;margin:0 auto}
+  .report-overview{grid-template-columns:repeat(4,1fr)}
+  .ach-grid{grid-template-columns:repeat(8,1fr)}
+  .bottom-nav{max-width:580px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0}
 }
 
 /* ========== MOBILE PORTRAIT (narrow, tall) ========== */
@@ -970,11 +1149,39 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .nav-item{padding:3px 12px}
   .nav-item .ic{font-size:18px}
   .nav-item .lb{font-size:7px;margin-top:0}
+  /* Settings */
+  .set-group{padding:10px;margin-bottom:8px;border-radius:14px}
+  .set-title{font-size:13px;margin-bottom:8px}
+  .set-row{padding:6px 0}
+  .set-lbl{font-size:11px}
+  .set-toggle{padding:4px 12px;font-size:10px}
+  .set-pill{padding:4px 10px;font-size:10px;border-radius:10px}
+  .set-input{font-size:11px;padding:4px 8px}
+  .set-input-full{font-size:11px;padding:6px 8px}
+  .set-btn{font-size:10px;padding:4px 10px}
+  .set-logout{padding:10px;font-size:13px;border-radius:14px;margin-top:8px}
+  .set-ver{font-size:9px;margin-top:6px}
+  /* Shop compact */
+  .shop-balance{margin-bottom:8px;gap:8px}
+  .shop-bal-item{padding:4px 10px;font-size:12px;border-radius:10px}
+  .shop-bal-num{font-size:16px}
+  .shop-cat-title{font-size:13px;margin:8px 0 4px}
+  .shop-item{padding:8px;margin-bottom:4px;border-radius:12px}
+  .shop-item-icon{font-size:22px}
+  .shop-item-name{font-size:11px}
+  .shop-item-desc{font-size:9px}
+  .shop-buy-btn{font-size:10px;padding:4px 8px}
   /* Overlays */
   .enc-text{font-size:30px}
   .enc-sub{font-size:14px}
   .speech-bubble{padding:6px 12px;font-size:12px;max-width:220px;border-radius:16px}
   .combo-display{top:44px;font-size:16px;padding:2px 10px}
+  /* Evolution overlay compact */
+  .evo-content{transform:scale(.75)}
+  .evo-icon{font-size:48px}
+  .evo-title{font-size:24px}
+  .evo-detail{font-size:14px}
+  .evo-subtitle{font-size:18px}
 }
 
 /* ========== REDUCED MOTION ========== */
