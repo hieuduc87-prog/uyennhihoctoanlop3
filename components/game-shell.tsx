@@ -522,6 +522,26 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .report-sk-stats{font-size:10px;font-weight:700;color:var(--dim);text-align:right;min-width:60px;flex-shrink:0}
 .report-sk-lv{font-size:9px;font-weight:800;color:var(--gold);background:rgba(255,194,51,.15);
   padding:2px 6px;border-radius:8px;display:inline-block;margin-top:2px}
+/* ========== ADVANCED CHARTS & BADGE CABINET ========== */
+.report-charts-row{display:flex;gap:10px;margin-bottom:14px}
+@media(max-width:500px){.report-charts-row{flex-direction:column}}
+.badge-cabinet{margin-bottom:14px}
+.badge-tabs{display:flex;gap:4px;margin-bottom:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.badge-tab{padding:5px 10px;border-radius:12px;border:1.5px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.05);color:var(--dim);font-size:11px;font-weight:800;
+  cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.badge-tab.active{background:rgba(180,77,255,.2);color:var(--purple);border-color:rgba(180,77,255,.3)}
+.badge-list{display:flex;flex-direction:column;gap:8px}
+.badge-card{display:flex;align-items:center;gap:10px;padding:12px;
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:16px;box-shadow:0 3px 0 rgba(0,0,0,.1),var(--shine)}
+.badge-icon{font-size:28px;flex-shrink:0}
+.badge-info{flex:1;min-width:0}
+.badge-name{font-size:13px;font-weight:800;color:var(--text)}
+.badge-tier-row{font-size:14px;letter-spacing:2px;margin-top:2px}
+.badge-next{font-size:10px;color:var(--dim);font-weight:700;margin-top:2px}
+.badge-prog{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-top:4px}
+.badge-prog .fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--gold));transition:width .4s}
 /* ========== SHOP ========== */
 .shop-balance{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
 .shop-bal-item{display:flex;align-items:center;gap:6px;padding:8px 16px;
@@ -1099,11 +1119,22 @@ const gameHTML = `
       <div class="report-chart-title">📈 Hoạt động 7 ngày qua</div>
       <canvas id="chart7day" style="width:100%;height:140px"></canvas>
     </div>
+    <div class="report-charts-row">
+      <div class="report-chart-card" style="flex:1;min-width:0">
+        <div class="report-chart-title">🎯 Radar Môn Học</div>
+        <canvas id="chartRadar" style="width:100%;max-width:200px;margin:0 auto;display:block"></canvas>
+      </div>
+      <div class="report-chart-card" style="flex:1.5;min-width:0">
+        <div class="report-chart-title">📅 Lịch Học (90 ngày)</div>
+        <canvas id="chartHeatmap" style="width:100%"></canvas>
+      </div>
+    </div>
     <div class="report-sub-title">📚 Tiến độ theo môn</div>
     <div id="reportSubjects"></div>
   </div>
   <h3 style="margin-top:18px;font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2)">🏆 Thành Tựu</h3>
   <div class="ach-grid" id="achGrid"></div>
+  <div id="badgeCabinet" class="badge-cabinet" style="margin-top:14px"></div>
 </div>
 <div id="shop" class="screen">
   <div class="top-bar"><span style="font-weight:800;font-size:15px">🛒 Cửa Hàng</span><button class="back-btn" onclick="showScreen('profile')">← Quay lại</button></div>

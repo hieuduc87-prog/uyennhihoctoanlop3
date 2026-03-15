@@ -731,9 +731,15 @@ function renderReport(){
     '<div class="report-ov-card"><div class="report-ov-icon">⏱️</div><div class="report-ov-num" style="color:var(--gold)">'+fmtTime(D.studyTime)+'</div><div class="report-ov-lbl">Thời gian học</div></div>';
   // 7-day bar chart
   draw7DayChart();
+  // Radar chart
+  setTimeout(drawRadarChart,100);
+  // Calendar heatmap
+  setTimeout(drawHeatmap,150);
   // Subject accuracy bars
   var rs=document.getElementById('reportSubjects');
   if(rs)rs.innerHTML=subData.join('');
+  // Badge cabinet
+  renderBadgeCabinet();
 }
 function draw7DayChart(){
   var c=document.getElementById('chart7day');if(!c)return;
@@ -841,6 +847,147 @@ function renderCharCard(cStage,pStage){
       '<span class="cp-ability-icon">'+(PP.pet==='cat'?'🐱':PP.pet==='elephant'?'🐘':'🐕')+'</span>'+
       '<span class="cp-ability-label">Năng lực: '+petBonus.label+'</span>'+
     '</div>';
+}
+
+// ============ RADAR CHART ============
+function drawRadarChart(){
+  var c=document.getElementById('chartRadar');if(!c)return;
+  var dpr=window.devicePixelRatio||1;
+  var sz=Math.min(c.getBoundingClientRect().width,200)||200;
+  c.width=sz*dpr;c.height=sz*dpr;c.style.width=sz+'px';c.style.height=sz+'px';
+  var ctx=c.getContext('2d');ctx.scale(dpr,dpr);
+  var cx=sz/2,cy=sz/2,maxR=sz/2-20;
+  var maxLv=GC.maxSkillLevel||5;
+  // Calculate per-subject mastery
+  var vals=SUBJECTS.map(function(sub){
+    var total=0,sum=0;
+    sub.skills.forEach(function(sk){
+      total++;
+      var pr=D.sp[sk.id];
+      sum+=pr?Math.min(pr.level/maxLv,1):0;
+    });
+    return total>0?sum/total:0;
+  });
+  var n=vals.length;if(n<3)return;
+  var colors=['#ff5a9e','#2ddba6','#3dc2ff','#ffc233','#b44dff'];
+  // Draw grid
+  for(var ring=1;ring<=4;ring++){
+    ctx.beginPath();
+    for(var i=0;i<=n;i++){
+      var angle=(-Math.PI/2)+(i%n)*(2*Math.PI/n);
+      var r=maxR*(ring/4);
+      var x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.closePath();ctx.strokeStyle='rgba(255,255,255,'+(ring===4?'.12':'.06')+')';ctx.stroke();
+  }
+  // Axes
+  for(var i=0;i<n;i++){
+    var angle=(-Math.PI/2)+i*(2*Math.PI/n);
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(angle)*maxR,cy+Math.sin(angle)*maxR);
+    ctx.strokeStyle='rgba(255,255,255,.08)';ctx.stroke();
+  }
+  // Data polygon
+  ctx.beginPath();
+  for(var i=0;i<=n;i++){
+    var angle=(-Math.PI/2)+(i%n)*(2*Math.PI/n);
+    var r=maxR*Math.max(vals[i%n],0.05);
+    var x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r;
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fillStyle='rgba(180,77,255,.2)';ctx.fill();
+  ctx.strokeStyle='rgba(180,77,255,.8)';ctx.lineWidth=2;ctx.stroke();
+  // Data points + labels
+  for(var i=0;i<n;i++){
+    var angle=(-Math.PI/2)+i*(2*Math.PI/n);
+    var r=maxR*Math.max(vals[i],0.05);
+    var x=cx+Math.cos(angle)*r,y=cy+Math.sin(angle)*r;
+    ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fillStyle=colors[i%colors.length];ctx.fill();
+    // Label
+    var lx=cx+Math.cos(angle)*(maxR+14),ly=cy+Math.sin(angle)*(maxR+14);
+    ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='bold 10px Nunito';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(SUBJECTS[i].emoji,lx,ly);
+  }
+}
+// ============ CALENDAR HEATMAP ============
+function drawHeatmap(){
+  var c=document.getElementById('chartHeatmap');if(!c)return;
+  var dpr=window.devicePixelRatio||1;
+  var w=c.getBoundingClientRect().width||300,h=100;
+  c.width=w*dpr;c.height=h*dpr;c.style.height=h+'px';
+  var ctx=c.getContext('2d');ctx.scale(dpr,dpr);
+  if(!D.dailyLog)D.dailyLog={};
+  var days=90;var cellSz=Math.floor((w-30)/Math.ceil(days/7))-1;
+  if(cellSz<6)cellSz=6;if(cellSz>12)cellSz=12;
+  var gap=1;var cols=Math.ceil(days/7);
+  // Find max questions for color scale
+  var maxQ=1;
+  for(var i=0;i<days;i++){
+    var d=new Date(Date.now()-(days-1-i)*864e5);
+    var key=d.toISOString().slice(0,10);
+    var log=D.dailyLog[key];
+    if(log&&log.q>maxQ)maxQ=log.q;
+  }
+  // Draw cells
+  for(var i=0;i<days;i++){
+    var d=new Date(Date.now()-(days-1-i)*864e5);
+    var key=d.toISOString().slice(0,10);
+    var log=D.dailyLog[key];
+    var q=log?log.q:0;
+    var col=Math.floor(i/7);var row=i%7;
+    var x=col*(cellSz+gap)+16;var y=row*(cellSz+gap)+14;
+    var intensity=q>0?0.2+0.8*(q/maxQ):0;
+    ctx.fillStyle=q>0?'rgba(45,219,166,'+intensity+')':'rgba(255,255,255,.04)';
+    roundRect(ctx,x,y,cellSz,cellSz,2);ctx.fill();
+  }
+  // Month labels
+  ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='8px Nunito';ctx.textAlign='left';
+  var months=['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+  var lastMonth=-1;
+  for(var i=0;i<days;i+=7){
+    var d=new Date(Date.now()-(days-1-i)*864e5);
+    var m=d.getMonth();
+    if(m!==lastMonth){lastMonth=m;
+      var col=Math.floor(i/7);
+      ctx.fillText(months[m],col*(cellSz+gap)+16,10);
+    }
+  }
+}
+// ============ BADGE CABINET ============
+function renderBadgeCabinet(){
+  var el=document.getElementById('badgeCabinet');if(!el)return;
+  var html='<div class="badge-tabs">';
+  var tiers=['Tất cả','🥉','🥈','🥇','💎','👑'];
+  tiers.forEach(function(t,i){
+    html+='<button class="badge-tab'+(i===0?' active':'')+'" onclick="filterBadges('+i+',this)">'+t+'</button>';
+  });
+  html+='</div><div class="badge-list" id="badgeList">';
+  html+=ACH_DEFS.map(function(a){
+    var tier=getAchTier(a.id);
+    var val=a.val();var nextReq=tier<5?a.ck(tier):a.ck(4);
+    var prog=tier<5?Math.min(100,Math.round(val/Math.max(nextReq,1)*100)):100;
+    return '<div class="badge-card" data-tier="'+tier+'">'+
+      '<div class="badge-icon">'+a.em+'</div>'+
+      '<div class="badge-info">'+
+        '<div class="badge-name">'+a.nm+'</div>'+
+        '<div class="badge-tier-row">'+(tier>0?ACH_TIERS.slice(0,tier).join(''):'🔒 Chưa mở')+'</div>'+
+        (tier<5?'<div class="badge-next">Tiếp: '+a.ck(tier)+' (đang: '+val+')</div>':
+          '<div class="badge-next" style="color:var(--gold)">✅ Hoàn thành!</div>')+
+        '<div class="badge-prog"><div class="fill" style="width:'+prog+'%"></div></div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  html+='</div>';
+  el.innerHTML=html;
+}
+function filterBadges(tier,btn){
+  btn.parentElement.querySelectorAll('.badge-tab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.badge-card').forEach(function(c){
+    if(tier===0)c.style.display='';
+    else c.style.display=parseInt(c.dataset.tier)>=tier?'':'none';
+  });
 }
 
 // ============ SHOP ============
