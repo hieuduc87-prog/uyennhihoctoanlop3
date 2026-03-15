@@ -18,7 +18,7 @@ from rembg import remove
 import vtracer
 
 # ── Config ─────────────────────────────────────────────────────────────
-API_KEY = "REDACTED"
+API_KEY = os.environ.get("GEMINI_API_KEY", "")
 PROJECT_ROOT = Path(__file__).parent.parent
 CHAR_DIR = PROJECT_ROOT / "public" / "characters"
 PET_DIR = PROJECT_ROOT / "public" / "pets"
@@ -216,6 +216,11 @@ def main():
         only = sys.argv[1]  # e.g. "boy", "girl", "cat", "corgi", "elephant"
 
     # Setup
+    if not API_KEY:
+        print("ERROR: Set GEMINI_API_KEY environment variable")
+        print("  export GEMINI_API_KEY='your-key-here'")
+        sys.exit(1)
+
     CHAR_DIR.mkdir(parents=True, exist_ok=True)
     PET_DIR.mkdir(parents=True, exist_ok=True)
 
