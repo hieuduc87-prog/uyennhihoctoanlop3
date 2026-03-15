@@ -23,6 +23,30 @@ function sndLevelUp(){var n=[392,494,587,659,784,988,1047];for(var i=0;i<n.lengt
 function sndStart(){tone(523,.12,'sine',.2);tone(659,.12,'sine',.2,.1);tone(784,.12,'sine',.25,.2);tone(1047,.25,'triangle',.3,.3)}
 function sndFail(){tone(392,.2,'triangle',.15);tone(330,.3,'triangle',.12,.15)}
 
+// ============ QUESTION POOL ============
+var _qPool=null;
+(function(){
+  fetch('/questions_pool.json').then(function(r){return r.json()}).then(function(data){
+    _qPool=data;
+    console.log('[Pool] Loaded question pools: '+Object.keys(data).length+' skills');
+  }).catch(function(e){console.log('[Pool] No pool found, using gen()')});
+})();
+function poolGet(skillId,level){
+  if(!_qPool||!_qPool[skillId])return null;
+  var qs=_qPool[skillId][level]||_qPool[skillId][String(level)];
+  if(!qs||!qs.length)return null;
+  var q=qs[R(0,qs.length-1)];
+  // Rebuild full question object with options
+  if(q.x){
+    return{text:q.t,answer:q.a,hint:q.h||'',options:SH([q.a].concat(qs.filter(function(o){return o.a!==q.a}).map(function(o){return o.a}).slice(0,3))),isText:true};
+  }
+  var ans=parseInt(q.a);
+  var opts=[ans];var _s=0;
+  while(opts.length<4&&_s<200){_s++;var d=R(1,Math.max(3,Math.abs(Math.round(ans*.3))||3));if(Math.random()>.5)d=-d;var v=ans+d;if(v>=0&&v!==ans&&opts.indexOf(v)===-1)opts.push(v)}
+  while(opts.length<4)opts.push(ans+opts.length*7);
+  return{text:q.t,answer:ans,hint:q.h||'',options:SH(opts),isText:false};
+}
+
 // ============ VOICE SYSTEM ============
 var _voiceManifest=null;
 var _voiceAudio=new Audio();
@@ -31,12 +55,17 @@ var _voiceLoaded=false;
 var _idleTimer=null;
 var _speechSynth=window.speechSynthesis||null;
 
-// Load voice manifest
+var _qVoiceManifest=null;
+// Load voice manifests
 (function(){
   fetch('/voice/voice_manifest.json').then(function(r){return r.json()}).then(function(data){
     _voiceManifest=data;_voiceLoaded=true;
     console.log('[Voice] Loaded manifest: '+data.total_files+' entries');
   }).catch(function(e){console.log('[Voice] No manifest found, voice disabled')});
+  fetch('/voice/question_manifest.json').then(function(r){return r.json()}).then(function(data){
+    _qVoiceManifest=data;
+    console.log('[Voice] Loaded question voice: '+Object.keys(data).length+' entries');
+  }).catch(function(e){console.log('[Voice] No question manifest')});
 })();
 
 function voiceEnabled(){
@@ -71,32 +100,25 @@ function voicePlay(event,topicId){
   }catch(e){}
 }
 
-// Read question text aloud using browser TTS
+// Read question text aloud using pre-generated MP3 file
 function voiceReadQuestion(text){
-  if(!voiceEnabled()||!_speechSynth||!voiceReadEnabled())return;
+  if(!voiceEnabled()||!voiceReadEnabled())return;
+  if(!_qVoiceManifest)return;
   try{
-    _speechSynth.cancel();
-    var clean=text.replace(/[◻️⬜️🔴🔵💛💚🐱🐕🐟🌍🏠📚🎨🐾🌤️🧒💕🙏⭐🧼🔢📖✍️📝🔤💬✏️📚❓⚖️🔀🔷🕐➕➖✖️➗❗📐📏🧮🍕📊🏷️💡🔍🌳🏫🦊🌱🧪⚡🌿🍄💪🌏🎯✅🏡🤝👨‍👩‍👧👗😊📍🚌💻📊🛡️🖥️🌐📝🐱🔒🎬🚀💻🧒👑🗺️🌴🕊️✊🏛️🔬🏥📜⏰🏃💪⏪⏩⚠️📖🌐⏰📦🚗⭕📐📏🧮📝🔗🔤🔀]/g,'');
-    // Detect English by skill ID (e_, e1_, e2_, e4_, e5_)
-    var isEng=curSkill&&/^e[_\d]/.test(curSkill.id);
-    // Replace math symbols with Vietnamese spoken words (non-English only)
-    if(!isEng){
-      clean=clean.replace(/\+/g,' cộng ').replace(/\-/g,' trừ ').replace(/×/g,' nhân ').replace(/(\d)\s*x\s*(\d)/gi,'$1 nhân $2').replace(/÷/g,' chia ').replace(/:/g,' chia ').replace(/=/g,' bằng ').replace(/>/g,' lớn hơn ').replace(/<(?![a-zA-Z\/])/g,' nhỏ hơn ').replace(/≥/g,' lớn hơn hoặc bằng ').replace(/≤/g,' nhỏ hơn hoặc bằng ').replace(/≠/g,' khác ').replace(/\?/g,' ');
-    }
-    clean=clean.replace(/\n/g,'. ').replace(/\s+/g,' ').trim();
-    if(!clean)return;
-    var u=new SpeechSynthesisUtterance(clean);
-    var lang=isEng?'en-US':'vi-VN';
-    u.lang=lang;
-    // Pick a male voice if available
-    var voices=_speechSynth.getVoices();
-    var male=voices.filter(function(v){return v.lang.replace('_','-').indexOf(lang)===0&&(/male/i.test(v.name)||/nam|minh|an |quang/i.test(v.name))});
-    if(male.length)u.voice=male[0];
-    else{var any=voices.filter(function(v){return v.lang.replace('_','-').indexOf(lang)===0});if(any.length)u.voice=any[0]}
-    u.rate=0.9;u.pitch=0.9;u.volume=0.7;
-    _speechSynth.speak(u);
+    // MD5 hash to find the right audio file
+    var hash=_md5(text);
+    var entry=_qVoiceManifest[hash];
+    if(!entry)return;
+    // Use a separate Audio for question reading so it doesn't conflict with voicePlay
+    if(!window._qAudio)window._qAudio=new Audio();
+    window._qAudio.pause();window._qAudio.currentTime=0;
+    window._qAudio.src='/voice/'+entry.file;
+    window._qAudio.volume=0.8;
+    window._qAudio.play().catch(function(){});
   }catch(e){}
 }
+// Simple MD5 for text→hash lookup (matches Python hashlib.md5)
+function _md5(s){var d,r,f,i,o,e,c;d=function(a,b){return(a+b)&0xFFFFFFFF};r=function(a,b){return(a<<b)|(a>>>(32-b))};f=[function(b,c2,dd){return(b&c2)|((~b)&dd)},function(b,c2,dd){return(b&dd)|(c2&(~dd))},function(b,c2,dd){return b^c2^dd},function(b,c2,dd){return c2^(b|(~dd))}];i=[7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];o=[0xd76aa478,0xe8c7b756,0x242070db,0xc1bdceee,0xf57c0faf,0x4787c62a,0xa8304613,0xfd469501,0x698098d8,0x8b44f7af,0xffff5bb1,0x895cd7be,0x6b901122,0xfd987193,0xa679438e,0x49b40821,0xf61e2562,0xc040b340,0x265e5a51,0xe9b6c7aa,0xd62f105d,0x02441453,0xd8a1e681,0xe7d3fbc8,0x21e1cde6,0xc33707d6,0xf4d50d87,0x455a14ed,0xa9e3e905,0xfcefa3f8,0x676f02d9,0x8d2a4c8a,0xfffa3942,0x8771f681,0x6d9d6122,0xfde5380c,0xa4beea44,0x4bdecfa9,0xf6bb4b60,0xbebfbc70,0x289b7ec6,0xeaa127fa,0xd4ef3085,0x04881d05,0xd9d4d039,0xe6db99e5,0x1fa27cf8,0xc4ac5665,0xf4292244,0x432aff97,0xab9423a7,0xfc93a039,0x655b59c3,0x8f0ccc92,0xffeff47d,0x85845dd1,0x6fa87e4f,0xfe2ce6e0,0xa3014314,0x4e0811a1,0xf7537e82,0xbd3af235,0x2ad7d2bb,0xeb86d391];e=function(str){var a=[],b=str.length*8;for(var k=0;k<str.length;k++){a[k>>2]|=str.charCodeAt(k)<<((k%4)*8)}a[str.length>>2]|=0x80<<((str.length%4)*8);var l=((str.length+8)>>>6)+1;while(a.length<l*16)a.push(0);a[l*16-2]=b&0xFFFFFFFF;a[l*16-1]=(b/0x100000000)>>>0;return a};c=function(h){var hex='';for(var j=0;j<4;j++){for(var k2=0;k2<4;k2++){hex+=(('0'+((h[j]>>(k2*8))&0xFF).toString(16)).slice(-2))}}return hex};var bytes=e(unescape(encodeURIComponent(s)));var h0=0x67452301,h1=0xefcdab89,h2=0x98badcfe,h3=0x10325476;for(var idx=0;idx<bytes.length;idx+=16){var a=h0,b=h1,c2=h2,dd=h3;for(var j=0;j<64;j++){var g,F;if(j<16){F=f[0](b,c2,dd);g=j}else if(j<32){F=f[1](b,c2,dd);g=(5*j+1)%16}else if(j<48){F=f[2](b,c2,dd);g=(3*j+5)%16}else{F=f[3](b,c2,dd);g=(7*j)%16}var tmp=dd;dd=c2;c2=b;b=d(b,r(d(d(a,F),d(o[j],bytes[idx+g]||0)),i[j]));a=tmp}h0=d(h0,a);h1=d(h1,b);h2=d(h2,c2);h3=d(h3,dd)}return c([h0,h1,h2,h3]).substring(0,12)}
 
 // Start idle timer (reminder if no interaction for 30s)
 function voiceStartIdle(){
@@ -434,7 +456,7 @@ function startSkill(id,subIdx){
   if(D.settings&&D.settings.qPerRound)Q_CT=D.settings.qPerRound;
   var pr=D.sp[id]||{level:1,correct:0,total:0};curLv=pr.level;
   var effLv=getEffectiveLevel(curLv);
-  questions=[];for(var i=0;i<Q_CT;i++)questions.push(sk.gen(effLv));
+  questions=[];for(var i=0;i<Q_CT;i++){var pq=poolGet(sk.id,effLv);questions.push(pq||sk.gen(effLv))}
   qIdx=0;correct=0;combo=0;_lives=GC.hasLives?(GC.livesCount||3):999;
   window._roundStart=Date.now();
   showScreen('game');
