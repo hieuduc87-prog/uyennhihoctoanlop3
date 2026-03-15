@@ -424,7 +424,58 @@ function renderProfile(){
   ];
   document.getElementById('achGrid').innerHTML=ads.map(function(a){var u=a.ck();if(u)D.ach[a.id]=true;return '<div class="ach '+(u?'':'locked')+'">'+a.em+'<div class="anm">'+a.nm+'</div></div>'}).join('');
   updateGemExchange();
+  renderReport();
   save();updateUI()
+}
+
+// ============ LEARNING REPORT ============
+function renderReport(){
+  var maxLv=GC.maxSkillLevel||5;var pass=GC.passThreshold||80;
+  var totQ=0,totC=0,totMastered=0,totSkills=0;
+  var subColors=[
+    {bg:'rgba(255,90,158,.12)',border:'rgba(255,90,158,.3)',accent:'#ff5a9e',bar:'linear-gradient(90deg,#ff5a9e,#ff8ec4)'},
+    {bg:'rgba(45,219,166,.12)',border:'rgba(45,219,166,.3)',accent:'#2ddba6',bar:'linear-gradient(90deg,#2ddba6,#6ff0cc)'},
+    {bg:'rgba(61,194,255,.12)',border:'rgba(61,194,255,.3)',accent:'#3dc2ff',bar:'linear-gradient(90deg,#3dc2ff,#7dd8ff)'}
+  ];
+  // Collect per-subject data
+  var subData=SUBJECTS.map(function(sub,si){
+    var sc=subColors[si%subColors.length];
+    var skills=sub.skills;var sQ=0,sC=0,sMast=0;
+    var skRows=skills.map(function(sk){
+      var pr=D.sp[sk.id]||{level:1,correct:0,total:0};
+      sQ+=pr.total;sC+=pr.correct;
+      var pct=pr.total>0?Math.round(pr.correct/Math.max(pr.total,1)*100):0;
+      var mst=pr.level>=maxLv&&pct>=pass;
+      if(mst)sMast++;
+      var lvPct=Math.round(((pr.level-1)/Math.max(maxLv-1,1))*100);
+      return '<div class="report-sk-row"><div class="report-sk-em">'+sk.emoji+'</div>'+
+        '<div class="report-sk-info"><div class="report-sk-nm">'+sk.name+'</div>'+
+        '<div class="report-sk-bar"><div class="fill" style="width:'+lvPct+'%;background:'+sc.bar+'"></div></div>'+
+        '<div class="report-sk-lv">Lv.'+pr.level+'/'+maxLv+(mst?' ✅':'')+'</div></div>'+
+        '<div class="report-sk-stats">'+(pr.total>0?pct+'% ('+pr.correct+'/'+pr.total+')':'Chưa học')+'</div></div>';
+    }).join('');
+    totQ+=sQ;totC+=sC;totMastered+=sMast;totSkills+=skills.length;
+    var sAcc=sQ>0?Math.round(sC/Math.max(sQ,1)*100):0;
+    var accColor=sAcc>=80?'var(--mint)':sAcc>=60?'var(--gold)':sAcc>0?'var(--coral)':'var(--dim)';
+    return '<div class="report-sub-card" onclick="this.classList.toggle(\'open\')" style="border-color:'+sc.border+';background:'+sc.bg+'">'+
+      '<div class="report-sub-header">'+
+      '<div class="report-sub-emoji">'+sub.emoji+'</div>'+
+      '<div class="report-sub-info"><div class="report-sub-name">'+sub.name+'</div>'+
+      '<div class="report-sub-meta"><span>🎯 '+sMast+'/'+skills.length+' master</span><span>📝 '+sQ+' câu</span></div></div>'+
+      '<div class="report-sub-acc" style="color:'+accColor+'">'+(sQ>0?sAcc+'%':'—')+'</div>'+
+      '<div class="report-sub-arrow">▼</div></div>'+
+      '<div class="report-skills-list">'+skRows+'</div></div>';
+  });
+  // Overview
+  var totAcc=totQ>0?Math.round(totC/Math.max(totQ,1)*100):0;
+  var ov=document.getElementById('reportOverview');
+  if(ov)ov.innerHTML=
+    '<div class="report-ov-card"><div class="report-ov-num" style="color:var(--purple)">'+totQ+'</div><div class="report-ov-lbl">Tổng câu hỏi</div></div>'+
+    '<div class="report-ov-card"><div class="report-ov-num" style="color:var(--mint)">'+totC+'</div><div class="report-ov-lbl">Trả lời đúng</div></div>'+
+    '<div class="report-ov-card"><div class="report-ov-num" style="color:'+(totAcc>=80?'var(--mint)':totAcc>=60?'var(--gold)':'var(--coral)')+'">'+totAcc+'%</div><div class="report-ov-lbl">Độ chính xác</div></div>';
+  // Subjects
+  var rs=document.getElementById('reportSubjects');
+  if(rs)rs.innerHTML=subData.join('');
 }
 
 // ============ SPIN WHEEL (Canvas-based, ticket system) ============

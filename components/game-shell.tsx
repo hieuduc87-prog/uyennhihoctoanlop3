@@ -433,6 +433,42 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .ex-item .ex-amt{flex:1;color:var(--mint)}
 .ex-item .ex-st{color:var(--gold)}
 .ex-item .ex-dt{color:var(--dim);font-size:9px}
+/* ========== LEARNING REPORT ========== */
+.report-section{margin-top:18px}
+.report-section h3{font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2);margin-bottom:10px}
+.report-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.report-ov-card{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:12px 8px;text-align:center;
+  box-shadow:0 3px 0 rgba(0,0,0,.15),var(--shine)}
+.report-ov-num{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;
+  text-shadow:0 2px 6px rgba(0,0,0,.2)}
+.report-ov-lbl{font-size:10px;font-weight:700;color:var(--dim);margin-top:2px}
+.report-sub-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:14px;margin-bottom:10px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12),var(--shine);cursor:pointer;transition:all .2s}
+.report-sub-card.open{background:rgba(255,255,255,.08)}
+.report-sub-header{display:flex;align-items:center;gap:10px}
+.report-sub-emoji{font-size:28px}
+.report-sub-info{flex:1}
+.report-sub-name{font-family:'Baloo 2',cursive;font-size:16px;font-weight:800;color:var(--text)}
+.report-sub-meta{display:flex;gap:12px;font-size:11px;font-weight:700;color:var(--dim);margin-top:2px}
+.report-sub-arrow{font-size:14px;color:var(--dim);transition:transform .2s}
+.report-sub-card.open .report-sub-arrow{transform:rotate(180deg)}
+.report-sub-acc{font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;margin-left:auto;min-width:48px;text-align:right}
+.report-skills-list{margin-top:10px;display:none}
+.report-sub-card.open .report-skills-list{display:block}
+.report-sk-row{display:flex;align-items:center;gap:8px;padding:8px 10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;margin-bottom:6px}
+.report-sk-em{font-size:18px;flex-shrink:0}
+.report-sk-info{flex:1;min-width:0}
+.report-sk-nm{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.report-sk-bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin-top:3px;
+  border:1px solid rgba(255,255,255,.04)}
+.report-sk-bar .fill{height:100%;border-radius:3px;transition:width .4s}
+.report-sk-stats{font-size:10px;font-weight:700;color:var(--dim);text-align:right;min-width:60px;flex-shrink:0}
+.report-sk-lv{font-size:9px;font-weight:800;color:var(--gold);background:rgba(255,194,51,.15);
+  padding:2px 6px;border-radius:8px;display:inline-block;margin-top:2px}
 .confetti-box{position:fixed;inset:0;pointer-events:none;z-index:9999}
 .conf{position:absolute;animation:confFall var(--dur,3s) var(--del,0s) linear forwards}
 @keyframes confFall{0%{transform:translateY(-10vh) rotate(0) scale(1);opacity:1}50%{opacity:1}100%{transform:translateY(110vh) rotate(720deg) scale(.6);opacity:0}}
@@ -524,6 +560,18 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .gem-stat-num{font-size:26px}
   .ach-grid{grid-template-columns:repeat(5,1fr);gap:12px}
   .ach{padding:14px 8px;font-size:30px;border-radius:18px}
+  .report-overview{gap:12px}
+  .report-ov-card{padding:16px 12px;border-radius:20px}
+  .report-ov-num{font-size:28px}
+  .report-ov-lbl{font-size:12px}
+  .report-sub-card{padding:18px;border-radius:22px}
+  .report-sub-emoji{font-size:34px}
+  .report-sub-name{font-size:18px}
+  .report-sub-meta{font-size:12px;gap:16px}
+  .report-sub-acc{font-size:22px}
+  .report-sk-row{padding:10px 14px;border-radius:14px}
+  .report-sk-nm{font-size:13px}
+  .report-sk-stats{font-size:11px;min-width:72px}
   #wheel{padding:0 20px 100px}
   .wh-wrap{width:260px!important;height:260px!important;margin:8px auto 12px!important}
   .btn-spin{padding:14px 36px;font-size:18px}
@@ -583,6 +631,8 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .gem-stats-card{padding:10px;margin-top:10px}
   .gem-exchange-card{padding:12px;margin-top:10px}
   #daily,#profile{padding:0 12px 85px}
+  .report-ov-num{font-size:20px}
+  .report-sub-card{padding:10px 12px;margin-bottom:8px}
 }
 
 /* ========== MOBILE LANDSCAPE (wide, short) ========== */
@@ -690,6 +740,21 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .ach-grid{grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px}
   .ach{padding:6px 4px;font-size:20px;border-radius:12px}
   .ach .anm{font-size:7px}
+  .report-section h3{font-size:14px;margin-bottom:6px}
+  .report-overview{gap:6px;margin-bottom:8px}
+  .report-ov-card{padding:8px 6px;border-radius:12px}
+  .report-ov-num{font-size:18px}
+  .report-ov-lbl{font-size:8px}
+  .report-sub-card{padding:8px 10px;margin-bottom:6px;border-radius:14px}
+  .report-sub-emoji{font-size:22px}
+  .report-sub-name{font-size:13px}
+  .report-sub-meta{font-size:9px;gap:8px}
+  .report-sub-acc{font-size:16px}
+  .report-sk-row{padding:5px 8px;margin-bottom:4px;border-radius:10px}
+  .report-sk-em{font-size:14px}
+  .report-sk-nm{font-size:10px}
+  .report-sk-stats{font-size:9px;min-width:50px}
+  .report-sk-lv{font-size:8px;padding:1px 4px}
   /* Bottom nav compact */
   .bottom-nav{padding:2px 0 max(2px,env(safe-area-inset-bottom))}
   .nav-item{padding:3px 12px}
@@ -833,6 +898,11 @@ const gameHTML = `
     </button>
     <div id="exchangeMsg" class="exchange-msg"></div>
     <div id="exchangeHistory" class="exchange-history"></div>
+  </div>
+  <div class="report-section">
+    <h3>📊 Báo Cáo Học Tập</h3>
+    <div class="report-overview" id="reportOverview"></div>
+    <div id="reportSubjects"></div>
   </div>
   <h3 style="margin-top:18px;font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2)">🏆 Thành Tựu</h3>
   <div class="ach-grid" id="achGrid"></div>
