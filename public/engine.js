@@ -396,6 +396,9 @@ function handleC(){
   showEnc(true);
   if(combo>=2){var cd=document.getElementById('comboDisplay');cd.textContent=combo+'x COMBO \ud83d\udd25';cd.classList.remove('show');requestAnimationFrame(function(){cd.classList.add('show')});setTimeout(function(){cd.classList.remove('show')},1500)}
   spawnFloat('\ud83d\udc95',2);
+  // Floating score popup
+  showScoreFloat('+XP','xp',R(35,65),R(25,45));
+  if(combo>=3)showScoreFloat(combo+'x!','coin',R(55,75),R(35,55));
 }
 function handleW(){
   combo=0;sndWrong();
@@ -411,6 +414,22 @@ function nextQ(){qIdx++;if(GC.hasLives&&_lives<=0){endRound();return}showQ()}
 
 function showEnc(ok){var ms=ok?C_MSGS:W_MSGS;var m=ms[R(0,ms.length-1)];var ov=document.createElement('div');ov.className='encourage-overlay';ov.innerHTML='<div class="enc-text">'+m.t+'</div><div class="enc-sub">'+m.s+'</div>';document.body.appendChild(ov);setTimeout(function(){ov.remove()},1600)}
 function spawnFloat(e,n){for(var i=0;i<n;i++){(function(){var el=document.createElement('div');el.className='corgi-tap-effect';el.textContent=e;el.style.left=R(20,80)+'%';el.style.top=R(30,70)+'%';document.body.appendChild(el);setTimeout(function(){el.remove()},1100)})()}}
+// ============ FLOATING SCORE POPUP ============
+function showScoreFloat(text,type,x,y){
+  var el=document.createElement('div');el.className='score-float '+(type||'xp');
+  el.textContent=text;
+  el.style.left=(x||50)+'%';el.style.top=(y||40)+'%';
+  document.body.appendChild(el);setTimeout(function(){el.remove()},1300);
+}
+// Count-up animation for result numbers
+function countUp(el,target,prefix,suffix,dur){
+  if(!el)return;prefix=prefix||'';suffix=suffix||'';dur=dur||600;
+  var start=0;var step=Math.max(1,Math.ceil(target/30));var t0=Date.now();
+  function tick(){var elapsed=Date.now()-t0;var pct=Math.min(1,elapsed/dur);
+    var val=Math.round(target*pct);el.textContent=prefix+val+suffix;
+    if(pct<1)requestAnimationFrame(tick);else{el.textContent=prefix+target+suffix;el.classList.add('count-up')}}
+  tick();
+}
 function tapCorgi(){sndTap();D.ct++;var cg=document.getElementById('corgiG');cg.innerHTML=CSvg(55);cg.classList.add('corgi-bounce');setTimeout(function(){cg.classList.remove('corgi-bounce')},600);var w=CORGI_TAP[R(0,CORGI_TAP.length-1)];var el=document.createElement('div');el.className='corgi-tap-effect';el.textContent=w;el.style.right='14px';el.style.bottom='80px';document.body.appendChild(el);setTimeout(function(){el.remove()},1000);save()}
 function tapCorgiMap(el){sndTap();el.classList.remove('corgi-happy');requestAnimationFrame(function(){el.classList.add('corgi-happy')});setTimeout(function(){el.classList.remove('corgi-happy')},800)}
 
@@ -464,11 +483,12 @@ function endRound(){
   var sp1=['Kh\u00f4ng sao! Corgi \u1edf b\u00ean Nhi!','M\u1ed7i l\u1ea7n ch\u01a1i l\u00e0 gi\u1ecfi h\u01a1n!'];
   var sp=stars>=3?sp3:stars>=2?sp2:sp1;
   document.getElementById('rSpeech').innerHTML='<div class="speech-bubble" style="margin:8px auto">'+sp[R(0,sp.length-1)]+'</div>';
-  document.getElementById('rCor').textContent=correct+'/'+Q_CT;
-  document.getElementById('rAcc').textContent=acc+'%';
-  document.getElementById('rXP').textContent='+'+xpE+(diffMult>1?' (x'+diffMult+')':'');
-  document.getElementById('rGem').textContent='+'+gemE;
-  var rCoin=document.getElementById('rCoin');if(rCoin)rCoin.textContent='+'+coinE;
+  // Count-up animated result stats
+  countUp(document.getElementById('rCor'),correct,'','/'+Q_CT,500);
+  countUp(document.getElementById('rAcc'),acc,'','%',600);
+  countUp(document.getElementById('rXP'),xpE,'+',(diffMult>1?' (x'+diffMult+')':''),700);
+  countUp(document.getElementById('rGem'),gemE,'+','',400);
+  var rCoin=document.getElementById('rCoin');if(rCoin)countUp(rCoin,coinE,'+','',500);
   if(stars>=2)spawnConfetti();
   // Show difficulty change
   if(newDiff!==oldDiff){

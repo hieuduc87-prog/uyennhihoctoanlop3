@@ -659,6 +659,137 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .paw-trail{position:fixed;pointer-events:none;z-index:0;font-size:12px;opacity:0;animation:pawFade 2s ease forwards}
 @keyframes pawFade{0%{opacity:.5;transform:scale(.5)}100%{opacity:0;transform:scale(1)}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ====== WAVE 1: SHIMMER + HOVER + STAGGER ====== */
+/* Progress bar shimmer overlay */
+@keyframes barShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.xp-bar-full .fill::after,.xp-mini .fill::after,.m-prog .fill::after,.gem-prog-bar .fill::after,
+.skill-card .pbar .fill::after,.cp-xp-bar .fill::after,.badge-prog .fill::after,.ach-prog .fill::after,
+.timer-bar .fill::after,.report-sk-bar .fill::after{
+  content:'';position:absolute;top:0;left:0;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+  animation:barShimmer 2s ease-in-out infinite}
+.xp-bar-full .fill,.xp-mini .fill,.m-prog .fill,.gem-prog-bar .fill,
+.skill-card .pbar .fill,.cp-xp-bar .fill,.badge-prog .fill,.ach-prog .fill,
+.timer-bar .fill,.report-sk-bar .fill{position:relative;overflow:hidden}
+
+/* Floating score popup — "+10 XP" */
+.score-float{position:fixed;pointer-events:none;z-index:500;
+  font-family:'Baloo 2',cursive;font-size:22px;font-weight:900;
+  text-shadow:0 2px 8px rgba(0,0,0,.4);animation:scoreFloat 1.2s ease-out forwards}
+.score-float.xp{color:var(--gold)}
+.score-float.coin{color:#ffc233}
+.score-float.gem{color:var(--purple)}
+.score-float.star{color:#ffab00}
+@keyframes scoreFloat{0%{opacity:1;transform:translateY(0) scale(.7)}20%{opacity:1;transform:translateY(-15px) scale(1.2)}100%{opacity:0;transform:translateY(-70px) scale(1)}}
+
+/* Card stagger entrance */
+.skill-card{animation:cardIn .45s cubic-bezier(.34,1.56,.64,1) both}
+.skill-card:nth-child(1){animation-delay:0s}
+.skill-card:nth-child(2){animation-delay:.05s}
+.skill-card:nth-child(3){animation-delay:.1s}
+.skill-card:nth-child(4){animation-delay:.15s}
+.skill-card:nth-child(5){animation-delay:.2s}
+.skill-card:nth-child(6){animation-delay:.25s}
+.skill-card:nth-child(7){animation-delay:.3s}
+.skill-card:nth-child(8){animation-delay:.35s}
+.skill-card:nth-child(9){animation-delay:.4s}
+.skill-card:nth-child(10){animation-delay:.45s}
+.skill-card:nth-child(11){animation-delay:.5s}
+.skill-card:nth-child(12){animation-delay:.55s}
+
+/* Answer button stagger */
+.ans-btn{animation:cardIn .35s cubic-bezier(.34,1.56,.64,1) both}
+.ans-btn:nth-child(1){animation-delay:0s}
+.ans-btn:nth-child(2){animation-delay:.06s}
+.ans-btn:nth-child(3){animation-delay:.12s}
+.ans-btn:nth-child(4){animation-delay:.18s}
+
+/* Mission card stagger */
+.mission-card{animation:cardIn .4s cubic-bezier(.34,1.56,.64,1) both}
+.mission-card:nth-child(1){animation-delay:0s}
+.mission-card:nth-child(2){animation-delay:.08s}
+.mission-card:nth-child(3){animation-delay:.16s}
+.mission-card:nth-child(4){animation-delay:.24s}
+.mission-card:nth-child(5){animation-delay:.32s}
+
+/* Desktop hover effects (mouse users) */
+@media(hover:hover){
+  .skill-card:hover{transform:translateY(-6px) scale(1.04);
+    box-shadow:0 10px 0 rgba(0,0,0,.15),0 16px 40px rgba(0,0,0,.2),0 0 24px var(--cc,rgba(255,107,157,.2)),var(--shine);
+    border-color:rgba(255,255,255,.2)}
+  .ans-btn:hover{transform:translateY(-3px) scale(1.02);
+    box-shadow:0 7px 0 rgba(0,0,0,.2),0 8px 24px rgba(0,0,0,.2),var(--shine);
+    border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.15)}
+  .btn-play:hover{transform:translateY(-3px) scale(1.03);
+    box-shadow:0 9px 0 rgba(140,20,80,.6),0 16px 48px rgba(255,90,158,.4),var(--shine)}
+  .btn-pri:hover{transform:translateY(-3px) scale(1.03);
+    box-shadow:0 7px 0 rgba(140,20,80,.5),0 12px 32px rgba(255,90,158,.35),var(--shine)}
+  .btn-sec:hover{transform:translateY(-2px);background:rgba(255,255,255,.15);
+    box-shadow:0 6px 0 rgba(0,0,0,.2),var(--shine)}
+  .btn-spin:hover{transform:translateY(-3px) scale(1.03);
+    box-shadow:0 6px 0 rgba(180,120,0,.5),0 12px 28px rgba(255,194,51,.4),var(--shine)}
+  .btn-exchange:hover{transform:translateY(-3px);
+    box-shadow:0 7px 0 rgba(10,130,80,.4),0 12px 28px rgba(45,219,166,.3),var(--shine)}
+  .mission-card:hover{transform:translateY(-3px);
+    box-shadow:0 6px 0 rgba(0,0,0,.15),0 8px 24px rgba(0,0,0,.15),var(--shine);
+    border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.1)}
+  .nav-item:hover{opacity:.7;transform:translateY(-2px)}
+  .grade-card:hover{transform:translateY(-6px) scale(1.03)}
+  .ach:not(.locked):hover{transform:translateY(-3px) scale(1.05);
+    box-shadow:0 5px 0 rgba(0,0,0,.15),0 0 16px rgba(255,194,51,.2),var(--shine)}
+  .shop-item:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.15);
+    box-shadow:0 5px 0 rgba(0,0,0,.12),0 8px 20px rgba(0,0,0,.15),var(--shine)}
+}
+
+/* ====== WAVE 2: ANSWER FEEDBACK UPGRADE ====== */
+/* Correct answer glow pulse */
+.ans-btn.correct::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:48px;color:rgba(45,219,166,.3);animation:checkPop .5s .1s cubic-bezier(.34,1.56,.64,1) both;z-index:3}
+@keyframes checkPop{0%{transform:translate(-50%,-50%) scale(0);opacity:1}60%{transform:translate(-50%,-50%) scale(1.5);opacity:.6}100%{transform:translate(-50%,-50%) scale(2);opacity:0}}
+
+/* Wrong answer X mark */
+.ans-btn.wrong::after{content:'✗';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  font-size:36px;color:rgba(255,107,122,.3);animation:xPop .4s .05s ease both;z-index:3}
+@keyframes xPop{0%{transform:translate(-50%,-50%) scale(0)}50%{transform:translate(-50%,-50%) scale(1.3)}100%{transform:translate(-50%,-50%) scale(0);opacity:0}}
+
+/* ====== WAVE 3: STREAK FIRE + BADGE GLOW ====== */
+/* Streak fire pulse */
+@keyframes firePulse{0%,100%{text-shadow:0 3px 12px rgba(255,107,122,.4)}50%{text-shadow:0 3px 20px rgba(255,107,122,.7),0 0 40px rgba(255,90,0,.3)}}
+.streak-num{animation:firePulse 2s ease-in-out infinite}
+.streak-info-num{animation:firePulse 2s ease-in-out infinite}
+
+/* Achievement maxed sparkle */
+@keyframes achSparkle{0%,100%{box-shadow:0 3px 0 rgba(180,120,0,.3),0 0 12px rgba(255,194,51,.15),var(--shine)}
+  50%{box-shadow:0 3px 0 rgba(180,120,0,.3),0 0 20px rgba(255,194,51,.3),0 0 40px rgba(255,194,51,.1),var(--shine)}}
+.ach.maxed{animation:achSparkle 3s ease-in-out infinite}
+
+/* Count-up number animation */
+@keyframes countPop{0%{transform:scale(.5);opacity:0}50%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+.count-up{animation:countPop .4s cubic-bezier(.34,1.56,.64,1)}
+
+/* Result stat number bounce */
+.r-stat .num{transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+
+/* ====== WAVE 4: LOADING SKELETON ====== */
+@keyframes skeletonShimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 75%);
+  background-size:200% 100%;animation:skeletonShimmer 1.5s ease-in-out infinite;border-radius:12px}
+.skeleton-text{height:14px;margin:6px 0;border-radius:7px}
+.skeleton-circle{border-radius:50%}
+
+/* Empty state illustration */
+.empty-state{text-align:center;padding:32px 20px;color:var(--dim)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:8px;opacity:.5}
+.empty-state .empty-text{font-size:14px;font-weight:700;margin-bottom:12px}
+.empty-state .empty-cta{font-size:12px;color:var(--pink);font-weight:800;cursor:pointer}
+
+/* Question dot progress (top bar) */
+.q-dots{display:flex;gap:4px;align-items:center}
+.q-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .2s}
+.q-dot.done{background:var(--mint);box-shadow:0 0 6px rgba(45,219,166,.4)}
+.q-dot.wrong-dot{background:var(--coral);box-shadow:0 0 6px rgba(255,107,122,.3)}
+.q-dot.current{background:var(--gold);transform:scale(1.3);box-shadow:0 0 8px rgba(255,194,51,.5)}
 #wheel{padding:0 14px 80px;text-align:center}
 .exchange-box{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 14px;margin:6px 16px;
   background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;
