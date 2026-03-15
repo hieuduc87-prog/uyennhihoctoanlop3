@@ -1489,6 +1489,54 @@ function toggleVoice(btn){
   try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.voiceEnabled=!voiceEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
   btn.classList.toggle('on');btn.textContent=voiceEnabled()?'BẬT':'TẮT';sndTap();
 }
+// ============ SOUND FAB (floating corner toggle) ============
+var _sfmOpen=false;
+function toggleSoundFab(){
+  _sfmOpen=!_sfmOpen;
+  var menu=document.getElementById('soundFabMenu');
+  if(_sfmOpen){
+    menu.style.display='block';updateSoundFabStates();
+    // Close on outside click
+    setTimeout(function(){document.addEventListener('click',_closeSfm,true)},10);
+  } else {
+    menu.style.display='none';
+    document.removeEventListener('click',_closeSfm,true);
+  }
+}
+function _closeSfm(e){
+  var fab=document.getElementById('soundFab');
+  var menu=document.getElementById('soundFabMenu');
+  if(fab&&!fab.contains(e.target)&&menu&&!menu.contains(e.target)){
+    _sfmOpen=false;menu.style.display='none';
+    document.removeEventListener('click',_closeSfm,true);
+  }
+}
+function toggleSoundFabItem(type){
+  try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};
+    if(type==='sound'){p.soundEnabled=!sndEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}
+    else if(type==='voice'){p.voiceEnabled=!voiceEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}
+    else if(type==='read'){p.voiceReadEnabled=!voiceReadEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}
+  }catch(e){}
+  updateSoundFabStates();
+  if(sndEnabled())sndTap();
+}
+function updateSoundFabStates(){
+  var sOn=sndEnabled(),vOn=voiceEnabled(),rOn=voiceReadEnabled();
+  var ss=document.getElementById('sfmSound');if(ss){ss.textContent=sOn?'BẬT':'TẮT';ss.className='sfm-state '+(sOn?'on':'off')}
+  var sv=document.getElementById('sfmVoice');if(sv){sv.textContent=vOn?'BẬT':'TẮT';sv.className='sfm-state '+(vOn?'on':'off')}
+  var sr=document.getElementById('sfmRead');if(sr){sr.textContent=rOn?'BẬT':'TẮT';sr.className='sfm-state '+(rOn?'on':'off')}
+  // Update FAB icon
+  var fab=document.getElementById('soundFab');
+  var icon=document.getElementById('soundFabIcon');
+  if(fab&&icon){
+    var allOff=!sOn;
+    icon.textContent=allOff?'🔇':'🔊';
+    fab.classList.toggle('muted',allOff);
+  }
+}
+// Init FAB states on load
+setTimeout(function(){try{updateSoundFabStates()}catch(e){}},100);
+
 function toggleVoiceRead(btn){
   try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.voiceReadEnabled=!voiceReadEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
   btn.classList.toggle('on');btn.textContent=voiceReadEnabled()?'BẬT':'TẮT';sndTap();

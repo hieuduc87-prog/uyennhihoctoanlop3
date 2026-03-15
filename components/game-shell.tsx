@@ -1344,6 +1344,38 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .evo-subtitle{font-size:18px}
 }
 
+/* ========== SOUND FAB (floating action button) ========== */
+.sound-fab{position:fixed;bottom:max(80px,calc(70px + env(safe-area-inset-bottom)));right:14px;z-index:200;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1.5px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);transition:all .15s}
+.sound-fab:active{transform:scale(.9)}
+.sound-fab.muted{border-color:rgba(255,107,122,.3)}
+.sound-fab-icon{font-size:20px;transition:transform .2s}
+.sound-fab-menu{position:fixed;bottom:max(130px,calc(120px + env(safe-area-inset-bottom)));right:14px;z-index:201;
+  background:rgba(20,10,50,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1.5px solid rgba(255,255,255,.12);border-radius:18px;
+  padding:8px 0;min-width:180px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:sfmPop .2s cubic-bezier(.34,1.56,.64,1)}
+@keyframes sfmPop{0%{opacity:0;transform:translateY(10px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.sfm-item{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;
+  transition:background .1s;font-size:13px;font-weight:800}
+.sfm-item:active{background:rgba(255,255,255,.08)}
+.sfm-icon{font-size:18px;width:24px;text-align:center}
+.sfm-label{flex:1;color:rgba(255,255,255,.8)}
+.sfm-state{font-size:11px;font-weight:900;padding:3px 10px;border-radius:10px;letter-spacing:.3px}
+.sfm-state.on{background:rgba(45,219,166,.2);color:#2ddba6;border:1px solid rgba(45,219,166,.3)}
+.sfm-state.off{background:rgba(255,107,122,.15);color:#ff6b7a;border:1px solid rgba(255,107,122,.2)}
+@media(min-width:768px){
+  .sound-fab{width:48px;height:48px;right:20px;bottom:max(90px,calc(80px + env(safe-area-inset-bottom)))}
+  .sound-fab-icon{font-size:22px}
+  .sound-fab-menu{right:20px;bottom:max(145px,calc(135px + env(safe-area-inset-bottom)));min-width:200px;border-radius:20px}
+  .sfm-item{padding:12px 18px;font-size:14px}
+}
+
 /* ========== SCREEN TRANSITIONS ========== */
 /* Iris wipe — circle expanding/contracting */
 .iris-transition{position:fixed;inset:0;z-index:10000;pointer-events:none}
@@ -1610,4 +1642,24 @@ const gameHTML = `
   <div class="nav-item" onclick="switchTab('profile')"><span class="ic">👤</span><span class="lb">Hồ sơ</span></div>
 </div>
 <div class="confetti-box" id="confetti"></div>
+<div class="sound-fab" id="soundFab" onclick="toggleSoundFab()">
+  <span class="sound-fab-icon" id="soundFabIcon">🔊</span>
+</div>
+<div class="sound-fab-menu" id="soundFabMenu" style="display:none">
+  <div class="sfm-item" onclick="toggleSoundFabItem('sound',this)">
+    <span class="sfm-icon">🔊</span>
+    <span class="sfm-label">Âm thanh</span>
+    <span class="sfm-state" id="sfmSound">BẬT</span>
+  </div>
+  <div class="sfm-item" onclick="toggleSoundFabItem('voice',this)">
+    <span class="sfm-icon">🎙️</span>
+    <span class="sfm-label">Giọng nói</span>
+    <span class="sfm-state" id="sfmVoice">BẬT</span>
+  </div>
+  <div class="sfm-item" onclick="toggleSoundFabItem('read',this)">
+    <span class="sfm-icon">📖</span>
+    <span class="sfm-label">Đọc câu hỏi</span>
+    <span class="sfm-state" id="sfmRead">BẬT</span>
+  </div>
+</div>
 `
