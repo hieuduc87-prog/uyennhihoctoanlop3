@@ -433,6 +433,51 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .ex-item .ex-amt{flex:1;color:var(--mint)}
 .ex-item .ex-st{color:var(--gold)}
 .ex-item .ex-dt{color:var(--dim);font-size:9px}
+/* ========== SETTINGS ========== */
+.set-group{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:16px;margin-bottom:12px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12),var(--shine)}
+.set-title{font-family:'Baloo 2',cursive;font-size:15px;color:var(--peach);
+  margin-bottom:12px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.set-row:last-child{border-bottom:none}
+.set-lbl{font-size:13px;font-weight:700;color:var(--text)}
+.set-toggle{padding:6px 16px;border-radius:20px;border:none;font-size:12px;font-weight:800;
+  font-family:'Nunito',sans-serif;cursor:pointer;transition:all .2s;
+  background:rgba(255,255,255,.1);color:var(--dim)}
+.set-toggle.on{background:linear-gradient(135deg,var(--mint),#14cca0);color:#1b0a3c;
+  box-shadow:0 3px 0 rgba(10,130,80,.4)}
+.set-pills{display:flex;gap:6px}
+.set-pill{padding:5px 12px;border-radius:14px;border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);color:var(--dim);font-size:12px;font-weight:700;
+  font-family:'Nunito',sans-serif;cursor:pointer;transition:all .2s}
+.set-pill.active{background:linear-gradient(135deg,var(--purple),#9b3dff);color:#fff;
+  border-color:var(--purple);box-shadow:0 3px 0 rgba(130,50,200,.4)}
+.set-input{width:100px;padding:6px 10px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.06);color:var(--text);font-size:13px;font-weight:700;
+  font-family:'Nunito',sans-serif;outline:none}
+.set-input:focus{border-color:var(--purple)}
+.set-input-full{width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.06);color:var(--text);font-size:13px;font-weight:700;
+  font-family:'Nunito',sans-serif;outline:none;margin-top:6px}
+.set-input-full:focus{border-color:var(--purple)}
+.set-btn{padding:6px 14px;border-radius:14px;border:none;font-size:12px;font-weight:800;
+  font-family:'Nunito',sans-serif;cursor:pointer;
+  background:rgba(255,255,255,.1);color:var(--text);transition:all .2s}
+.set-btn:active{transform:translateY(2px)}
+.set-btn.pri{background:linear-gradient(135deg,var(--mint),#14cca0);color:#1b0a3c;
+  box-shadow:0 3px 0 rgba(10,130,80,.4)}
+.set-field{margin-bottom:10px}
+.set-field label{font-size:12px;font-weight:700;color:var(--dim)}
+.set-msg{font-size:12px;font-weight:700;min-height:16px;margin-top:8px}
+.set-logout{display:block;width:100%;padding:14px;border:none;border-radius:18px;
+  background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(239,68,68,.1));
+  border:1.5px solid rgba(239,68,68,.3);color:#ef4444;font-size:15px;font-weight:800;
+  font-family:'Baloo 2',cursive;cursor:pointer;margin-top:16px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12);transition:all .2s}
+.set-logout:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.set-ver{text-align:center;font-size:11px;color:var(--dim);margin-top:14px;font-weight:600}
 /* ========== LEARNING REPORT ========== */
 .report-section{margin-top:18px}
 .report-section h3{font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2);margin-bottom:10px}
@@ -885,7 +930,7 @@ const gameHTML = `
   </div>
 </div>
 <div id="profile" class="screen">
-  <div class="top-bar"><span style="font-weight:800;font-size:15px" id="profTopName">👤 Bé</span><button class="back-btn" onclick="resetProgress()">🔄 Reset</button></div>
+  <div class="top-bar"><span style="font-weight:800;font-size:15px" id="profTopName">👤 Bé</span><div style="display:flex;gap:8px"><button class="back-btn" onclick="showScreen('settings')">⚙️</button><button class="back-btn" onclick="resetProgress()">🔄</button></div></div>
   <div class="profile-hero">
     <div id="profAv" style="margin:0 auto 10px"></div>
     <div class="profile-name" id="profName">Bé</div>
@@ -928,6 +973,10 @@ const gameHTML = `
   </div>
   <h3 style="margin-top:18px;font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2)">🏆 Thành Tựu</h3>
   <div class="ach-grid" id="achGrid"></div>
+</div>
+<div id="settings" class="screen">
+  <div class="top-bar"><span style="font-weight:800;font-size:15px">⚙️ Cài Đặt</span><button class="back-btn" onclick="showScreen('profile')">← Quay lại</button></div>
+  <div id="settingsContent" style="padding:0 14px 100px"></div>
 </div>
 <div class="bottom-nav" id="bottomNav" style="display:none">
   <div class="nav-item active" onclick="switchTab('map')"><span class="ic">🗺️</span><span class="lb">Học</span></div>

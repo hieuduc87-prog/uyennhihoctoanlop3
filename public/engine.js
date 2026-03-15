@@ -5,7 +5,9 @@ function aCtx(){
   if(_aCtx&&_aCtx.state==='suspended')_aCtx.resume();
   return _aCtx;
 }
+function sndEnabled(){try{var p=JSON.parse(localStorage.getItem('player_profile'));return p&&p.soundEnabled===false?false:true}catch(e){return true}}
 function tone(freq,dur,type,vol,delay){
+  if(!sndEnabled())return;
   try{var c=aCtx();if(!c)return;var t=c.currentTime+(delay||0);
   var o=c.createOscillator(),g=c.createGain();
   o.type=type||'sine';o.frequency.setValueAtTime(freq,t);
@@ -50,7 +52,7 @@ var SUBJECTS=GC.subjects||[];
 var SK=GC.saveKey||'uynhi3sub_v1';
 var OLD_SK=GC.oldSaveKey||'';
 var D=load();
-function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{}}}
+function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true}}}
 function load(){
   try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};return d}}catch(e){}
   // Migrate from old math-only save
@@ -188,7 +190,7 @@ function showScreen(id){
   nav.style.display=['map','daily','wheel','profile'].indexOf(id)>=0?'flex':'none';
   var cg=document.getElementById('corgiG');
   if(cg)cg.style.display=id==='game'?'block':'none';
-  if(id==='map')renderGrid();if(id==='daily')renderDaily();if(id==='wheel')renderWheel();if(id==='profile')renderProfile();
+  if(id==='map')renderGrid();if(id==='daily')renderDaily();if(id==='wheel')renderWheel();if(id==='profile')renderProfile();if(id==='settings')renderSettings();
 }
 function switchTab(id){
   sndTap();showScreen(id);
@@ -230,6 +232,7 @@ function startSkill(id,subIdx){
   var sub=SUBJECTS[subIdx];
   var sk=sub.skills.find(function(s){return s.id===id});if(!sk)return;
   curSkill=sk;
+  if(D.settings&&D.settings.qPerRound)Q_CT=D.settings.qPerRound;
   var pr=D.sp[id]||{level:1,correct:0,total:0};curLv=pr.level;
   questions=[];for(var i=0;i<Q_CT;i++)questions.push(sk.gen(curLv));
   qIdx=0;correct=0;combo=0;_lives=GC.hasLives?(GC.livesCount||3):999;
@@ -266,19 +269,24 @@ function showQ(){
     }).join('')
     +'</div></div>';
   clearInterval(timerInt);
-  timerInt=setInterval(function(){
-    timeLeft-=0.1;
-    var f=document.getElementById('tF');
-    if(f)f.style.width=Math.max(0,timeLeft/TIME_Q*100)+'%';
-    if(timeLeft<=0&&!_answered){
-      _answered=true;clearInterval(timerInt);
-      document.querySelectorAll('.ans-btn').forEach(function(b){b.style.pointerEvents='none'});
-      var q2=questions[qIdx];var ans2=String(q2.answer);
-      document.querySelectorAll('.ans-btn').forEach(function(b){if(decodeURIComponent(b.dataset.val)===ans2)b.classList.add('correct')});
-      handleW();if(GC.hasLives&&_lives<=0)setTimeout(function(){endRound()},1500);else setTimeout(nextQ,1500);
-    }
-  },100);
-  window.__gameTimerInt=timerInt;
+  var _timerOn=D.settings&&D.settings.timerOn===false?false:true;
+  var tBar=document.getElementById('tF');
+  if(!_timerOn&&tBar)tBar.parentElement.style.display='none';
+  if(_timerOn){
+    timerInt=setInterval(function(){
+      timeLeft-=0.1;
+      var f=document.getElementById('tF');
+      if(f)f.style.width=Math.max(0,timeLeft/TIME_Q*100)+'%';
+      if(timeLeft<=0&&!_answered){
+        _answered=true;clearInterval(timerInt);
+        document.querySelectorAll('.ans-btn').forEach(function(b){b.style.pointerEvents='none'});
+        var q2=questions[qIdx];var ans2=String(q2.answer);
+        document.querySelectorAll('.ans-btn').forEach(function(b){if(decodeURIComponent(b.dataset.val)===ans2)b.classList.add('correct')});
+        handleW();if(GC.hasLives&&_lives<=0)setTimeout(function(){endRound()},1500);else setTimeout(nextQ,1500);
+      }
+    },100);
+    window.__gameTimerInt=timerInt;
+  }
 }
 
 // ============ CHECK ANSWER ============
@@ -567,6 +575,102 @@ function draw7DayChart(){
   ctx.fillStyle='rgba(180,77,255,.5)';ctx.fillRect(w-45,4,8,8);
   ctx.fillText('Tổng',w-33,12);
 }
+// ============ SETTINGS ============
+function renderSettings(){
+  if(!D.settings)D.settings={diffMode:'auto',qPerRound:10,timerOn:true};
+  var s=D.settings;
+  var sndOn=sndEnabled();
+  var el=document.getElementById('settingsContent');if(!el)return;
+  el.innerHTML=
+    '<div class="set-group"><div class="set-title">🎮 Cài đặt Học tập</div>'+
+    '<div class="set-row"><span class="set-lbl">🔊 Âm thanh</span><button class="set-toggle '+(sndOn?'on':'')+'" onclick="toggleSound(this)">'+(sndOn?'BẬT':'TẮT')+'</button></div>'+
+    '<div class="set-row"><span class="set-lbl">⏱️ Đồng hồ</span><button class="set-toggle '+(s.timerOn!==false?'on':'')+'" onclick="toggleTimer(this)">'+(s.timerOn!==false?'BẬT':'TẮT')+'</button></div>'+
+    '<div class="set-row"><span class="set-lbl">📝 Số câu/lượt</span><div class="set-pills">'+
+      [5,10,15,20].map(function(n){return '<button class="set-pill '+(s.qPerRound===n?'active':'')+'" onclick="setQPerRound('+n+',this)">'+n+'</button>'}).join('')+
+    '</div></div>'+
+    '<div class="set-row"><span class="set-lbl">🎯 Độ khó</span><div class="set-pills">'+
+      '<button class="set-pill '+(s.diffMode==='auto'?'active':'')+'" onclick="setDiffMode(\'auto\',this)">Tự động</button>'+
+      '<button class="set-pill '+(s.diffMode==='manual'?'active':'')+'" onclick="setDiffMode(\'manual\',this)">Thủ công</button>'+
+    '</div></div>'+
+    '</div>'+
+    '<div class="set-group"><div class="set-title">👤 Tài khoản</div>'+
+    '<div class="set-row"><span class="set-lbl">📛 Tên</span><div style="display:flex;gap:6px;flex:1;justify-content:flex-end">'+
+      '<input id="setName" class="set-input" value="'+getPlayerName()+'" maxlength="20">'+
+      '<button class="set-btn" onclick="saveName()">Lưu</button></div></div>'+
+    '<div class="set-row"><span class="set-lbl">🔑 Mật khẩu</span><button class="set-btn" onclick="showChangePass()">Đổi</button></div>'+
+    '</div>'+
+    '<div class="set-group"><div class="set-title">👨‍👩‍👧 Phụ huynh</div>'+
+    '<div class="set-row"><span class="set-lbl">📊 Xem báo cáo</span><button class="set-btn" onclick="switchTab(\'profile\')">Hồ sơ</button></div>'+
+    '</div>'+
+    '<button class="set-logout" onclick="doLogout()">🚪 Đăng xuất</button>'+
+    '<div class="set-ver">Học Bảo v2.0</div>';
+}
+function toggleSound(btn){
+  try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.soundEnabled=!sndEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
+  btn.classList.toggle('on');btn.textContent=sndEnabled()?'BẬT':'TẮT';
+  if(sndEnabled())sndTap();
+}
+function toggleTimer(btn){
+  if(!D.settings)D.settings={};D.settings.timerOn=!D.settings.timerOn;save();
+  btn.classList.toggle('on');btn.textContent=D.settings.timerOn?'BẬT':'TẮT';sndTap();
+}
+function setQPerRound(n,btn){
+  if(!D.settings)D.settings={};D.settings.qPerRound=n;Q_CT=n;save();sndTap();
+  btn.parentElement.querySelectorAll('.set-pill').forEach(function(p){p.classList.remove('active')});
+  btn.classList.add('active');
+}
+function setDiffMode(mode,btn){
+  if(!D.settings)D.settings={};D.settings.diffMode=mode;save();sndTap();
+  btn.parentElement.querySelectorAll('.set-pill').forEach(function(p){p.classList.remove('active')});
+  btn.classList.add('active');
+}
+function saveName(){
+  var n=document.getElementById('setName').value.trim();if(!n)return;
+  try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.name=n;PP.name=n;localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
+  sndCorrect();updateUI();
+}
+function showChangePass(){
+  var el=document.getElementById('settingsContent');if(!el)return;
+  el.innerHTML=
+    '<div class="set-group"><div class="set-title">🔑 Đổi Mật Khẩu</div>'+
+    '<div class="set-field"><label>Mật khẩu hiện tại</label><input type="password" id="cpOld" class="set-input-full"></div>'+
+    '<div class="set-field"><label>Mật khẩu mới</label><input type="password" id="cpNew" class="set-input-full"></div>'+
+    '<div class="set-field"><label>Xác nhận</label><input type="password" id="cpCfm" class="set-input-full"></div>'+
+    '<div id="cpMsg" class="set-msg"></div>'+
+    '<div style="display:flex;gap:8px;margin-top:12px">'+
+    '<button class="set-btn" onclick="renderSettings()">← Quay lại</button>'+
+    '<button class="set-btn pri" onclick="doChangePass()">Đổi mật khẩu</button></div></div>';
+}
+function doChangePass(){
+  var old=document.getElementById('cpOld').value;
+  var nw=document.getElementById('cpNew').value;
+  var cfm=document.getElementById('cpCfm').value;
+  var msg=document.getElementById('cpMsg');
+  if(!old||!nw){msg.textContent='Nhập đầy đủ!';msg.style.color='var(--coral)';return}
+  if(nw.length<6){msg.textContent='Mật khẩu mới tối thiểu 6 ký tự';msg.style.color='var(--coral)';return}
+  if(nw!==cfm){msg.textContent='Xác nhận không khớp!';msg.style.color='var(--coral)';return}
+  var user=localStorage.getItem('voicon_user');
+  if(!user){msg.textContent='Cần đăng nhập để đổi!';msg.style.color='var(--coral)';return}
+  msg.textContent='Đang xử lý...';msg.style.color='var(--gold)';
+  fetch('https://cvaqpwejuvqpnahsrjyy.supabase.co/rest/v1/users?username=eq.'+user+'&password=eq.'+encodeURIComponent(old),{
+    headers:{'apikey':'***REDACTED_ANON_KEY***'}
+  }).then(function(r){return r.json()}).then(function(data){
+    if(!data||data.length===0){msg.textContent='Mật khẩu cũ sai!';msg.style.color='var(--coral)';return}
+    return fetch('https://cvaqpwejuvqpnahsrjyy.supabase.co/rest/v1/users?username=eq.'+user,{
+      method:'PATCH',headers:{'apikey':'***REDACTED_ANON_KEY***','Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({password:nw})
+    })
+  }).then(function(){msg.textContent='✅ Đổi thành công!';msg.style.color='var(--mint)';sndCorrect()
+  }).catch(function(e){msg.textContent='Lỗi: '+e.message;msg.style.color='var(--coral)'});
+}
+function doLogout(){
+  if(!confirm('Đăng xuất? Dữ liệu đã lưu trên cloud sẽ được giữ lại.'))return;
+  try{localStorage.removeItem('player_profile');localStorage.removeItem('voicon_user');
+    document.cookie='logged_in=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/';
+    document.cookie='guest_mode=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/';}catch(e){}
+  window.location.href='/login';
+}
+
 function roundRect(ctx,x,y,w,h,r){
   if(h<=0)return;if(r>h/2)r=h/2;
   ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
