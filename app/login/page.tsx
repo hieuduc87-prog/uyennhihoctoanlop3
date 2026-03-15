@@ -238,6 +238,21 @@ function LoginContent() {
           </button>
           <p className="login-hint">(Chơi khách: tiến trình chỉ lưu trên thiết bị)</p>
         </div>
+        {/* Animated characters running across screen */}
+        <div className="running-chars">
+          <div className="run-char run-girl">
+            <img src="/uyennhi.png" width={60} height={80} alt="" />
+          </div>
+          <div className="run-char run-cat">
+            <img src="/cat.png" width={50} height={50} alt="" />
+          </div>
+          <div className="run-char run-boy">
+            <img src="/voi.png" width={60} height={80} alt="" />
+          </div>
+          <div className="run-char run-corgi">
+            <img src="/corgi.png" width={50} height={50} alt="" />
+          </div>
+        </div>
         <div className="login-footer">
           <span className="login-star" style={{ '--d': '0s' } as React.CSSProperties}>⭐</span>
           <span className="login-star" style={{ '--d': '0.5s' } as React.CSSProperties}>🌟</span>
@@ -356,6 +371,46 @@ const loginCSS = `
 .login-star{font-size:24px;animation:starBob 2s var(--d,0s) ease-in-out infinite;
   filter:drop-shadow(0 2px 6px rgba(255,194,51,.5))}
 @keyframes starBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.15)}}
+/* Running characters */
+.running-chars{position:fixed;bottom:0;left:0;right:0;height:120px;pointer-events:none;z-index:1;overflow:hidden}
+.run-char{position:absolute;bottom:8px;animation-timing-function:linear;animation-iteration-count:infinite}
+.run-char img{object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}
+
+.run-girl{animation:runRight 12s 0s linear infinite}
+.run-girl img{animation:charBounce .4s ease-in-out infinite}
+
+.run-cat{animation:runRight 9s 3s linear infinite;bottom:12px}
+.run-cat img{animation:charBounce .3s ease-in-out infinite}
+
+.run-boy{animation:runLeft 14s 1.5s linear infinite}
+.run-boy img{transform:scaleX(-1);animation:charBounce .45s ease-in-out infinite}
+
+.run-corgi{animation:runLeft 10s 5s linear infinite;bottom:10px}
+.run-corgi img{transform:scaleX(-1);animation:charBounce .35s ease-in-out infinite}
+
+@keyframes runRight{
+  0%{left:-80px;opacity:0}
+  3%{opacity:1}
+  92%{opacity:1}
+  100%{left:calc(100% + 80px);opacity:0}
+}
+@keyframes runLeft{
+  0%{right:-80px;left:auto;opacity:0}
+  3%{opacity:1}
+  92%{opacity:1}
+  100%{right:calc(100% + 80px);left:auto;opacity:0}
+}
+@keyframes charBounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+.run-boy img{animation:charBounceMirror .45s ease-in-out infinite}
+.run-corgi img{animation:charBounceMirror .35s ease-in-out infinite}
+@keyframes charBounceMirror{
+  0%,100%{transform:scaleX(-1) translateY(0)}
+  50%{transform:scaleX(-1) translateY(-12px)}
+}
+
 @media(max-width:380px){
   .login-card{padding:22px 18px 20px;border-radius:24px}
   .login-title{font-size:20px}
