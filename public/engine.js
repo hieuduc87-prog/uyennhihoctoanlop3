@@ -165,6 +165,27 @@ function save(){
   try{var json=JSON.stringify(D);localStorage.setItem(SK,json);localStorage.setItem(SK+'_bak',json)}catch(e){}
   try{window.dispatchEvent(new CustomEvent('game-save'))}catch(e){}
 }
+// Auto-save every 30s to prevent data loss
+setInterval(function(){try{save()}catch(e){}},30000);
+// Protect against cloud overwrite: reload D if localStorage changed externally (other tab)
+window.addEventListener('storage',function(e){
+  if(e.key===SK&&e.newValue){
+    try{var nd=JSON.parse(e.newValue);
+      if(nd&&nd.level&&(nd.gems+nd.stars)>=(D.gems+D.stars)){
+        for(var k in nd){if(nd.hasOwnProperty(k))D[k]=nd[k]}
+        updateUI();
+      }else{save()}
+    }catch(e2){}
+  }
+});
+// Cloud sync event from same tab (game-shell.tsx loadCloudData)
+window.addEventListener('cloud-sync',function(){
+  var nd=_loadSave(SK);
+  if(nd&&nd.level&&(nd.gems+nd.stars)>=(D.gems+D.stars)){
+    for(var k in nd){if(nd.hasOwnProperty(k))D[k]=nd[k]}
+    try{updateUI()}catch(e){}
+  }
+});
 function resetProgress(){if(confirm('X\u00f3a to\u00e0n b\u1ed9?')){D=def();save();updateUI();renderGrid()}}
 
 function R(a,b){return Math.floor(Math.random()*(b-a+1))+a}
@@ -1273,7 +1294,8 @@ function spinWheel(){
   var res=document.getElementById('spinResult');if(res)res.textContent='';
   var c=document.getElementById('wheelCanvas');
   var prize=R(0,PRIZES.length-1);
-  var targetAngle=360*5+(prize*(360/PRIZES.length))+R(5,Math.floor(360/PRIZES.length)-5);
+  var segAngle=360/PRIZES.length;
+  var targetAngle=360*5+(360-prize*segAngle)-R(5,Math.floor(segAngle)-5);
   var currentAngle=0,duration=3000,start=Date.now();
   function animate(){
     var elapsed=Date.now()-start;var progress=Math.min(elapsed/duration,1);

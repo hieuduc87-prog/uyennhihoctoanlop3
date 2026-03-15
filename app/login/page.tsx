@@ -14,6 +14,7 @@ function LoginContent() {
   const [childName, setChildName] = useState('')
   const [gender, setGender] = useState<'girl' | 'boy'>('girl')
   const [pet, setPet] = useState<'corgi' | 'cat' | 'elephant'>('corgi')
+  const [grade, setGrade] = useState(1)
   const [error, setError] = useState(urlError ? 'Đăng nhập thất bại. Thử lại nhé!' : '')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
@@ -35,12 +36,20 @@ function LoginContent() {
         return
       }
       const user = data.user
-      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet }
+      if (!user || !user.username) {
+        setError('Lỗi đăng nhập. Thử lại nhé!')
+        setLoading(false)
+        return
+      }
+      // Restore profile + lastGrade from user data
+      const existingProfile = (() => { try { return JSON.parse(localStorage.getItem('player_profile') || '{}') } catch { return {} } })()
+      const gradeId = user.grade ? 'lop' + user.grade : existingProfile.lastGrade
+      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet, lastGrade: gradeId || existingProfile.lastGrade }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
       document.cookie = 'logged_in=1; path=/; max-age=31536000'
-      router.push('/')
+      router.push(gradeId ? '/' + gradeId : '/')
     } catch {
       setError('Lỗi kết nối. Thử lại nhé!')
       setLoading(false)
@@ -66,7 +75,7 @@ function LoginContent() {
           display_name: childName.trim(),
           gender,
           pet,
-          grade: 1,
+          grade,
           email: email.trim() || undefined
         })
       })
@@ -77,13 +86,19 @@ function LoginContent() {
         return
       }
       const user = data.user
-      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet }
+      if (!user || !user.username) {
+        setError('Lỗi tạo tài khoản. Thử lại nhé!')
+        setLoading(false)
+        return
+      }
+      const gradeId = 'lop' + (user.grade || grade || 1)
+      const profile = { name: user.display_name || childName.trim(), gender: user.gender || gender, avatar: (user.gender || gender) === 'girl' ? 'uyennhi' : 'voi', pet: user.pet || pet, lastGrade: gradeId }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
       document.cookie = 'logged_in=1; path=/; max-age=31536000'
-      setSuccess('Đăng ký thành công! Đang đăng nhập...')
-      router.push('/')
+      setSuccess('Đăng ký thành công! Đang vào game...')
+      router.push('/' + gradeId)
     } catch {
       setError('Lỗi kết nối. Thử lại nhé!')
       setLoading(false)
@@ -177,6 +192,17 @@ function LoginContent() {
                       <img src="/pets/elephant_level_1.svg" width={50} height={50} alt="Voi Con" style={{ objectFit: 'contain' }} />
                       <span>Voi Con</span>
                     </button>
+                  </div>
+                </div>
+                <div className="pick-section">
+                  <p className="pick-label">Chọn lớp:</p>
+                  <div className="pick-row grade-row">
+                    {[1,2,3,4,5].map(g => (
+                      <button key={g} type="button" className={`pick-card grade-pick ${grade === g ? 'selected' : ''}`} onClick={() => setGrade(g)}>
+                        <span className="grade-num">{['🐘','🦊','🐕','🐱','🦁'][g-1]}</span>
+                        <span>Lớp {g}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </>
@@ -340,6 +366,9 @@ const loginCSS = `
 .pick-card.selected{border-color:var(--coral,#ff5a9e);background:rgba(255,90,158,.15);color:#fff;
   box-shadow:0 0 16px rgba(255,90,158,.25)}
 .pick-card img{filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.grade-row{flex-wrap:wrap;gap:8px}
+.grade-pick{min-width:auto;padding:8px 12px}
+.grade-num{font-size:18px}
 .email-opt{margin-top:2px}
 .email-label{font-size:11px;color:rgba(255,255,255,.35);font-weight:700;margin-bottom:6px;text-align:left}
 .btn-login{
@@ -475,6 +504,10 @@ const loginCSS = `
   .pick-card span{font-size:10px}
   .email-opt{margin-top:0}
   .email-label{font-size:9px;margin-bottom:3px}
+  .grade-row{gap:4px}
+  .grade-pick{padding:5px 8px}
+  .grade-num{font-size:14px}
+  .grade-pick span:last-child{font-size:9px}
   .login-hint{font-size:9px;margin-top:3px}
   .login-footer{margin-top:8px}
   .login-star{font-size:18px}

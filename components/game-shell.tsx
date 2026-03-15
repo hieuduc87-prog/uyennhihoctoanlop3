@@ -15,18 +15,19 @@ export default function GameShell({ gradeScript, saveKey }: GameShellProps) {
     if (init.current) return
     init.current = true
 
-    // Load grade config first, then engine
+    // Load grade config first, then engine, then cloud sync
     const gs = document.createElement('script')
-    gs.src = gradeScript + '?v=1'
+    gs.src = gradeScript + '?v=2'
     document.body.appendChild(gs)
     gs.onload = () => {
       const es = document.createElement('script')
-      es.src = '/engine.js?v=1'
+      es.src = '/engine.js?v=2'
       document.body.appendChild(es)
+      es.onload = () => {
+        // Only sync AFTER engine.js has loaded D from localStorage
+        loadCloudData(SAVE_KEY)
+      }
     }
-
-    // Cloud sync in background
-    loadCloudData(SAVE_KEY)
 
     // Save handler
     let saveTimer: ReturnType<typeof setTimeout>
@@ -85,13 +86,21 @@ async function loadCloudData(sk: string) {
       const localRaw = localStorage.getItem(sk)
       if (localRaw) {
         const local = JSON.parse(localRaw)
-        const cloudScore = ((migrated.tp as number) || 0) + ((migrated.level as number) || 0) * 1000
-        const localScore = (local.tp || 0) + (local.level || 0) * 1000
-        if (cloudScore >= localScore) {
+        // Compare progress (level + total played) AND wealth (gems + stars)
+        const cloudProgress = ((migrated.tp as number) || 0) + ((migrated.level as number) || 0) * 1000
+        const localProgress = (local.tp || 0) + (local.level || 0) * 1000
+        const cloudWealth = ((migrated.gems as number) || 0) + ((migrated.stars as number) || 0)
+        const localWealth = (local.gems || 0) + (local.stars || 0)
+        // Only overwrite if cloud has strictly more progress AND not losing wealth
+        if (cloudProgress > localProgress && cloudWealth >= localWealth) {
           localStorage.setItem(sk, JSON.stringify(migrated))
+          window.dispatchEvent(new CustomEvent('cloud-sync'))
         }
+        // If progress is same/lower, or would lose gems: keep local data
       } else {
+        // No local data — use cloud
         localStorage.setItem(sk, JSON.stringify(migrated))
+        window.dispatchEvent(new CustomEvent('cloud-sync'))
       }
     }
   } catch {
