@@ -66,7 +66,7 @@ function LoginContent() {
           display_name: childName.trim(),
           gender,
           pet,
-          grade: 0,
+          grade: 1,
           email: email.trim() || undefined
         })
       })
@@ -96,8 +96,8 @@ function LoginContent() {
     router.push('/')
   }
 
-  const avatarSrc = gender === 'girl' ? '/uyennhi.png' : '/voi.png'
-  const petSrc = pet === 'corgi' ? '/corgi.png' : pet === 'elephant' ? '/voi.png' : '/cat.png'
+  const avatarSrc = gender === 'girl' ? '/characters/girl_level_1.svg' : '/characters/boy_level_1.svg'
+  const petSrc = pet === 'corgi' ? '/pets/corgi_level_1.svg' : pet === 'elephant' ? '/pets/elephant_level_1.svg' : '/pets/cat_level_1.svg'
 
   return (
     <>
@@ -153,12 +153,12 @@ function LoginContent() {
                   <p className="pick-label">Chọn nhân vật:</p>
                   <div className="pick-row">
                     <button type="button" className={`pick-card ${gender === 'girl' ? 'selected' : ''}`} onClick={() => setGender('girl')}>
-                      <img src="/uyennhi.png" width={50} height={60} alt="Bé gái" style={{ objectFit: 'contain' }} />
-                      <span>Bé gái</span>
+                      <img src="/characters/girl_level_1.svg" width={50} height={60} alt="Bé gái" style={{ objectFit: 'contain' }} />
+                      <span>Uyển Nhi</span>
                     </button>
                     <button type="button" className={`pick-card ${gender === 'boy' ? 'selected' : ''}`} onClick={() => setGender('boy')}>
-                      <img src="/voi.png" width={50} height={60} alt="Bé trai" style={{ objectFit: 'contain' }} />
-                      <span>Bé trai</span>
+                      <img src="/characters/boy_level_1.svg" width={50} height={60} alt="Bé trai" style={{ objectFit: 'contain' }} />
+                      <span>Bin</span>
                     </button>
                   </div>
                 </div>
@@ -166,16 +166,16 @@ function LoginContent() {
                   <p className="pick-label">Chọn thú cưng:</p>
                   <div className="pick-row">
                     <button type="button" className={`pick-card ${pet === 'corgi' ? 'selected' : ''}`} onClick={() => setPet('corgi')}>
-                      <img src="/corgi.png" width={50} height={50} alt="Corgi" style={{ objectFit: 'contain' }} />
-                      <span>Corgi</span>
+                      <img src="/pets/corgi_level_1.svg" width={50} height={50} alt="Corgi Béo" style={{ objectFit: 'contain' }} />
+                      <span>Corgi Béo</span>
                     </button>
                     <button type="button" className={`pick-card ${pet === 'cat' ? 'selected' : ''}`} onClick={() => setPet('cat')}>
-                      <img src="/cat.png" width={50} height={50} alt="Mèo" style={{ objectFit: 'contain' }} />
-                      <span>Mèo</span>
+                      <img src="/pets/cat_level_1.svg" width={50} height={50} alt="Mèo Bông" style={{ objectFit: 'contain' }} />
+                      <span>Mèo Bông</span>
                     </button>
                     <button type="button" className={`pick-card ${pet === 'elephant' ? 'selected' : ''}`} onClick={() => setPet('elephant')}>
-                      <img src="/voi.png" width={50} height={50} alt="Voi" style={{ objectFit: 'contain' }} />
-                      <span>Voi</span>
+                      <img src="/pets/elephant_level_1.svg" width={50} height={50} alt="Voi Con" style={{ objectFit: 'contain' }} />
+                      <span>Voi Con</span>
                     </button>
                   </div>
                 </div>
@@ -235,16 +235,16 @@ function LoginContent() {
         {/* Animated characters running across screen */}
         <div className="running-chars">
           <div className="run-char run-girl">
-            <img src="/uyennhi.png" width={60} height={80} alt="" />
+            <img src="/characters/girl_level_5.svg" width={60} height={80} alt="" />
           </div>
           <div className="run-char run-cat">
-            <img src="/cat.png" width={50} height={50} alt="" />
+            <img src="/pets/cat_level_3.svg" width={50} height={50} alt="" />
           </div>
           <div className="run-char run-boy">
-            <img src="/voi.png" width={60} height={80} alt="" />
+            <img src="/characters/boy_level_5.svg" width={60} height={80} alt="" />
           </div>
           <div className="run-char run-corgi">
-            <img src="/corgi.png" width={50} height={50} alt="" />
+            <img src="/pets/corgi_level_3.svg" width={50} height={50} alt="" />
           </div>
         </div>
         <div className="login-footer">

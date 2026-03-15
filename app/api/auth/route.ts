@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       display_name: display_name.trim(),
       gender: gender || 'girl',
       pet: pet || 'corgi',
-      grade: grade || 0,
+      grade: grade && grade >= 1 ? grade : 1,
     }
     if (email) row.email = email.trim()
 
