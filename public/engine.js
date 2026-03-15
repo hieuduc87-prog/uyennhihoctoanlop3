@@ -50,7 +50,7 @@ var SUBJECTS=GC.subjects||[];
 var SK=GC.saveKey||'uynhi3sub_v1';
 var OLD_SK=GC.oldSaveKey||'';
 var D=load();
-function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false}}
+function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{}}}
 function load(){
   try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};return d}}catch(e){}
   // Migrate from old math-only save
@@ -233,6 +233,7 @@ function startSkill(id,subIdx){
   var pr=D.sp[id]||{level:1,correct:0,total:0};curLv=pr.level;
   questions=[];for(var i=0;i<Q_CT;i++)questions.push(sk.gen(curLv));
   qIdx=0;correct=0;combo=0;_lives=GC.hasLives?(GC.livesCount||3):999;
+  window._roundStart=Date.now();
   showScreen('game');
   document.getElementById('cC').textContent=0;
   document.getElementById('tQ').textContent=Q_CT;
@@ -331,6 +332,15 @@ function endRound(){
   var stars=acc>=90?3:acc>=70?2:acc>=50?1:0;
   var xpE=correct*10+stars*15;if(D.x2xp){xpE*=2;D.x2xp=false}var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
   D.xp+=xpE;D.stars+=stars;D.gems+=gemE;D.tp+=Q_CT;
+  // Track study time
+  if(!D.studyTime)D.studyTime=0;
+  var elapsed=window._roundStart?Math.round((Date.now()-window._roundStart)/1000):0;
+  D.studyTime+=elapsed;window._roundStart=null;
+  // Track daily log
+  if(!D.dailyLog)D.dailyLog={};
+  var today=new Date().toISOString().slice(0,10);
+  if(!D.dailyLog[today])D.dailyLog[today]={q:0,c:0,t:0};
+  D.dailyLog[today].q+=Q_CT;D.dailyLog[today].c+=correct;D.dailyLog[today].t+=elapsed;
   var _safe=0;while(D.xp>=D.level*(GC.xpPerLevel||100)&&_safe<100){_safe++;D.xp-=D.level*(GC.xpPerLevel||100);D.level++}
   if(curSkill){var p=D.sp[curSkill.id]||{level:1,correct:0,total:0};p.correct+=correct;p.total+=Q_CT;if(acc>=(GC.passThreshold||80)&&p.level<(GC.maxSkillLevel||5))p.level++;D.sp[curSkill.id]=p}
   try{updateDaily(correct)}catch(e){}
@@ -429,8 +439,15 @@ function renderProfile(){
 }
 
 // ============ LEARNING REPORT ============
+function fmtTime(sec){
+  if(!sec||sec<0)sec=0;
+  if(sec<60)return sec+'s';
+  if(sec<3600)return Math.floor(sec/60)+'p '+sec%60+'s';
+  return Math.floor(sec/3600)+'h '+Math.floor((sec%3600)/60)+'p';
+}
 function renderReport(){
   var maxLv=GC.maxSkillLevel||5;var pass=GC.passThreshold||80;
+  if(!D.studyTime)D.studyTime=0;if(!D.dailyLog)D.dailyLog={};
   var totQ=0,totC=0,totMastered=0,totSkills=0;
   var subColors=[
     {bg:'rgba(255,90,158,.12)',border:'rgba(255,90,158,.3)',accent:'#ff5a9e',bar:'linear-gradient(90deg,#ff5a9e,#ff8ec4)'},
@@ -466,16 +483,96 @@ function renderReport(){
       '<div class="report-sub-arrow">▼</div></div>'+
       '<div class="report-skills-list">'+skRows+'</div></div>';
   });
-  // Overview
+  // Quick Stats (4 cards — spec Section 2)
   var totAcc=totQ>0?Math.round(totC/Math.max(totQ,1)*100):0;
   var ov=document.getElementById('reportOverview');
   if(ov)ov.innerHTML=
-    '<div class="report-ov-card"><div class="report-ov-num" style="color:var(--purple)">'+totQ+'</div><div class="report-ov-lbl">Tổng câu hỏi</div></div>'+
-    '<div class="report-ov-card"><div class="report-ov-num" style="color:var(--mint)">'+totC+'</div><div class="report-ov-lbl">Trả lời đúng</div></div>'+
-    '<div class="report-ov-card"><div class="report-ov-num" style="color:'+(totAcc>=80?'var(--mint)':totAcc>=60?'var(--gold)':'var(--coral)')+'">'+totAcc+'%</div><div class="report-ov-lbl">Độ chính xác</div></div>';
-  // Subjects
+    '<div class="report-ov-card"><div class="report-ov-icon">📚</div><div class="report-ov-num" style="color:var(--purple)">'+D.tp+'</div><div class="report-ov-lbl">Tổng bài làm</div></div>'+
+    '<div class="report-ov-card"><div class="report-ov-icon">🎯</div><div class="report-ov-num" style="color:'+(totAcc>=80?'var(--mint)':totAcc>=60?'var(--gold)':'var(--coral)')+'">'+totAcc+'%</div><div class="report-ov-lbl">Độ chính xác</div></div>'+
+    '<div class="report-ov-card"><div class="report-ov-icon">🔥</div><div class="report-ov-num" style="color:var(--coral)">'+D.streak+'</div><div class="report-ov-lbl">Streak</div></div>'+
+    '<div class="report-ov-card"><div class="report-ov-icon">⏱️</div><div class="report-ov-num" style="color:var(--gold)">'+fmtTime(D.studyTime)+'</div><div class="report-ov-lbl">Thời gian học</div></div>';
+  // 7-day bar chart
+  draw7DayChart();
+  // Subject accuracy bars
   var rs=document.getElementById('reportSubjects');
   if(rs)rs.innerHTML=subData.join('');
+}
+function draw7DayChart(){
+  var c=document.getElementById('chart7day');if(!c)return;
+  var dpr=window.devicePixelRatio||1;
+  var rect=c.getBoundingClientRect();
+  var w=rect.width||300,h=rect.height||140;
+  c.width=w*dpr;c.height=h*dpr;
+  var ctx=c.getContext('2d');ctx.scale(dpr,dpr);
+  if(!D.dailyLog)D.dailyLog={};
+  // Get last 7 days
+  var days=[],labels=[],dayNames=['CN','T2','T3','T4','T5','T6','T7'];
+  for(var i=6;i>=0;i--){
+    var d=new Date(Date.now()-i*864e5);
+    var key=d.toISOString().slice(0,10);
+    var log=D.dailyLog[key]||{q:0,c:0,t:0};
+    days.push(log);
+    labels.push(dayNames[d.getDay()]+'\n'+d.getDate()+'/'+(d.getMonth()+1));
+  }
+  var maxQ=Math.max.apply(null,days.map(function(d){return d.q}))||10;
+  var pad={t:14,b:38,l:8,r:8};
+  var barW=(w-pad.l-pad.r)/7;
+  var chartH=h-pad.t-pad.b;
+  // Grid lines
+  ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){
+    var gy=pad.t+chartH*(1-g/4);
+    ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(w-pad.r,gy);ctx.stroke();
+  }
+  // Bars
+  for(var i=0;i<7;i++){
+    var x=pad.l+i*barW;var bw=barW*.6;var bx=x+(barW-bw)/2;
+    var qH=days[i].q>0?(days[i].q/maxQ)*chartH:0;
+    var cH=days[i].c>0?(days[i].c/maxQ)*chartH:0;
+    // Total questions bar (dim)
+    if(qH>0){
+      var grad=ctx.createLinearGradient(0,pad.t+chartH-qH,0,pad.t+chartH);
+      grad.addColorStop(0,'rgba(180,77,255,.4)');grad.addColorStop(1,'rgba(180,77,255,.15)');
+      ctx.fillStyle=grad;
+      roundRect(ctx,bx,pad.t+chartH-qH,bw,qH,4);ctx.fill();
+    }
+    // Correct answers bar (bright)
+    if(cH>0){
+      var grad2=ctx.createLinearGradient(0,pad.t+chartH-cH,0,pad.t+chartH);
+      grad2.addColorStop(0,'rgba(45,219,166,.9)');grad2.addColorStop(1,'rgba(45,219,166,.5)');
+      ctx.fillStyle=grad2;
+      roundRect(ctx,bx+2,pad.t+chartH-cH,bw-4,cH,3);ctx.fill();
+    }
+    // Count on top
+    if(days[i].q>0){
+      ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='bold 10px Nunito';ctx.textAlign='center';
+      ctx.fillText(days[i].q,bx+bw/2,pad.t+chartH-qH-4);
+    }
+    // Day label
+    var parts=labels[i].split('\n');
+    ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='bold 10px Nunito';ctx.textAlign='center';
+    ctx.fillText(parts[0],bx+bw/2,h-pad.b+14);
+    ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='9px Nunito';
+    ctx.fillText(parts[1],bx+bw/2,h-pad.b+26);
+    // Highlight today
+    if(i===6&&days[i].q>0){
+      ctx.strokeStyle='rgba(45,219,166,.4)';ctx.lineWidth=1.5;
+      roundRect(ctx,bx-1,pad.t+chartH-qH-1,bw+2,qH+2,5);ctx.stroke();
+    }
+  }
+  // Legend
+  ctx.fillStyle='rgba(45,219,166,.8)';ctx.fillRect(w-90,4,8,8);
+  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='9px Nunito';ctx.textAlign='left';
+  ctx.fillText('Đúng',w-78,12);
+  ctx.fillStyle='rgba(180,77,255,.5)';ctx.fillRect(w-45,4,8,8);
+  ctx.fillText('Tổng',w-33,12);
+}
+function roundRect(ctx,x,y,w,h,r){
+  if(h<=0)return;if(r>h/2)r=h/2;
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
 }
 
 // ============ SPIN WHEEL (Canvas-based, ticket system) ============

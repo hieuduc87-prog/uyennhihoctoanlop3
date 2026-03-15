@@ -436,13 +436,21 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 /* ========== LEARNING REPORT ========== */
 .report-section{margin-top:18px}
 .report-section h3{font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2);margin-bottom:10px}
-.report-overview{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.report-overview{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
 .report-ov-card{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.08);
   border-radius:16px;padding:12px 8px;text-align:center;
   box-shadow:0 3px 0 rgba(0,0,0,.15),var(--shine)}
-.report-ov-num{font-family:'Baloo 2',cursive;font-size:24px;font-weight:800;
+.report-ov-icon{font-size:20px;margin-bottom:2px}
+.report-ov-num{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;
   text-shadow:0 2px 6px rgba(0,0,0,.2)}
 .report-ov-lbl{font-size:10px;font-weight:700;color:var(--dim);margin-top:2px}
+.report-chart-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:14px;margin-bottom:14px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12),var(--shine)}
+.report-chart-title{font-family:'Baloo 2',cursive;font-size:14px;color:var(--peach);
+  margin-bottom:8px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
+.report-sub-title{font-family:'Baloo 2',cursive;font-size:14px;color:var(--peach);
+  margin-bottom:8px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
 .report-sub-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
   border-radius:18px;padding:14px;margin-bottom:10px;
   box-shadow:0 4px 0 rgba(0,0,0,.12),var(--shine);cursor:pointer;transition:all .2s}
@@ -561,9 +569,13 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .ach-grid{grid-template-columns:repeat(5,1fr);gap:12px}
   .ach{padding:14px 8px;font-size:30px;border-radius:18px}
   .report-overview{gap:12px}
-  .report-ov-card{padding:16px 12px;border-radius:20px}
-  .report-ov-num{font-size:28px}
+  .report-ov-card{padding:18px 14px;border-radius:20px}
+  .report-ov-icon{font-size:24px}
+  .report-ov-num{font-size:26px}
   .report-ov-lbl{font-size:12px}
+  .report-chart-card{padding:20px;border-radius:22px}
+  .report-chart-card canvas{height:160px!important}
+  .report-chart-title{font-size:16px}
   .report-sub-card{padding:18px;border-radius:22px}
   .report-sub-emoji{font-size:34px}
   .report-sub-name{font-size:18px}
@@ -631,7 +643,8 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .gem-stats-card{padding:10px;margin-top:10px}
   .gem-exchange-card{padding:12px;margin-top:10px}
   #daily,#profile{padding:0 12px 85px}
-  .report-ov-num{font-size:20px}
+  .report-ov-num{font-size:18px}
+  .report-chart-card canvas{height:110px!important}
   .report-sub-card{padding:10px 12px;margin-bottom:8px}
 }
 
@@ -743,8 +756,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .report-section h3{font-size:14px;margin-bottom:6px}
   .report-overview{gap:6px;margin-bottom:8px}
   .report-ov-card{padding:8px 6px;border-radius:12px}
-  .report-ov-num{font-size:18px}
+  .report-ov-icon{font-size:14px;margin-bottom:0}
+  .report-ov-num{font-size:16px}
   .report-ov-lbl{font-size:8px}
+  .report-chart-card{padding:8px 10px;margin-bottom:8px;border-radius:14px}
+  .report-chart-card canvas{height:100px!important}
+  .report-chart-title{font-size:12px;margin-bottom:4px}
   .report-sub-card{padding:8px 10px;margin-bottom:6px;border-radius:14px}
   .report-sub-emoji{font-size:22px}
   .report-sub-name{font-size:13px}
@@ -902,6 +919,11 @@ const gameHTML = `
   <div class="report-section">
     <h3>📊 Báo Cáo Học Tập</h3>
     <div class="report-overview" id="reportOverview"></div>
+    <div class="report-chart-card">
+      <div class="report-chart-title">📈 Hoạt động 7 ngày qua</div>
+      <canvas id="chart7day" style="width:100%;height:140px"></canvas>
+    </div>
+    <div class="report-sub-title">📚 Tiến độ theo môn</div>
     <div id="reportSubjects"></div>
   </div>
   <h3 style="margin-top:18px;font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2)">🏆 Thành Tựu</h3>
