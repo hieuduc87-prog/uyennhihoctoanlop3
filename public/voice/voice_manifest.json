@@ -1,0 +1,3627 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-03-15T20:01:55Z",
+  "characters": [
+    "boy",
+    "girl"
+  ],
+  "total_files": 452,
+  "entries": [
+    {
+      "id": "boy_praise_01",
+      "file": "boy/global/praise_01.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Giỏi lắm!"
+    },
+    {
+      "id": "boy_praise_02",
+      "file": "boy/global/praise_02.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Tuyệt vời!"
+    },
+    {
+      "id": "boy_praise_03",
+      "file": "boy/global/praise_03.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Xuất sắc!"
+    },
+    {
+      "id": "boy_praise_04",
+      "file": "boy/global/praise_04.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Đúng rồi!"
+    },
+    {
+      "id": "boy_praise_05",
+      "file": "boy/global/praise_05.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Hay quá!"
+    },
+    {
+      "id": "boy_praise_06",
+      "file": "boy/global/praise_06.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Siêu giỏi!"
+    },
+    {
+      "id": "boy_praise_07",
+      "file": "boy/global/praise_07.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Chính xác!"
+    },
+    {
+      "id": "boy_praise_08",
+      "file": "boy/global/praise_08.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Thông minh quá!"
+    },
+    {
+      "id": "boy_praise_09",
+      "file": "boy/global/praise_09.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Cừ lắm!"
+    },
+    {
+      "id": "boy_praise_10",
+      "file": "boy/global/praise_10.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "boy",
+      "text": "Đỉnh của chóp!"
+    },
+    {
+      "id": "boy_encourage_01",
+      "file": "boy/global/encourage_01.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Cố lên nào!"
+    },
+    {
+      "id": "boy_encourage_02",
+      "file": "boy/global/encourage_02.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Gần đúng rồi!"
+    },
+    {
+      "id": "boy_encourage_03",
+      "file": "boy/global/encourage_03.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Thử lại nhé!"
+    },
+    {
+      "id": "boy_encourage_04",
+      "file": "boy/global/encourage_04.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Không sao đâu!"
+    },
+    {
+      "id": "boy_encourage_05",
+      "file": "boy/global/encourage_05.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Suy nghĩ thêm nha!"
+    },
+    {
+      "id": "boy_encourage_06",
+      "file": "boy/global/encourage_06.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Bạn làm được mà!"
+    },
+    {
+      "id": "boy_encourage_07",
+      "file": "boy/global/encourage_07.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Đừng vội nha!"
+    },
+    {
+      "id": "boy_encourage_08",
+      "file": "boy/global/encourage_08.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "boy",
+      "text": "Từ từ suy nghĩ!"
+    },
+    {
+      "id": "boy_streak_3",
+      "file": "boy/global/streak_3.mp3",
+      "event": "streak",
+      "topic": null,
+      "character": "boy",
+      "text": "Wow! Ba câu đúng liên tiếp! Giỏi quá!"
+    },
+    {
+      "id": "boy_streak_5",
+      "file": "boy/global/streak_5.mp3",
+      "event": "streak",
+      "topic": null,
+      "character": "boy",
+      "text": "Tuyệt vời! Năm câu đúng liên tiếp! Siêu ghê!"
+    },
+    {
+      "id": "boy_streak_10",
+      "file": "boy/global/streak_10.mp3",
+      "event": "streak",
+      "topic": null,
+      "character": "boy",
+      "text": "Không thể tin được! Mười câu đúng liên tiếp! Bạn là thiên tài!"
+    },
+    {
+      "id": "boy_level_1",
+      "file": "boy/global/level_1.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "boy",
+      "text": "Chúc mừng! Bạn đã lên cấp!"
+    },
+    {
+      "id": "boy_level_2",
+      "file": "boy/global/level_2.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "boy",
+      "text": "Tuyệt vời! Bạn tiến bộ rất nhanh!"
+    },
+    {
+      "id": "boy_level_3",
+      "file": "boy/global/level_3.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "boy",
+      "text": "Siêu đỉnh! Bạn ngày càng giỏi hơn!"
+    },
+    {
+      "id": "boy_level_4",
+      "file": "boy/global/level_4.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "boy",
+      "text": "Wow! Bạn đã lên cấp mới! Tiếp tục phát huy nhé!"
+    },
+    {
+      "id": "boy_level_5",
+      "file": "boy/global/level_5.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "boy",
+      "text": "Xuất sắc! Bạn đạt đến đỉnh cao rồi! Tự hào lắm!"
+    },
+    {
+      "id": "boy_idle_1",
+      "file": "boy/global/idle_1.mp3",
+      "event": "idle",
+      "topic": null,
+      "character": "boy",
+      "text": "Bạn ơi! Mình đang chờ bạn nè!"
+    },
+    {
+      "id": "boy_idle_2",
+      "file": "boy/global/idle_2.mp3",
+      "event": "idle",
+      "topic": null,
+      "character": "boy",
+      "text": "Hế lô! Bạn còn ở đây không?"
+    },
+    {
+      "id": "boy_idle_3",
+      "file": "boy/global/idle_3.mp3",
+      "event": "idle",
+      "topic": null,
+      "character": "boy",
+      "text": "Bạn ơi, chơi tiếp đi nào!"
+    },
+    {
+      "id": "boy_goodbye",
+      "file": "boy/global/goodbye.mp3",
+      "event": "goodbye",
+      "topic": null,
+      "character": "boy",
+      "text": "Hẹn gặp lại nhé! Hôm nay bạn đã làm rất tốt!"
+    },
+    {
+      "id": "boy_pet_corgi",
+      "file": "boy/global/pet_corgi.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "boy",
+      "text": "Nhìn kìa! Cún Corgi đã tiến hóa! Dễ thương quá!"
+    },
+    {
+      "id": "boy_pet_cat",
+      "file": "boy/global/pet_cat.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "boy",
+      "text": "Wow! Mèo Ragdoll đã tiến hóa! Xinh đẹp quá!"
+    },
+    {
+      "id": "boy_pet_trex",
+      "file": "boy/global/pet_trex.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "boy",
+      "text": "Tuyệt! Ti-Rex đã tiến hóa! Mạnh mẽ quá!"
+    },
+    {
+      "id": "boy_pet_dragon",
+      "file": "boy/global/pet_dragon.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "boy",
+      "text": "Siêu! Rồng đã tiến hóa! Oai phong quá!"
+    },
+    {
+      "id": "boy_reward_1",
+      "file": "boy/global/reward_1.mp3",
+      "event": "reward",
+      "topic": null,
+      "character": "boy",
+      "text": "Chúc mừng! Bạn nhận được phần thưởng!"
+    },
+    {
+      "id": "boy_reward_2",
+      "file": "boy/global/reward_2.mp3",
+      "event": "reward",
+      "topic": null,
+      "character": "boy",
+      "text": "Yay! Bạn có quà rồi nè!"
+    },
+    {
+      "id": "boy_reward_3",
+      "file": "boy/global/reward_3.mp3",
+      "event": "reward",
+      "topic": null,
+      "character": "boy",
+      "text": "Tuyệt vời! Phần thưởng dành cho bạn!"
+    },
+    {
+      "id": "boy_round_3star",
+      "file": "boy/global/round_3star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "boy",
+      "text": "Tuyệt vời! Ba sao! Bạn là siêu sao!"
+    },
+    {
+      "id": "boy_round_2star",
+      "file": "boy/global/round_2star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "boy",
+      "text": "Giỏi lắm! Hai sao! Lần sau ba sao nhé!"
+    },
+    {
+      "id": "boy_round_1star",
+      "file": "boy/global/round_1star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "boy",
+      "text": "Tốt lắm! Cố gắng thêm nhé!"
+    },
+    {
+      "id": "boy_round_0star",
+      "file": "boy/global/round_0star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "boy",
+      "text": "Không sao đâu! Lần sau sẽ giỏi hơn!"
+    },
+    {
+      "id": "boy_intro_m1_add",
+      "file": "boy/intro/m1_add.mp3",
+      "event": "intro",
+      "topic": "m1_add",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép cộng nhé!"
+    },
+    {
+      "id": "boy_intro_m1_sub",
+      "file": "boy/intro/m1_sub.mp3",
+      "event": "intro",
+      "topic": "m1_sub",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép trừ nhé!"
+    },
+    {
+      "id": "boy_intro_m1_mix",
+      "file": "boy/intro/m1_mix.mp3",
+      "event": "intro",
+      "topic": "m1_mix",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cộng trừ hỗn hợp nhé!"
+    },
+    {
+      "id": "boy_intro_m1_cmp",
+      "file": "boy/intro/m1_cmp.mp3",
+      "event": "intro",
+      "topic": "m1_cmp",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về So sánh số nhé!"
+    },
+    {
+      "id": "boy_intro_m1_miss",
+      "file": "boy/intro/m1_miss.mp3",
+      "event": "intro",
+      "topic": "m1_miss",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tìm số thiếu nhé!"
+    },
+    {
+      "id": "boy_intro_m1_word",
+      "file": "boy/intro/m1_word.mp3",
+      "event": "intro",
+      "topic": "m1_word",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán có lời văn nhé!"
+    },
+    {
+      "id": "boy_intro_m1_seq",
+      "file": "boy/intro/m1_seq.mp3",
+      "event": "intro",
+      "topic": "m1_seq",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dãy số nhé!"
+    },
+    {
+      "id": "boy_intro_m1_shp",
+      "file": "boy/intro/m1_shp.mp3",
+      "event": "intro",
+      "topic": "m1_shp",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "boy_intro_m1_time",
+      "file": "boy/intro/m1_time.mp3",
+      "event": "intro",
+      "topic": "m1_time",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giờ và đo lường nhé!"
+    },
+    {
+      "id": "boy_intro_v1_am",
+      "file": "boy/intro/v1_am.mp3",
+      "event": "intro",
+      "topic": "v1_am",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Âm và vần nhé!"
+    },
+    {
+      "id": "boy_intro_v1_doc",
+      "file": "boy/intro/v1_doc.mp3",
+      "event": "intro",
+      "topic": "v1_doc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Ghép từ nhé!"
+    },
+    {
+      "id": "boy_intro_v1_ct",
+      "file": "boy/intro/v1_ct.mp3",
+      "event": "intro",
+      "topic": "v1_ct",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nhé!"
+    },
+    {
+      "id": "boy_intro_v1_tv",
+      "file": "boy/intro/v1_tv.mp3",
+      "event": "intro",
+      "topic": "v1_tv",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng nhé!"
+    },
+    {
+      "id": "boy_intro_v1_dien",
+      "file": "boy/intro/v1_dien.mp3",
+      "event": "intro",
+      "topic": "v1_dien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "boy_intro_v1_cau",
+      "file": "boy/intro/v1_cau.mp3",
+      "event": "intro",
+      "topic": "v1_cau",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Câu đơn giản nhé!"
+    },
+    {
+      "id": "boy_intro_e1_abc",
+      "file": "boy/intro/e1_abc.mp3",
+      "event": "intro",
+      "topic": "e1_abc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảng chữ cái tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e1_num",
+      "file": "boy/intro/e1_num.mp3",
+      "event": "intro",
+      "topic": "e1_num",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Số đếm tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e1_color",
+      "file": "boy/intro/e1_color.mp3",
+      "event": "intro",
+      "topic": "e1_color",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Màu sắc tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e1_animal",
+      "file": "boy/intro/e1_animal.mp3",
+      "event": "intro",
+      "topic": "e1_animal",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Động vật tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e1_greet",
+      "file": "boy/intro/e1_greet.mp3",
+      "event": "intro",
+      "topic": "e1_greet",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chào hỏi tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e1_family",
+      "file": "boy/intro/e1_family.mp3",
+      "event": "intro",
+      "topic": "e1_family",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_tn1_gd",
+      "file": "boy/intro/tn1_gd.mp3",
+      "event": "intro",
+      "topic": "tn1_gd",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình nhé!"
+    },
+    {
+      "id": "boy_intro_tn1_truong",
+      "file": "boy/intro/tn1_truong.mp3",
+      "event": "intro",
+      "topic": "tn1_truong",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trường học nhé!"
+    },
+    {
+      "id": "boy_intro_tn1_caycon",
+      "file": "boy/intro/tn1_caycon.mp3",
+      "event": "intro",
+      "topic": "tn1_caycon",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cây cối và động vật nhé!"
+    },
+    {
+      "id": "boy_intro_tn1_thoitiet",
+      "file": "boy/intro/tn1_thoitiet.mp3",
+      "event": "intro",
+      "topic": "tn1_thoitiet",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thời tiết nhé!"
+    },
+    {
+      "id": "boy_intro_tn1_cothe",
+      "file": "boy/intro/tn1_cothe.mp3",
+      "event": "intro",
+      "topic": "tn1_cothe",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cơ thể em nhé!"
+    },
+    {
+      "id": "boy_intro_dd1_yeu",
+      "file": "boy/intro/dd1_yeu.mp3",
+      "event": "intro",
+      "topic": "dd1_yeu",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Yêu thương nhé!"
+    },
+    {
+      "id": "boy_intro_dd1_lephep",
+      "file": "boy/intro/dd1_lephep.mp3",
+      "event": "intro",
+      "topic": "dd1_lephep",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Lễ phép nhé!"
+    },
+    {
+      "id": "boy_intro_dd1_trungthuc",
+      "file": "boy/intro/dd1_trungthuc.mp3",
+      "event": "intro",
+      "topic": "dd1_trungthuc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trung thực nhé!"
+    },
+    {
+      "id": "boy_intro_dd1_vesinh",
+      "file": "boy/intro/dd1_vesinh.mp3",
+      "event": "intro",
+      "topic": "dd1_vesinh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giữ vệ sinh nhé!"
+    },
+    {
+      "id": "boy_intro_m2_add",
+      "file": "boy/intro/m2_add.mp3",
+      "event": "intro",
+      "topic": "m2_add",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cộng có nhớ nhé!"
+    },
+    {
+      "id": "boy_intro_m2_sub",
+      "file": "boy/intro/m2_sub.mp3",
+      "event": "intro",
+      "topic": "m2_sub",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trừ có nhớ nhé!"
+    },
+    {
+      "id": "boy_intro_m2_mul",
+      "file": "boy/intro/m2_mul.mp3",
+      "event": "intro",
+      "topic": "m2_mul",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép nhân nhé!"
+    },
+    {
+      "id": "boy_intro_m2_div",
+      "file": "boy/intro/m2_div.mp3",
+      "event": "intro",
+      "topic": "m2_div",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép chia nhé!"
+    },
+    {
+      "id": "boy_intro_m2_cmp",
+      "file": "boy/intro/m2_cmp.mp3",
+      "event": "intro",
+      "topic": "m2_cmp",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về So sánh số lớn nhé!"
+    },
+    {
+      "id": "boy_intro_m2_miss",
+      "file": "boy/intro/m2_miss.mp3",
+      "event": "intro",
+      "topic": "m2_miss",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tìm số thiếu nhé!"
+    },
+    {
+      "id": "boy_intro_m2_word",
+      "file": "boy/intro/m2_word.mp3",
+      "event": "intro",
+      "topic": "m2_word",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán đố nhé!"
+    },
+    {
+      "id": "boy_intro_m2_geo",
+      "file": "boy/intro/m2_geo.mp3",
+      "event": "intro",
+      "topic": "m2_geo",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "boy_intro_m2_meas",
+      "file": "boy/intro/m2_meas.mp3",
+      "event": "intro",
+      "topic": "m2_meas",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đo lường và tiền nhé!"
+    },
+    {
+      "id": "boy_intro_v2_ct",
+      "file": "boy/intro/v2_ct.mp3",
+      "event": "intro",
+      "topic": "v2_ct",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả lớp 2 nhé!"
+    },
+    {
+      "id": "boy_intro_v2_tuloai",
+      "file": "boy/intro/v2_tuloai.mp3",
+      "event": "intro",
+      "topic": "v2_tuloai",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ loại nhé!"
+    },
+    {
+      "id": "boy_intro_v2_cau",
+      "file": "boy/intro/v2_cau.mp3",
+      "event": "intro",
+      "topic": "v2_cau",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Kiểu câu nhé!"
+    },
+    {
+      "id": "boy_intro_v2_tv",
+      "file": "boy/intro/v2_tv.mp3",
+      "event": "intro",
+      "topic": "v2_tv",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng mở rộng nhé!"
+    },
+    {
+      "id": "boy_intro_v2_dien",
+      "file": "boy/intro/v2_dien.mp3",
+      "event": "intro",
+      "topic": "v2_dien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "boy_intro_v2_dauca",
+      "file": "boy/intro/v2_dauca.mp3",
+      "event": "intro",
+      "topic": "v2_dauca",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dấu câu nhé!"
+    },
+    {
+      "id": "boy_intro_v2_sapxep",
+      "file": "boy/intro/v2_sapxep.mp3",
+      "event": "intro",
+      "topic": "v2_sapxep",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "boy_intro_e2_family",
+      "file": "boy/intro/e2_family.mp3",
+      "event": "intro",
+      "topic": "e2_family",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e2_feel",
+      "file": "boy/intro/e2_feel.mp3",
+      "event": "intro",
+      "topic": "e2_feel",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cảm xúc tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e2_clothes",
+      "file": "boy/intro/e2_clothes.mp3",
+      "event": "intro",
+      "topic": "e2_clothes",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Quần áo tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e2_prepos",
+      "file": "boy/intro/e2_prepos.mp3",
+      "event": "intro",
+      "topic": "e2_prepos",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giới từ tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e2_rooms",
+      "file": "boy/intro/e2_rooms.mp3",
+      "event": "intro",
+      "topic": "e2_rooms",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phòng trong nhà nhé!"
+    },
+    {
+      "id": "boy_intro_e2_transport",
+      "file": "boy/intro/e2_transport.mp3",
+      "event": "intro",
+      "topic": "e2_transport",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phương tiện giao thông nhé!"
+    },
+    {
+      "id": "boy_intro_tn2_cothe",
+      "file": "boy/intro/tn2_cothe.mp3",
+      "event": "intro",
+      "topic": "tn2_cothe",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cơ thể người nhé!"
+    },
+    {
+      "id": "boy_intro_tn2_thucvat",
+      "file": "boy/intro/tn2_thucvat.mp3",
+      "event": "intro",
+      "topic": "tn2_thucvat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thực vật và động vật nhé!"
+    },
+    {
+      "id": "boy_intro_tn2_traidat",
+      "file": "boy/intro/tn2_traidat.mp3",
+      "event": "intro",
+      "topic": "tn2_traidat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trái Đất nhé!"
+    },
+    {
+      "id": "boy_intro_tn2_suckhoe",
+      "file": "boy/intro/tn2_suckhoe.mp3",
+      "event": "intro",
+      "topic": "tn2_suckhoe",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "boy_intro_dd2_bieton",
+      "file": "boy/intro/dd2_bieton.mp3",
+      "event": "intro",
+      "topic": "dd2_bieton",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biết ơn nhé!"
+    },
+    {
+      "id": "boy_intro_dd2_chiase",
+      "file": "boy/intro/dd2_chiase.mp3",
+      "event": "intro",
+      "topic": "dd2_chiase",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia sẻ nhé!"
+    },
+    {
+      "id": "boy_intro_dd2_moitruong",
+      "file": "boy/intro/dd2_moitruong.mp3",
+      "event": "intro",
+      "topic": "dd2_moitruong",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảo vệ môi trường nhé!"
+    },
+    {
+      "id": "boy_intro_dd2_giaothong",
+      "file": "boy/intro/dd2_giaothong.mp3",
+      "event": "intro",
+      "topic": "dd2_giaothong",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về An toàn giao thông nhé!"
+    },
+    {
+      "id": "boy_intro_m_add",
+      "file": "boy/intro/m_add.mp3",
+      "event": "intro",
+      "topic": "m_add",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép cộng nhé!"
+    },
+    {
+      "id": "boy_intro_m_sub",
+      "file": "boy/intro/m_sub.mp3",
+      "event": "intro",
+      "topic": "m_sub",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép trừ nhé!"
+    },
+    {
+      "id": "boy_intro_m_mul",
+      "file": "boy/intro/m_mul.mp3",
+      "event": "intro",
+      "topic": "m_mul",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép nhân nhé!"
+    },
+    {
+      "id": "boy_intro_m_div",
+      "file": "boy/intro/m_div.mp3",
+      "event": "intro",
+      "topic": "m_div",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép chia nhé!"
+    },
+    {
+      "id": "boy_intro_m_tbl",
+      "file": "boy/intro/m_tbl.mp3",
+      "event": "intro",
+      "topic": "m_tbl",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảng cửu chương nhé!"
+    },
+    {
+      "id": "boy_intro_m_expr",
+      "file": "boy/intro/m_expr.mp3",
+      "event": "intro",
+      "topic": "m_expr",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biểu thức nhé!"
+    },
+    {
+      "id": "boy_intro_m_word",
+      "file": "boy/intro/m_word.mp3",
+      "event": "intro",
+      "topic": "m_word",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán đố nhé!"
+    },
+    {
+      "id": "boy_intro_m_geo",
+      "file": "boy/intro/m_geo.mp3",
+      "event": "intro",
+      "topic": "m_geo",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "boy_intro_m_meas",
+      "file": "boy/intro/m_meas.mp3",
+      "event": "intro",
+      "topic": "m_meas",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đo lường nhé!"
+    },
+    {
+      "id": "boy_intro_m_frac",
+      "file": "boy/intro/m_frac.mp3",
+      "event": "intro",
+      "topic": "m_frac",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phân số nhé!"
+    },
+    {
+      "id": "boy_intro_v_chinh",
+      "file": "boy/intro/v_chinh.mp3",
+      "event": "intro",
+      "topic": "v_chinh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nhé!"
+    },
+    {
+      "id": "boy_intro_v_tuloai",
+      "file": "boy/intro/v_tuloai.mp3",
+      "event": "intro",
+      "topic": "v_tuloai",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ loại nhé!"
+    },
+    {
+      "id": "boy_intro_v_cautruc",
+      "file": "boy/intro/v_cautruc.mp3",
+      "event": "intro",
+      "topic": "v_cautruc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Câu và dấu câu nhé!"
+    },
+    {
+      "id": "boy_intro_v_tuvung",
+      "file": "boy/intro/v_tuvung.mp3",
+      "event": "intro",
+      "topic": "v_tuvung",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng nhé!"
+    },
+    {
+      "id": "boy_intro_v_bienphat",
+      "file": "boy/intro/v_bienphat.mp3",
+      "event": "intro",
+      "topic": "v_bienphat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biện pháp tu từ nhé!"
+    },
+    {
+      "id": "boy_intro_v_dien",
+      "file": "boy/intro/v_dien.mp3",
+      "event": "intro",
+      "topic": "v_dien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "boy_intro_v_thanhphan",
+      "file": "boy/intro/v_thanhphan.mp3",
+      "event": "intro",
+      "topic": "v_thanhphan",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thành phần câu nhé!"
+    },
+    {
+      "id": "boy_intro_v_sapxep",
+      "file": "boy/intro/v_sapxep.mp3",
+      "event": "intro",
+      "topic": "v_sapxep",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "boy_intro_e_vocab",
+      "file": "boy/intro/e_vocab.mp3",
+      "event": "intro",
+      "topic": "e_vocab",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e_colors",
+      "file": "boy/intro/e_colors.mp3",
+      "event": "intro",
+      "topic": "e_colors",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Màu sắc và số đếm nhé!"
+    },
+    {
+      "id": "boy_intro_e_greet",
+      "file": "boy/intro/e_greet.mp3",
+      "event": "intro",
+      "topic": "e_greet",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chào hỏi tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e_animals",
+      "file": "boy/intro/e_animals.mp3",
+      "event": "intro",
+      "topic": "e_animals",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Động vật tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e_family",
+      "file": "boy/intro/e_family.mp3",
+      "event": "intro",
+      "topic": "e_family",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e_grammar",
+      "file": "boy/intro/e_grammar.mp3",
+      "event": "intro",
+      "topic": "e_grammar",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Ngữ pháp tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e_prepos",
+      "file": "boy/intro/e_prepos.mp3",
+      "event": "intro",
+      "topic": "e_prepos",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giới từ tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e_translate",
+      "file": "boy/intro/e_translate.mp3",
+      "event": "intro",
+      "topic": "e_translate",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dịch câu nhé!"
+    },
+    {
+      "id": "boy_intro_tn3_chat",
+      "file": "boy/intro/tn3_chat.mp3",
+      "event": "intro",
+      "topic": "tn3_chat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chất và năng lượng nhé!"
+    },
+    {
+      "id": "boy_intro_tn3_thucvat",
+      "file": "boy/intro/tn3_thucvat.mp3",
+      "event": "intro",
+      "topic": "tn3_thucvat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thực vật và động vật nhé!"
+    },
+    {
+      "id": "boy_intro_tn3_nam",
+      "file": "boy/intro/tn3_nam.mp3",
+      "event": "intro",
+      "topic": "tn3_nam",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Nấm và vi khuẩn nhé!"
+    },
+    {
+      "id": "boy_intro_tn3_suckhoe",
+      "file": "boy/intro/tn3_suckhoe.mp3",
+      "event": "intro",
+      "topic": "tn3_suckhoe",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "boy_intro_tn3_traidat",
+      "file": "boy/intro/tn3_traidat.mp3",
+      "event": "intro",
+      "topic": "tn3_traidat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trái Đất nhé!"
+    },
+    {
+      "id": "boy_intro_dd3_tuchu",
+      "file": "boy/intro/dd3_tuchu.mp3",
+      "event": "intro",
+      "topic": "dd3_tuchu",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tự chủ nhé!"
+    },
+    {
+      "id": "boy_intro_dd3_trachnhiem",
+      "file": "boy/intro/dd3_trachnhiem.mp3",
+      "event": "intro",
+      "topic": "dd3_trachnhiem",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trách nhiệm nhé!"
+    },
+    {
+      "id": "boy_intro_dd3_quehuong",
+      "file": "boy/intro/dd3_quehuong.mp3",
+      "event": "intro",
+      "topic": "dd3_quehuong",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Yêu quê hương nhé!"
+    },
+    {
+      "id": "boy_intro_dd3_hoptac",
+      "file": "boy/intro/dd3_hoptac.mp3",
+      "event": "intro",
+      "topic": "dd3_hoptac",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hợp tác nhé!"
+    },
+    {
+      "id": "boy_intro_th3_maytinh",
+      "file": "boy/intro/th3_maytinh.mp3",
+      "event": "intro",
+      "topic": "th3_maytinh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Máy tính nhé!"
+    },
+    {
+      "id": "boy_intro_th3_thongtin",
+      "file": "boy/intro/th3_thongtin.mp3",
+      "event": "intro",
+      "topic": "th3_thongtin",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thông tin nhé!"
+    },
+    {
+      "id": "boy_intro_th3_daoduc",
+      "file": "boy/intro/th3_daoduc.mp3",
+      "event": "intro",
+      "topic": "th3_daoduc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Văn hóa số nhé!"
+    },
+    {
+      "id": "boy_intro_th3_ungdung",
+      "file": "boy/intro/th3_ungdung.mp3",
+      "event": "intro",
+      "topic": "th3_ungdung",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Ứng dụng nhé!"
+    },
+    {
+      "id": "boy_intro_m4_calc",
+      "file": "boy/intro/m4_calc.mp3",
+      "event": "intro",
+      "topic": "m4_calc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cộng trừ số lớn nhé!"
+    },
+    {
+      "id": "boy_intro_m4_mul",
+      "file": "boy/intro/m4_mul.mp3",
+      "event": "intro",
+      "topic": "m4_mul",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Nhân nhiều chữ số nhé!"
+    },
+    {
+      "id": "boy_intro_m4_div",
+      "file": "boy/intro/m4_div.mp3",
+      "event": "intro",
+      "topic": "m4_div",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia nhiều chữ số nhé!"
+    },
+    {
+      "id": "boy_intro_m4_frac",
+      "file": "boy/intro/m4_frac.mp3",
+      "event": "intro",
+      "topic": "m4_frac",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phân số nhé!"
+    },
+    {
+      "id": "boy_intro_m4_divis",
+      "file": "boy/intro/m4_divis.mp3",
+      "event": "intro",
+      "topic": "m4_divis",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia hết nhé!"
+    },
+    {
+      "id": "boy_intro_m4_avg",
+      "file": "boy/intro/m4_avg.mp3",
+      "event": "intro",
+      "topic": "m4_avg",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trung bình cộng nhé!"
+    },
+    {
+      "id": "boy_intro_m4_sumdf",
+      "file": "boy/intro/m4_sumdf.mp3",
+      "event": "intro",
+      "topic": "m4_sumdf",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tổng hiệu nhé!"
+    },
+    {
+      "id": "boy_intro_m4_geo",
+      "file": "boy/intro/m4_geo.mp3",
+      "event": "intro",
+      "topic": "m4_geo",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "boy_intro_m4_meas",
+      "file": "boy/intro/m4_meas.mp3",
+      "event": "intro",
+      "topic": "m4_meas",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đo lường nhé!"
+    },
+    {
+      "id": "boy_intro_m4_expr",
+      "file": "boy/intro/m4_expr.mp3",
+      "event": "intro",
+      "topic": "m4_expr",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biểu thức nhé!"
+    },
+    {
+      "id": "boy_intro_v4_ct",
+      "file": "boy/intro/v4_ct.mp3",
+      "event": "intro",
+      "topic": "v4_ct",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_v4_tuloai",
+      "file": "boy/intro/v4_tuloai.mp3",
+      "event": "intro",
+      "topic": "v4_tuloai",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ ghép và từ láy nhé!"
+    },
+    {
+      "id": "boy_intro_v4_cau",
+      "file": "boy/intro/v4_cau.mp3",
+      "event": "intro",
+      "topic": "v4_cau",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Kiểu câu nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_v4_tp",
+      "file": "boy/intro/v4_tp.mp3",
+      "event": "intro",
+      "topic": "v4_tp",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thành phần câu nhé!"
+    },
+    {
+      "id": "boy_intro_v4_tv",
+      "file": "boy/intro/v4_tv.mp3",
+      "event": "intro",
+      "topic": "v4_tv",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thành ngữ nhé!"
+    },
+    {
+      "id": "boy_intro_v4_bptt",
+      "file": "boy/intro/v4_bptt.mp3",
+      "event": "intro",
+      "topic": "v4_bptt",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biện pháp tu từ nhé!"
+    },
+    {
+      "id": "boy_intro_v4_dien",
+      "file": "boy/intro/v4_dien.mp3",
+      "event": "intro",
+      "topic": "v4_dien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "boy_intro_v4_sapxep",
+      "file": "boy/intro/v4_sapxep.mp3",
+      "event": "intro",
+      "topic": "v4_sapxep",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "boy_intro_e4_vocab",
+      "file": "boy/intro/e4_vocab.mp3",
+      "event": "intro",
+      "topic": "e4_vocab",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e4_present",
+      "file": "boy/intro/e4_present.mp3",
+      "event": "intro",
+      "topic": "e4_present",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì hiện tại đơn nhé!"
+    },
+    {
+      "id": "boy_intro_e4_contin",
+      "file": "boy/intro/e4_contin.mp3",
+      "event": "intro",
+      "topic": "e4_contin",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì hiện tại tiếp diễn nhé!"
+    },
+    {
+      "id": "boy_intro_e4_there",
+      "file": "boy/intro/e4_there.mp3",
+      "event": "intro",
+      "topic": "e4_there",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về There is và are nhé!"
+    },
+    {
+      "id": "boy_intro_e4_can",
+      "file": "boy/intro/e4_can.mp3",
+      "event": "intro",
+      "topic": "e4_can",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Can và can't nhé!"
+    },
+    {
+      "id": "boy_intro_e4_time",
+      "file": "boy/intro/e4_time.mp3",
+      "event": "intro",
+      "topic": "e4_time",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thời gian và ngày nhé!"
+    },
+    {
+      "id": "boy_intro_e4_prepos",
+      "file": "boy/intro/e4_prepos.mp3",
+      "event": "intro",
+      "topic": "e4_prepos",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giới từ nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_e4_translate",
+      "file": "boy/intro/e4_translate.mp3",
+      "event": "intro",
+      "topic": "e4_translate",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dịch câu nhé!"
+    },
+    {
+      "id": "boy_intro_kh4_chat",
+      "file": "boy/intro/kh4_chat.mp3",
+      "event": "intro",
+      "topic": "kh4_chat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chất nhé!"
+    },
+    {
+      "id": "boy_intro_kh4_nangl",
+      "file": "boy/intro/kh4_nangl.mp3",
+      "event": "intro",
+      "topic": "kh4_nangl",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Năng lượng nhé!"
+    },
+    {
+      "id": "boy_intro_kh4_sinhhoc",
+      "file": "boy/intro/kh4_sinhhoc.mp3",
+      "event": "intro",
+      "topic": "kh4_sinhhoc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sinh học nhé!"
+    },
+    {
+      "id": "boy_intro_kh4_namvi",
+      "file": "boy/intro/kh4_namvi.mp3",
+      "event": "intro",
+      "topic": "kh4_namvi",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Nấm và vi khuẩn nhé!"
+    },
+    {
+      "id": "boy_intro_kh4_suckhoe",
+      "file": "boy/intro/kh4_suckhoe.mp3",
+      "event": "intro",
+      "topic": "kh4_suckhoe",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "boy_intro_sd4_diaphuong",
+      "file": "boy/intro/sd4_diaphuong.mp3",
+      "event": "intro",
+      "topic": "sd4_diaphuong",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Lịch sử địa phương nhé!"
+    },
+    {
+      "id": "boy_intro_sd4_vungmien",
+      "file": "boy/intro/sd4_vungmien.mp3",
+      "event": "intro",
+      "topic": "sd4_vungmien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Vùng miền Việt Nam nhé!"
+    },
+    {
+      "id": "boy_intro_sd4_trieudai",
+      "file": "boy/intro/sd4_trieudai.mp3",
+      "event": "intro",
+      "topic": "sd4_trieudai",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Triều đại nhé!"
+    },
+    {
+      "id": "boy_intro_sd4_thiennhien",
+      "file": "boy/intro/sd4_thiennhien.mp3",
+      "event": "intro",
+      "topic": "sd4_thiennhien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thiên nhiên Việt Nam nhé!"
+    },
+    {
+      "id": "boy_intro_dd4_trungthuc",
+      "file": "boy/intro/dd4_trungthuc.mp3",
+      "event": "intro",
+      "topic": "dd4_trungthuc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trung thực và dũng cảm nhé!"
+    },
+    {
+      "id": "boy_intro_dd4_tontrong",
+      "file": "boy/intro/dd4_tontrong.mp3",
+      "event": "intro",
+      "topic": "dd4_tontrong",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tôn trọng nhé!"
+    },
+    {
+      "id": "boy_intro_dd4_thiennhien",
+      "file": "boy/intro/dd4_thiennhien.mp3",
+      "event": "intro",
+      "topic": "dd4_thiennhien",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảo vệ thiên nhiên nhé!"
+    },
+    {
+      "id": "boy_intro_dd4_quyentrem",
+      "file": "boy/intro/dd4_quyentrem.mp3",
+      "event": "intro",
+      "topic": "dd4_quyentrem",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Quyền trẻ em nhé!"
+    },
+    {
+      "id": "boy_intro_th4_mang",
+      "file": "boy/intro/th4_mang.mp3",
+      "event": "intro",
+      "topic": "th4_mang",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Mạng và Internet nhé!"
+    },
+    {
+      "id": "boy_intro_th4_vanban",
+      "file": "boy/intro/th4_vanban.mp3",
+      "event": "intro",
+      "topic": "th4_vanban",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Soạn văn bản nhé!"
+    },
+    {
+      "id": "boy_intro_th4_laptrinh",
+      "file": "boy/intro/th4_laptrinh.mp3",
+      "event": "intro",
+      "topic": "th4_laptrinh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Scratch nhé!"
+    },
+    {
+      "id": "boy_intro_th4_antoan",
+      "file": "boy/intro/th4_antoan.mp3",
+      "event": "intro",
+      "topic": "th4_antoan",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về An toàn thông tin nhé!"
+    },
+    {
+      "id": "boy_intro_m5_dec",
+      "file": "boy/intro/m5_dec.mp3",
+      "event": "intro",
+      "topic": "m5_dec",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Số thập phân nhé!"
+    },
+    {
+      "id": "boy_intro_m5_pct",
+      "file": "boy/intro/m5_pct.mp3",
+      "event": "intro",
+      "topic": "m5_pct",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phần trăm nhé!"
+    },
+    {
+      "id": "boy_intro_m5_frac",
+      "file": "boy/intro/m5_frac.mp3",
+      "event": "intro",
+      "topic": "m5_frac",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phân số nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_m5_vol",
+      "file": "boy/intro/m5_vol.mp3",
+      "event": "intro",
+      "topic": "m5_vol",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thể tích nhé!"
+    },
+    {
+      "id": "boy_intro_m5_speed",
+      "file": "boy/intro/m5_speed.mp3",
+      "event": "intro",
+      "topic": "m5_speed",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Vận tốc nhé!"
+    },
+    {
+      "id": "boy_intro_m5_circle",
+      "file": "boy/intro/m5_circle.mp3",
+      "event": "intro",
+      "topic": "m5_circle",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình tròn nhé!"
+    },
+    {
+      "id": "boy_intro_m5_area",
+      "file": "boy/intro/m5_area.mp3",
+      "event": "intro",
+      "topic": "m5_area",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Diện tích nhé!"
+    },
+    {
+      "id": "boy_intro_m5_conv",
+      "file": "boy/intro/m5_conv.mp3",
+      "event": "intro",
+      "topic": "m5_conv",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đổi đơn vị nhé!"
+    },
+    {
+      "id": "boy_intro_m5_expr",
+      "file": "boy/intro/m5_expr.mp3",
+      "event": "intro",
+      "topic": "m5_expr",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biểu thức nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_m5_word",
+      "file": "boy/intro/m5_word.mp3",
+      "event": "intro",
+      "topic": "m5_word",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán đố nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_v5_ct",
+      "file": "boy/intro/v5_ct.mp3",
+      "event": "intro",
+      "topic": "v5_ct",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_v5_caugh",
+      "file": "boy/intro/v5_caugh.mp3",
+      "event": "intro",
+      "topic": "v5_caugh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Câu ghép nhé!"
+    },
+    {
+      "id": "boy_intro_v5_qht",
+      "file": "boy/intro/v5_qht.mp3",
+      "event": "intro",
+      "topic": "v5_qht",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Quan hệ từ nhé!"
+    },
+    {
+      "id": "boy_intro_v5_dongam",
+      "file": "boy/intro/v5_dongam.mp3",
+      "event": "intro",
+      "topic": "v5_dongam",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ đồng âm nhé!"
+    },
+    {
+      "id": "boy_intro_v5_bptt",
+      "file": "boy/intro/v5_bptt.mp3",
+      "event": "intro",
+      "topic": "v5_bptt",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biện pháp tu từ nhé!"
+    },
+    {
+      "id": "boy_intro_v5_lk",
+      "file": "boy/intro/v5_lk.mp3",
+      "event": "intro",
+      "topic": "v5_lk",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Liên kết câu nhé!"
+    },
+    {
+      "id": "boy_intro_v5_tv",
+      "file": "boy/intro/v5_tv.mp3",
+      "event": "intro",
+      "topic": "v5_tv",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_v5_sapxep",
+      "file": "boy/intro/v5_sapxep.mp3",
+      "event": "intro",
+      "topic": "v5_sapxep",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "boy_intro_e5_vocab",
+      "file": "boy/intro/e5_vocab.mp3",
+      "event": "intro",
+      "topic": "e5_vocab",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e5_past",
+      "file": "boy/intro/e5_past.mp3",
+      "event": "intro",
+      "topic": "e5_past",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì quá khứ đơn nhé!"
+    },
+    {
+      "id": "boy_intro_e5_future",
+      "file": "boy/intro/e5_future.mp3",
+      "event": "intro",
+      "topic": "e5_future",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì tương lai nhé!"
+    },
+    {
+      "id": "boy_intro_e5_modal",
+      "file": "boy/intro/e5_modal.mp3",
+      "event": "intro",
+      "topic": "e5_modal",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Should và Must nhé!"
+    },
+    {
+      "id": "boy_intro_e5_compare",
+      "file": "boy/intro/e5_compare.mp3",
+      "event": "intro",
+      "topic": "e5_compare",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về So sánh tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e5_tenses",
+      "file": "boy/intro/e5_tenses.mp3",
+      "event": "intro",
+      "topic": "e5_tenses",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia thì nhé!"
+    },
+    {
+      "id": "boy_intro_e5_reading",
+      "file": "boy/intro/e5_reading.mp3",
+      "event": "intro",
+      "topic": "e5_reading",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đọc hiểu tiếng Anh nhé!"
+    },
+    {
+      "id": "boy_intro_e5_translate",
+      "file": "boy/intro/e5_translate.mp3",
+      "event": "intro",
+      "topic": "e5_translate",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dịch câu nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_kh5_biendoi",
+      "file": "boy/intro/kh5_biendoi.mp3",
+      "event": "intro",
+      "topic": "kh5_biendoi",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sự biến đổi nhé!"
+    },
+    {
+      "id": "boy_intro_kh5_nangl",
+      "file": "boy/intro/kh5_nangl.mp3",
+      "event": "intro",
+      "topic": "kh5_nangl",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Năng lượng nhé!"
+    },
+    {
+      "id": "boy_intro_kh5_sinhhoc",
+      "file": "boy/intro/kh5_sinhhoc.mp3",
+      "event": "intro",
+      "topic": "kh5_sinhhoc",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sinh vật và môi trường nhé!"
+    },
+    {
+      "id": "boy_intro_kh5_suckhoe",
+      "file": "boy/intro/kh5_suckhoe.mp3",
+      "event": "intro",
+      "topic": "kh5_suckhoe",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "boy_intro_kh5_traidat",
+      "file": "boy/intro/kh5_traidat.mp3",
+      "event": "intro",
+      "topic": "kh5_traidat",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trái Đất và vũ trụ nhé!"
+    },
+    {
+      "id": "boy_intro_sd5_lichsu",
+      "file": "boy/intro/sd5_lichsu.mp3",
+      "event": "intro",
+      "topic": "sd5_lichsu",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Lịch sử Việt Nam cận đại nhé!"
+    },
+    {
+      "id": "boy_intro_sd5_dialy",
+      "file": "boy/intro/sd5_dialy.mp3",
+      "event": "intro",
+      "topic": "sd5_dialy",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Địa lí Việt Nam nhé!"
+    },
+    {
+      "id": "boy_intro_sd5_chaua",
+      "file": "boy/intro/sd5_chaua.mp3",
+      "event": "intro",
+      "topic": "sd5_chaua",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Châu Á nhé!"
+    },
+    {
+      "id": "boy_intro_sd5_thegioi",
+      "file": "boy/intro/sd5_thegioi.mp3",
+      "event": "intro",
+      "topic": "sd5_thegioi",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thế giới nhé!"
+    },
+    {
+      "id": "boy_intro_dd5_congdan",
+      "file": "boy/intro/dd5_congdan.mp3",
+      "event": "intro",
+      "topic": "dd5_congdan",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Công dân toàn cầu nhé!"
+    },
+    {
+      "id": "boy_intro_dd5_doankiet",
+      "file": "boy/intro/dd5_doankiet.mp3",
+      "event": "intro",
+      "topic": "dd5_doankiet",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đoàn kết nhé!"
+    },
+    {
+      "id": "boy_intro_dd5_hoabinh",
+      "file": "boy/intro/dd5_hoabinh.mp3",
+      "event": "intro",
+      "topic": "dd5_hoabinh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hòa bình nhé!"
+    },
+    {
+      "id": "boy_intro_dd5_trachnhiem",
+      "file": "boy/intro/dd5_trachnhiem.mp3",
+      "event": "intro",
+      "topic": "dd5_trachnhiem",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trách nhiệm xã hội nhé!"
+    },
+    {
+      "id": "boy_intro_th5_media",
+      "file": "boy/intro/th5_media.mp3",
+      "event": "intro",
+      "topic": "th5_media",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đa phương tiện nhé!"
+    },
+    {
+      "id": "boy_intro_th5_laptrinh",
+      "file": "boy/intro/th5_laptrinh.mp3",
+      "event": "intro",
+      "topic": "th5_laptrinh",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Scratch nâng cao nhé!"
+    },
+    {
+      "id": "boy_intro_th5_slide",
+      "file": "boy/intro/th5_slide.mp3",
+      "event": "intro",
+      "topic": "th5_slide",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trình bày slide nhé!"
+    },
+    {
+      "id": "boy_intro_th5_duan",
+      "file": "boy/intro/th5_duan.mp3",
+      "event": "intro",
+      "topic": "th5_duan",
+      "character": "boy",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dự án tin học nhé!"
+    },
+    {
+      "id": "girl_praise_01",
+      "file": "girl/global/praise_01.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Giỏi lắm!"
+    },
+    {
+      "id": "girl_praise_02",
+      "file": "girl/global/praise_02.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Tuyệt vời!"
+    },
+    {
+      "id": "girl_praise_03",
+      "file": "girl/global/praise_03.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Xuất sắc!"
+    },
+    {
+      "id": "girl_praise_04",
+      "file": "girl/global/praise_04.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Đúng rồi!"
+    },
+    {
+      "id": "girl_praise_05",
+      "file": "girl/global/praise_05.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Hay quá!"
+    },
+    {
+      "id": "girl_praise_06",
+      "file": "girl/global/praise_06.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Siêu giỏi!"
+    },
+    {
+      "id": "girl_praise_07",
+      "file": "girl/global/praise_07.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Chính xác!"
+    },
+    {
+      "id": "girl_praise_08",
+      "file": "girl/global/praise_08.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Thông minh quá!"
+    },
+    {
+      "id": "girl_praise_09",
+      "file": "girl/global/praise_09.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Cừ lắm!"
+    },
+    {
+      "id": "girl_praise_10",
+      "file": "girl/global/praise_10.mp3",
+      "event": "correct",
+      "topic": null,
+      "character": "girl",
+      "text": "Đỉnh của chóp!"
+    },
+    {
+      "id": "girl_encourage_01",
+      "file": "girl/global/encourage_01.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Cố lên nào!"
+    },
+    {
+      "id": "girl_encourage_02",
+      "file": "girl/global/encourage_02.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Gần đúng rồi!"
+    },
+    {
+      "id": "girl_encourage_03",
+      "file": "girl/global/encourage_03.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Thử lại nhé!"
+    },
+    {
+      "id": "girl_encourage_04",
+      "file": "girl/global/encourage_04.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Không sao đâu!"
+    },
+    {
+      "id": "girl_encourage_05",
+      "file": "girl/global/encourage_05.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Suy nghĩ thêm nha!"
+    },
+    {
+      "id": "girl_encourage_06",
+      "file": "girl/global/encourage_06.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Bạn làm được mà!"
+    },
+    {
+      "id": "girl_encourage_07",
+      "file": "girl/global/encourage_07.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Đừng vội nha!"
+    },
+    {
+      "id": "girl_encourage_08",
+      "file": "girl/global/encourage_08.mp3",
+      "event": "wrong",
+      "topic": null,
+      "character": "girl",
+      "text": "Từ từ suy nghĩ!"
+    },
+    {
+      "id": "girl_streak_3",
+      "file": "girl/global/streak_3.mp3",
+      "event": "streak",
+      "topic": null,
+      "character": "girl",
+      "text": "Wow! Ba câu đúng liên tiếp! Giỏi quá!"
+    },
+    {
+      "id": "girl_streak_5",
+      "file": "girl/global/streak_5.mp3",
+      "event": "streak",
+      "topic": null,
+      "character": "girl",
+      "text": "Tuyệt vời! Năm câu đúng liên tiếp! Siêu ghê!"
+    },
+    {
+      "id": "girl_streak_10",
+      "file": "girl/global/streak_10.mp3",
+      "event": "streak",
+      "topic": null,
+      "character": "girl",
+      "text": "Không thể tin được! Mười câu đúng liên tiếp! Bạn là thiên tài!"
+    },
+    {
+      "id": "girl_level_1",
+      "file": "girl/global/level_1.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "girl",
+      "text": "Chúc mừng! Bạn đã lên cấp!"
+    },
+    {
+      "id": "girl_level_2",
+      "file": "girl/global/level_2.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "girl",
+      "text": "Tuyệt vời! Bạn tiến bộ rất nhanh!"
+    },
+    {
+      "id": "girl_level_3",
+      "file": "girl/global/level_3.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "girl",
+      "text": "Siêu đỉnh! Bạn ngày càng giỏi hơn!"
+    },
+    {
+      "id": "girl_level_4",
+      "file": "girl/global/level_4.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "girl",
+      "text": "Wow! Bạn đã lên cấp mới! Tiếp tục phát huy nhé!"
+    },
+    {
+      "id": "girl_level_5",
+      "file": "girl/global/level_5.mp3",
+      "event": "level_up",
+      "topic": null,
+      "character": "girl",
+      "text": "Xuất sắc! Bạn đạt đến đỉnh cao rồi! Tự hào lắm!"
+    },
+    {
+      "id": "girl_idle_1",
+      "file": "girl/global/idle_1.mp3",
+      "event": "idle",
+      "topic": null,
+      "character": "girl",
+      "text": "Bạn ơi! Mình đang chờ bạn nè!"
+    },
+    {
+      "id": "girl_idle_2",
+      "file": "girl/global/idle_2.mp3",
+      "event": "idle",
+      "topic": null,
+      "character": "girl",
+      "text": "Hế lô! Bạn còn ở đây không?"
+    },
+    {
+      "id": "girl_idle_3",
+      "file": "girl/global/idle_3.mp3",
+      "event": "idle",
+      "topic": null,
+      "character": "girl",
+      "text": "Bạn ơi, chơi tiếp đi nào!"
+    },
+    {
+      "id": "girl_goodbye",
+      "file": "girl/global/goodbye.mp3",
+      "event": "goodbye",
+      "topic": null,
+      "character": "girl",
+      "text": "Hẹn gặp lại nhé! Hôm nay bạn đã làm rất tốt!"
+    },
+    {
+      "id": "girl_pet_corgi",
+      "file": "girl/global/pet_corgi.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "girl",
+      "text": "Nhìn kìa! Cún Corgi đã tiến hóa! Dễ thương quá!"
+    },
+    {
+      "id": "girl_pet_cat",
+      "file": "girl/global/pet_cat.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "girl",
+      "text": "Wow! Mèo Ragdoll đã tiến hóa! Xinh đẹp quá!"
+    },
+    {
+      "id": "girl_pet_trex",
+      "file": "girl/global/pet_trex.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "girl",
+      "text": "Tuyệt! Ti-Rex đã tiến hóa! Mạnh mẽ quá!"
+    },
+    {
+      "id": "girl_pet_dragon",
+      "file": "girl/global/pet_dragon.mp3",
+      "event": "pet_evolve",
+      "topic": null,
+      "character": "girl",
+      "text": "Siêu! Rồng đã tiến hóa! Oai phong quá!"
+    },
+    {
+      "id": "girl_reward_1",
+      "file": "girl/global/reward_1.mp3",
+      "event": "reward",
+      "topic": null,
+      "character": "girl",
+      "text": "Chúc mừng! Bạn nhận được phần thưởng!"
+    },
+    {
+      "id": "girl_reward_2",
+      "file": "girl/global/reward_2.mp3",
+      "event": "reward",
+      "topic": null,
+      "character": "girl",
+      "text": "Yay! Bạn có quà rồi nè!"
+    },
+    {
+      "id": "girl_reward_3",
+      "file": "girl/global/reward_3.mp3",
+      "event": "reward",
+      "topic": null,
+      "character": "girl",
+      "text": "Tuyệt vời! Phần thưởng dành cho bạn!"
+    },
+    {
+      "id": "girl_round_3star",
+      "file": "girl/global/round_3star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "girl",
+      "text": "Tuyệt vời! Ba sao! Bạn là siêu sao!"
+    },
+    {
+      "id": "girl_round_2star",
+      "file": "girl/global/round_2star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "girl",
+      "text": "Giỏi lắm! Hai sao! Lần sau ba sao nhé!"
+    },
+    {
+      "id": "girl_round_1star",
+      "file": "girl/global/round_1star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "girl",
+      "text": "Tốt lắm! Cố gắng thêm nhé!"
+    },
+    {
+      "id": "girl_round_0star",
+      "file": "girl/global/round_0star.mp3",
+      "event": "round_end",
+      "topic": null,
+      "character": "girl",
+      "text": "Không sao đâu! Lần sau sẽ giỏi hơn!"
+    },
+    {
+      "id": "girl_intro_m1_add",
+      "file": "girl/intro/m1_add.mp3",
+      "event": "intro",
+      "topic": "m1_add",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép cộng nhé!"
+    },
+    {
+      "id": "girl_intro_m1_sub",
+      "file": "girl/intro/m1_sub.mp3",
+      "event": "intro",
+      "topic": "m1_sub",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép trừ nhé!"
+    },
+    {
+      "id": "girl_intro_m1_mix",
+      "file": "girl/intro/m1_mix.mp3",
+      "event": "intro",
+      "topic": "m1_mix",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cộng trừ hỗn hợp nhé!"
+    },
+    {
+      "id": "girl_intro_m1_cmp",
+      "file": "girl/intro/m1_cmp.mp3",
+      "event": "intro",
+      "topic": "m1_cmp",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về So sánh số nhé!"
+    },
+    {
+      "id": "girl_intro_m1_miss",
+      "file": "girl/intro/m1_miss.mp3",
+      "event": "intro",
+      "topic": "m1_miss",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tìm số thiếu nhé!"
+    },
+    {
+      "id": "girl_intro_m1_word",
+      "file": "girl/intro/m1_word.mp3",
+      "event": "intro",
+      "topic": "m1_word",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán có lời văn nhé!"
+    },
+    {
+      "id": "girl_intro_m1_seq",
+      "file": "girl/intro/m1_seq.mp3",
+      "event": "intro",
+      "topic": "m1_seq",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dãy số nhé!"
+    },
+    {
+      "id": "girl_intro_m1_shp",
+      "file": "girl/intro/m1_shp.mp3",
+      "event": "intro",
+      "topic": "m1_shp",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "girl_intro_m1_time",
+      "file": "girl/intro/m1_time.mp3",
+      "event": "intro",
+      "topic": "m1_time",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giờ và đo lường nhé!"
+    },
+    {
+      "id": "girl_intro_v1_am",
+      "file": "girl/intro/v1_am.mp3",
+      "event": "intro",
+      "topic": "v1_am",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Âm và vần nhé!"
+    },
+    {
+      "id": "girl_intro_v1_doc",
+      "file": "girl/intro/v1_doc.mp3",
+      "event": "intro",
+      "topic": "v1_doc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Ghép từ nhé!"
+    },
+    {
+      "id": "girl_intro_v1_ct",
+      "file": "girl/intro/v1_ct.mp3",
+      "event": "intro",
+      "topic": "v1_ct",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nhé!"
+    },
+    {
+      "id": "girl_intro_v1_tv",
+      "file": "girl/intro/v1_tv.mp3",
+      "event": "intro",
+      "topic": "v1_tv",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng nhé!"
+    },
+    {
+      "id": "girl_intro_v1_dien",
+      "file": "girl/intro/v1_dien.mp3",
+      "event": "intro",
+      "topic": "v1_dien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "girl_intro_v1_cau",
+      "file": "girl/intro/v1_cau.mp3",
+      "event": "intro",
+      "topic": "v1_cau",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Câu đơn giản nhé!"
+    },
+    {
+      "id": "girl_intro_e1_abc",
+      "file": "girl/intro/e1_abc.mp3",
+      "event": "intro",
+      "topic": "e1_abc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảng chữ cái tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e1_num",
+      "file": "girl/intro/e1_num.mp3",
+      "event": "intro",
+      "topic": "e1_num",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Số đếm tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e1_color",
+      "file": "girl/intro/e1_color.mp3",
+      "event": "intro",
+      "topic": "e1_color",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Màu sắc tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e1_animal",
+      "file": "girl/intro/e1_animal.mp3",
+      "event": "intro",
+      "topic": "e1_animal",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Động vật tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e1_greet",
+      "file": "girl/intro/e1_greet.mp3",
+      "event": "intro",
+      "topic": "e1_greet",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chào hỏi tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e1_family",
+      "file": "girl/intro/e1_family.mp3",
+      "event": "intro",
+      "topic": "e1_family",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_tn1_gd",
+      "file": "girl/intro/tn1_gd.mp3",
+      "event": "intro",
+      "topic": "tn1_gd",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình nhé!"
+    },
+    {
+      "id": "girl_intro_tn1_truong",
+      "file": "girl/intro/tn1_truong.mp3",
+      "event": "intro",
+      "topic": "tn1_truong",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trường học nhé!"
+    },
+    {
+      "id": "girl_intro_tn1_caycon",
+      "file": "girl/intro/tn1_caycon.mp3",
+      "event": "intro",
+      "topic": "tn1_caycon",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cây cối và động vật nhé!"
+    },
+    {
+      "id": "girl_intro_tn1_thoitiet",
+      "file": "girl/intro/tn1_thoitiet.mp3",
+      "event": "intro",
+      "topic": "tn1_thoitiet",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thời tiết nhé!"
+    },
+    {
+      "id": "girl_intro_tn1_cothe",
+      "file": "girl/intro/tn1_cothe.mp3",
+      "event": "intro",
+      "topic": "tn1_cothe",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cơ thể em nhé!"
+    },
+    {
+      "id": "girl_intro_dd1_yeu",
+      "file": "girl/intro/dd1_yeu.mp3",
+      "event": "intro",
+      "topic": "dd1_yeu",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Yêu thương nhé!"
+    },
+    {
+      "id": "girl_intro_dd1_lephep",
+      "file": "girl/intro/dd1_lephep.mp3",
+      "event": "intro",
+      "topic": "dd1_lephep",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Lễ phép nhé!"
+    },
+    {
+      "id": "girl_intro_dd1_trungthuc",
+      "file": "girl/intro/dd1_trungthuc.mp3",
+      "event": "intro",
+      "topic": "dd1_trungthuc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trung thực nhé!"
+    },
+    {
+      "id": "girl_intro_dd1_vesinh",
+      "file": "girl/intro/dd1_vesinh.mp3",
+      "event": "intro",
+      "topic": "dd1_vesinh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giữ vệ sinh nhé!"
+    },
+    {
+      "id": "girl_intro_m2_add",
+      "file": "girl/intro/m2_add.mp3",
+      "event": "intro",
+      "topic": "m2_add",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cộng có nhớ nhé!"
+    },
+    {
+      "id": "girl_intro_m2_sub",
+      "file": "girl/intro/m2_sub.mp3",
+      "event": "intro",
+      "topic": "m2_sub",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trừ có nhớ nhé!"
+    },
+    {
+      "id": "girl_intro_m2_mul",
+      "file": "girl/intro/m2_mul.mp3",
+      "event": "intro",
+      "topic": "m2_mul",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép nhân nhé!"
+    },
+    {
+      "id": "girl_intro_m2_div",
+      "file": "girl/intro/m2_div.mp3",
+      "event": "intro",
+      "topic": "m2_div",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép chia nhé!"
+    },
+    {
+      "id": "girl_intro_m2_cmp",
+      "file": "girl/intro/m2_cmp.mp3",
+      "event": "intro",
+      "topic": "m2_cmp",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về So sánh số lớn nhé!"
+    },
+    {
+      "id": "girl_intro_m2_miss",
+      "file": "girl/intro/m2_miss.mp3",
+      "event": "intro",
+      "topic": "m2_miss",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tìm số thiếu nhé!"
+    },
+    {
+      "id": "girl_intro_m2_word",
+      "file": "girl/intro/m2_word.mp3",
+      "event": "intro",
+      "topic": "m2_word",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán đố nhé!"
+    },
+    {
+      "id": "girl_intro_m2_geo",
+      "file": "girl/intro/m2_geo.mp3",
+      "event": "intro",
+      "topic": "m2_geo",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "girl_intro_m2_meas",
+      "file": "girl/intro/m2_meas.mp3",
+      "event": "intro",
+      "topic": "m2_meas",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đo lường và tiền nhé!"
+    },
+    {
+      "id": "girl_intro_v2_ct",
+      "file": "girl/intro/v2_ct.mp3",
+      "event": "intro",
+      "topic": "v2_ct",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả lớp 2 nhé!"
+    },
+    {
+      "id": "girl_intro_v2_tuloai",
+      "file": "girl/intro/v2_tuloai.mp3",
+      "event": "intro",
+      "topic": "v2_tuloai",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ loại nhé!"
+    },
+    {
+      "id": "girl_intro_v2_cau",
+      "file": "girl/intro/v2_cau.mp3",
+      "event": "intro",
+      "topic": "v2_cau",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Kiểu câu nhé!"
+    },
+    {
+      "id": "girl_intro_v2_tv",
+      "file": "girl/intro/v2_tv.mp3",
+      "event": "intro",
+      "topic": "v2_tv",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng mở rộng nhé!"
+    },
+    {
+      "id": "girl_intro_v2_dien",
+      "file": "girl/intro/v2_dien.mp3",
+      "event": "intro",
+      "topic": "v2_dien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "girl_intro_v2_dauca",
+      "file": "girl/intro/v2_dauca.mp3",
+      "event": "intro",
+      "topic": "v2_dauca",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dấu câu nhé!"
+    },
+    {
+      "id": "girl_intro_v2_sapxep",
+      "file": "girl/intro/v2_sapxep.mp3",
+      "event": "intro",
+      "topic": "v2_sapxep",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "girl_intro_e2_family",
+      "file": "girl/intro/e2_family.mp3",
+      "event": "intro",
+      "topic": "e2_family",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e2_feel",
+      "file": "girl/intro/e2_feel.mp3",
+      "event": "intro",
+      "topic": "e2_feel",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cảm xúc tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e2_clothes",
+      "file": "girl/intro/e2_clothes.mp3",
+      "event": "intro",
+      "topic": "e2_clothes",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Quần áo tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e2_prepos",
+      "file": "girl/intro/e2_prepos.mp3",
+      "event": "intro",
+      "topic": "e2_prepos",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giới từ tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e2_rooms",
+      "file": "girl/intro/e2_rooms.mp3",
+      "event": "intro",
+      "topic": "e2_rooms",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phòng trong nhà nhé!"
+    },
+    {
+      "id": "girl_intro_e2_transport",
+      "file": "girl/intro/e2_transport.mp3",
+      "event": "intro",
+      "topic": "e2_transport",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phương tiện giao thông nhé!"
+    },
+    {
+      "id": "girl_intro_tn2_cothe",
+      "file": "girl/intro/tn2_cothe.mp3",
+      "event": "intro",
+      "topic": "tn2_cothe",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cơ thể người nhé!"
+    },
+    {
+      "id": "girl_intro_tn2_thucvat",
+      "file": "girl/intro/tn2_thucvat.mp3",
+      "event": "intro",
+      "topic": "tn2_thucvat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thực vật và động vật nhé!"
+    },
+    {
+      "id": "girl_intro_tn2_traidat",
+      "file": "girl/intro/tn2_traidat.mp3",
+      "event": "intro",
+      "topic": "tn2_traidat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trái Đất nhé!"
+    },
+    {
+      "id": "girl_intro_tn2_suckhoe",
+      "file": "girl/intro/tn2_suckhoe.mp3",
+      "event": "intro",
+      "topic": "tn2_suckhoe",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "girl_intro_dd2_bieton",
+      "file": "girl/intro/dd2_bieton.mp3",
+      "event": "intro",
+      "topic": "dd2_bieton",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biết ơn nhé!"
+    },
+    {
+      "id": "girl_intro_dd2_chiase",
+      "file": "girl/intro/dd2_chiase.mp3",
+      "event": "intro",
+      "topic": "dd2_chiase",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia sẻ nhé!"
+    },
+    {
+      "id": "girl_intro_dd2_moitruong",
+      "file": "girl/intro/dd2_moitruong.mp3",
+      "event": "intro",
+      "topic": "dd2_moitruong",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảo vệ môi trường nhé!"
+    },
+    {
+      "id": "girl_intro_dd2_giaothong",
+      "file": "girl/intro/dd2_giaothong.mp3",
+      "event": "intro",
+      "topic": "dd2_giaothong",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về An toàn giao thông nhé!"
+    },
+    {
+      "id": "girl_intro_m_add",
+      "file": "girl/intro/m_add.mp3",
+      "event": "intro",
+      "topic": "m_add",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép cộng nhé!"
+    },
+    {
+      "id": "girl_intro_m_sub",
+      "file": "girl/intro/m_sub.mp3",
+      "event": "intro",
+      "topic": "m_sub",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép trừ nhé!"
+    },
+    {
+      "id": "girl_intro_m_mul",
+      "file": "girl/intro/m_mul.mp3",
+      "event": "intro",
+      "topic": "m_mul",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép nhân nhé!"
+    },
+    {
+      "id": "girl_intro_m_div",
+      "file": "girl/intro/m_div.mp3",
+      "event": "intro",
+      "topic": "m_div",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phép chia nhé!"
+    },
+    {
+      "id": "girl_intro_m_tbl",
+      "file": "girl/intro/m_tbl.mp3",
+      "event": "intro",
+      "topic": "m_tbl",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảng cửu chương nhé!"
+    },
+    {
+      "id": "girl_intro_m_expr",
+      "file": "girl/intro/m_expr.mp3",
+      "event": "intro",
+      "topic": "m_expr",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biểu thức nhé!"
+    },
+    {
+      "id": "girl_intro_m_word",
+      "file": "girl/intro/m_word.mp3",
+      "event": "intro",
+      "topic": "m_word",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán đố nhé!"
+    },
+    {
+      "id": "girl_intro_m_geo",
+      "file": "girl/intro/m_geo.mp3",
+      "event": "intro",
+      "topic": "m_geo",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "girl_intro_m_meas",
+      "file": "girl/intro/m_meas.mp3",
+      "event": "intro",
+      "topic": "m_meas",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đo lường nhé!"
+    },
+    {
+      "id": "girl_intro_m_frac",
+      "file": "girl/intro/m_frac.mp3",
+      "event": "intro",
+      "topic": "m_frac",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phân số nhé!"
+    },
+    {
+      "id": "girl_intro_v_chinh",
+      "file": "girl/intro/v_chinh.mp3",
+      "event": "intro",
+      "topic": "v_chinh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nhé!"
+    },
+    {
+      "id": "girl_intro_v_tuloai",
+      "file": "girl/intro/v_tuloai.mp3",
+      "event": "intro",
+      "topic": "v_tuloai",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ loại nhé!"
+    },
+    {
+      "id": "girl_intro_v_cautruc",
+      "file": "girl/intro/v_cautruc.mp3",
+      "event": "intro",
+      "topic": "v_cautruc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Câu và dấu câu nhé!"
+    },
+    {
+      "id": "girl_intro_v_tuvung",
+      "file": "girl/intro/v_tuvung.mp3",
+      "event": "intro",
+      "topic": "v_tuvung",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng nhé!"
+    },
+    {
+      "id": "girl_intro_v_bienphat",
+      "file": "girl/intro/v_bienphat.mp3",
+      "event": "intro",
+      "topic": "v_bienphat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biện pháp tu từ nhé!"
+    },
+    {
+      "id": "girl_intro_v_dien",
+      "file": "girl/intro/v_dien.mp3",
+      "event": "intro",
+      "topic": "v_dien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "girl_intro_v_thanhphan",
+      "file": "girl/intro/v_thanhphan.mp3",
+      "event": "intro",
+      "topic": "v_thanhphan",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thành phần câu nhé!"
+    },
+    {
+      "id": "girl_intro_v_sapxep",
+      "file": "girl/intro/v_sapxep.mp3",
+      "event": "intro",
+      "topic": "v_sapxep",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "girl_intro_e_vocab",
+      "file": "girl/intro/e_vocab.mp3",
+      "event": "intro",
+      "topic": "e_vocab",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e_colors",
+      "file": "girl/intro/e_colors.mp3",
+      "event": "intro",
+      "topic": "e_colors",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Màu sắc và số đếm nhé!"
+    },
+    {
+      "id": "girl_intro_e_greet",
+      "file": "girl/intro/e_greet.mp3",
+      "event": "intro",
+      "topic": "e_greet",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chào hỏi tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e_animals",
+      "file": "girl/intro/e_animals.mp3",
+      "event": "intro",
+      "topic": "e_animals",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Động vật tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e_family",
+      "file": "girl/intro/e_family.mp3",
+      "event": "intro",
+      "topic": "e_family",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Gia đình tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e_grammar",
+      "file": "girl/intro/e_grammar.mp3",
+      "event": "intro",
+      "topic": "e_grammar",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Ngữ pháp tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e_prepos",
+      "file": "girl/intro/e_prepos.mp3",
+      "event": "intro",
+      "topic": "e_prepos",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giới từ tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e_translate",
+      "file": "girl/intro/e_translate.mp3",
+      "event": "intro",
+      "topic": "e_translate",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dịch câu nhé!"
+    },
+    {
+      "id": "girl_intro_tn3_chat",
+      "file": "girl/intro/tn3_chat.mp3",
+      "event": "intro",
+      "topic": "tn3_chat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chất và năng lượng nhé!"
+    },
+    {
+      "id": "girl_intro_tn3_thucvat",
+      "file": "girl/intro/tn3_thucvat.mp3",
+      "event": "intro",
+      "topic": "tn3_thucvat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thực vật và động vật nhé!"
+    },
+    {
+      "id": "girl_intro_tn3_nam",
+      "file": "girl/intro/tn3_nam.mp3",
+      "event": "intro",
+      "topic": "tn3_nam",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Nấm và vi khuẩn nhé!"
+    },
+    {
+      "id": "girl_intro_tn3_suckhoe",
+      "file": "girl/intro/tn3_suckhoe.mp3",
+      "event": "intro",
+      "topic": "tn3_suckhoe",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "girl_intro_tn3_traidat",
+      "file": "girl/intro/tn3_traidat.mp3",
+      "event": "intro",
+      "topic": "tn3_traidat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trái Đất nhé!"
+    },
+    {
+      "id": "girl_intro_dd3_tuchu",
+      "file": "girl/intro/dd3_tuchu.mp3",
+      "event": "intro",
+      "topic": "dd3_tuchu",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tự chủ nhé!"
+    },
+    {
+      "id": "girl_intro_dd3_trachnhiem",
+      "file": "girl/intro/dd3_trachnhiem.mp3",
+      "event": "intro",
+      "topic": "dd3_trachnhiem",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trách nhiệm nhé!"
+    },
+    {
+      "id": "girl_intro_dd3_quehuong",
+      "file": "girl/intro/dd3_quehuong.mp3",
+      "event": "intro",
+      "topic": "dd3_quehuong",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Yêu quê hương nhé!"
+    },
+    {
+      "id": "girl_intro_dd3_hoptac",
+      "file": "girl/intro/dd3_hoptac.mp3",
+      "event": "intro",
+      "topic": "dd3_hoptac",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hợp tác nhé!"
+    },
+    {
+      "id": "girl_intro_th3_maytinh",
+      "file": "girl/intro/th3_maytinh.mp3",
+      "event": "intro",
+      "topic": "th3_maytinh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Máy tính nhé!"
+    },
+    {
+      "id": "girl_intro_th3_thongtin",
+      "file": "girl/intro/th3_thongtin.mp3",
+      "event": "intro",
+      "topic": "th3_thongtin",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thông tin nhé!"
+    },
+    {
+      "id": "girl_intro_th3_daoduc",
+      "file": "girl/intro/th3_daoduc.mp3",
+      "event": "intro",
+      "topic": "th3_daoduc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Văn hóa số nhé!"
+    },
+    {
+      "id": "girl_intro_th3_ungdung",
+      "file": "girl/intro/th3_ungdung.mp3",
+      "event": "intro",
+      "topic": "th3_ungdung",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Ứng dụng nhé!"
+    },
+    {
+      "id": "girl_intro_m4_calc",
+      "file": "girl/intro/m4_calc.mp3",
+      "event": "intro",
+      "topic": "m4_calc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Cộng trừ số lớn nhé!"
+    },
+    {
+      "id": "girl_intro_m4_mul",
+      "file": "girl/intro/m4_mul.mp3",
+      "event": "intro",
+      "topic": "m4_mul",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Nhân nhiều chữ số nhé!"
+    },
+    {
+      "id": "girl_intro_m4_div",
+      "file": "girl/intro/m4_div.mp3",
+      "event": "intro",
+      "topic": "m4_div",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia nhiều chữ số nhé!"
+    },
+    {
+      "id": "girl_intro_m4_frac",
+      "file": "girl/intro/m4_frac.mp3",
+      "event": "intro",
+      "topic": "m4_frac",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phân số nhé!"
+    },
+    {
+      "id": "girl_intro_m4_divis",
+      "file": "girl/intro/m4_divis.mp3",
+      "event": "intro",
+      "topic": "m4_divis",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia hết nhé!"
+    },
+    {
+      "id": "girl_intro_m4_avg",
+      "file": "girl/intro/m4_avg.mp3",
+      "event": "intro",
+      "topic": "m4_avg",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trung bình cộng nhé!"
+    },
+    {
+      "id": "girl_intro_m4_sumdf",
+      "file": "girl/intro/m4_sumdf.mp3",
+      "event": "intro",
+      "topic": "m4_sumdf",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tổng hiệu nhé!"
+    },
+    {
+      "id": "girl_intro_m4_geo",
+      "file": "girl/intro/m4_geo.mp3",
+      "event": "intro",
+      "topic": "m4_geo",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình học nhé!"
+    },
+    {
+      "id": "girl_intro_m4_meas",
+      "file": "girl/intro/m4_meas.mp3",
+      "event": "intro",
+      "topic": "m4_meas",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đo lường nhé!"
+    },
+    {
+      "id": "girl_intro_m4_expr",
+      "file": "girl/intro/m4_expr.mp3",
+      "event": "intro",
+      "topic": "m4_expr",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biểu thức nhé!"
+    },
+    {
+      "id": "girl_intro_v4_ct",
+      "file": "girl/intro/v4_ct.mp3",
+      "event": "intro",
+      "topic": "v4_ct",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_v4_tuloai",
+      "file": "girl/intro/v4_tuloai.mp3",
+      "event": "intro",
+      "topic": "v4_tuloai",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ ghép và từ láy nhé!"
+    },
+    {
+      "id": "girl_intro_v4_cau",
+      "file": "girl/intro/v4_cau.mp3",
+      "event": "intro",
+      "topic": "v4_cau",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Kiểu câu nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_v4_tp",
+      "file": "girl/intro/v4_tp.mp3",
+      "event": "intro",
+      "topic": "v4_tp",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thành phần câu nhé!"
+    },
+    {
+      "id": "girl_intro_v4_tv",
+      "file": "girl/intro/v4_tv.mp3",
+      "event": "intro",
+      "topic": "v4_tv",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thành ngữ nhé!"
+    },
+    {
+      "id": "girl_intro_v4_bptt",
+      "file": "girl/intro/v4_bptt.mp3",
+      "event": "intro",
+      "topic": "v4_bptt",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biện pháp tu từ nhé!"
+    },
+    {
+      "id": "girl_intro_v4_dien",
+      "file": "girl/intro/v4_dien.mp3",
+      "event": "intro",
+      "topic": "v4_dien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Điền từ nhé!"
+    },
+    {
+      "id": "girl_intro_v4_sapxep",
+      "file": "girl/intro/v4_sapxep.mp3",
+      "event": "intro",
+      "topic": "v4_sapxep",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "girl_intro_e4_vocab",
+      "file": "girl/intro/e4_vocab.mp3",
+      "event": "intro",
+      "topic": "e4_vocab",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e4_present",
+      "file": "girl/intro/e4_present.mp3",
+      "event": "intro",
+      "topic": "e4_present",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì hiện tại đơn nhé!"
+    },
+    {
+      "id": "girl_intro_e4_contin",
+      "file": "girl/intro/e4_contin.mp3",
+      "event": "intro",
+      "topic": "e4_contin",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì hiện tại tiếp diễn nhé!"
+    },
+    {
+      "id": "girl_intro_e4_there",
+      "file": "girl/intro/e4_there.mp3",
+      "event": "intro",
+      "topic": "e4_there",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về There is và are nhé!"
+    },
+    {
+      "id": "girl_intro_e4_can",
+      "file": "girl/intro/e4_can.mp3",
+      "event": "intro",
+      "topic": "e4_can",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Can và can't nhé!"
+    },
+    {
+      "id": "girl_intro_e4_time",
+      "file": "girl/intro/e4_time.mp3",
+      "event": "intro",
+      "topic": "e4_time",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thời gian và ngày nhé!"
+    },
+    {
+      "id": "girl_intro_e4_prepos",
+      "file": "girl/intro/e4_prepos.mp3",
+      "event": "intro",
+      "topic": "e4_prepos",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Giới từ nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_e4_translate",
+      "file": "girl/intro/e4_translate.mp3",
+      "event": "intro",
+      "topic": "e4_translate",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dịch câu nhé!"
+    },
+    {
+      "id": "girl_intro_kh4_chat",
+      "file": "girl/intro/kh4_chat.mp3",
+      "event": "intro",
+      "topic": "kh4_chat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chất nhé!"
+    },
+    {
+      "id": "girl_intro_kh4_nangl",
+      "file": "girl/intro/kh4_nangl.mp3",
+      "event": "intro",
+      "topic": "kh4_nangl",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Năng lượng nhé!"
+    },
+    {
+      "id": "girl_intro_kh4_sinhhoc",
+      "file": "girl/intro/kh4_sinhhoc.mp3",
+      "event": "intro",
+      "topic": "kh4_sinhhoc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sinh học nhé!"
+    },
+    {
+      "id": "girl_intro_kh4_namvi",
+      "file": "girl/intro/kh4_namvi.mp3",
+      "event": "intro",
+      "topic": "kh4_namvi",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Nấm và vi khuẩn nhé!"
+    },
+    {
+      "id": "girl_intro_kh4_suckhoe",
+      "file": "girl/intro/kh4_suckhoe.mp3",
+      "event": "intro",
+      "topic": "kh4_suckhoe",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "girl_intro_sd4_diaphuong",
+      "file": "girl/intro/sd4_diaphuong.mp3",
+      "event": "intro",
+      "topic": "sd4_diaphuong",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Lịch sử địa phương nhé!"
+    },
+    {
+      "id": "girl_intro_sd4_vungmien",
+      "file": "girl/intro/sd4_vungmien.mp3",
+      "event": "intro",
+      "topic": "sd4_vungmien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Vùng miền Việt Nam nhé!"
+    },
+    {
+      "id": "girl_intro_sd4_trieudai",
+      "file": "girl/intro/sd4_trieudai.mp3",
+      "event": "intro",
+      "topic": "sd4_trieudai",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Triều đại nhé!"
+    },
+    {
+      "id": "girl_intro_sd4_thiennhien",
+      "file": "girl/intro/sd4_thiennhien.mp3",
+      "event": "intro",
+      "topic": "sd4_thiennhien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thiên nhiên Việt Nam nhé!"
+    },
+    {
+      "id": "girl_intro_dd4_trungthuc",
+      "file": "girl/intro/dd4_trungthuc.mp3",
+      "event": "intro",
+      "topic": "dd4_trungthuc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trung thực và dũng cảm nhé!"
+    },
+    {
+      "id": "girl_intro_dd4_tontrong",
+      "file": "girl/intro/dd4_tontrong.mp3",
+      "event": "intro",
+      "topic": "dd4_tontrong",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Tôn trọng nhé!"
+    },
+    {
+      "id": "girl_intro_dd4_thiennhien",
+      "file": "girl/intro/dd4_thiennhien.mp3",
+      "event": "intro",
+      "topic": "dd4_thiennhien",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Bảo vệ thiên nhiên nhé!"
+    },
+    {
+      "id": "girl_intro_dd4_quyentrem",
+      "file": "girl/intro/dd4_quyentrem.mp3",
+      "event": "intro",
+      "topic": "dd4_quyentrem",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Quyền trẻ em nhé!"
+    },
+    {
+      "id": "girl_intro_th4_mang",
+      "file": "girl/intro/th4_mang.mp3",
+      "event": "intro",
+      "topic": "th4_mang",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Mạng và Internet nhé!"
+    },
+    {
+      "id": "girl_intro_th4_vanban",
+      "file": "girl/intro/th4_vanban.mp3",
+      "event": "intro",
+      "topic": "th4_vanban",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Soạn văn bản nhé!"
+    },
+    {
+      "id": "girl_intro_th4_laptrinh",
+      "file": "girl/intro/th4_laptrinh.mp3",
+      "event": "intro",
+      "topic": "th4_laptrinh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Scratch nhé!"
+    },
+    {
+      "id": "girl_intro_th4_antoan",
+      "file": "girl/intro/th4_antoan.mp3",
+      "event": "intro",
+      "topic": "th4_antoan",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về An toàn thông tin nhé!"
+    },
+    {
+      "id": "girl_intro_m5_dec",
+      "file": "girl/intro/m5_dec.mp3",
+      "event": "intro",
+      "topic": "m5_dec",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Số thập phân nhé!"
+    },
+    {
+      "id": "girl_intro_m5_pct",
+      "file": "girl/intro/m5_pct.mp3",
+      "event": "intro",
+      "topic": "m5_pct",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phần trăm nhé!"
+    },
+    {
+      "id": "girl_intro_m5_frac",
+      "file": "girl/intro/m5_frac.mp3",
+      "event": "intro",
+      "topic": "m5_frac",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Phân số nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_m5_vol",
+      "file": "girl/intro/m5_vol.mp3",
+      "event": "intro",
+      "topic": "m5_vol",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thể tích nhé!"
+    },
+    {
+      "id": "girl_intro_m5_speed",
+      "file": "girl/intro/m5_speed.mp3",
+      "event": "intro",
+      "topic": "m5_speed",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Vận tốc nhé!"
+    },
+    {
+      "id": "girl_intro_m5_circle",
+      "file": "girl/intro/m5_circle.mp3",
+      "event": "intro",
+      "topic": "m5_circle",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hình tròn nhé!"
+    },
+    {
+      "id": "girl_intro_m5_area",
+      "file": "girl/intro/m5_area.mp3",
+      "event": "intro",
+      "topic": "m5_area",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Diện tích nhé!"
+    },
+    {
+      "id": "girl_intro_m5_conv",
+      "file": "girl/intro/m5_conv.mp3",
+      "event": "intro",
+      "topic": "m5_conv",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đổi đơn vị nhé!"
+    },
+    {
+      "id": "girl_intro_m5_expr",
+      "file": "girl/intro/m5_expr.mp3",
+      "event": "intro",
+      "topic": "m5_expr",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biểu thức nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_m5_word",
+      "file": "girl/intro/m5_word.mp3",
+      "event": "intro",
+      "topic": "m5_word",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Toán đố nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_v5_ct",
+      "file": "girl/intro/v5_ct.mp3",
+      "event": "intro",
+      "topic": "v5_ct",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chính tả nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_v5_caugh",
+      "file": "girl/intro/v5_caugh.mp3",
+      "event": "intro",
+      "topic": "v5_caugh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Câu ghép nhé!"
+    },
+    {
+      "id": "girl_intro_v5_qht",
+      "file": "girl/intro/v5_qht.mp3",
+      "event": "intro",
+      "topic": "v5_qht",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Quan hệ từ nhé!"
+    },
+    {
+      "id": "girl_intro_v5_dongam",
+      "file": "girl/intro/v5_dongam.mp3",
+      "event": "intro",
+      "topic": "v5_dongam",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ đồng âm nhé!"
+    },
+    {
+      "id": "girl_intro_v5_bptt",
+      "file": "girl/intro/v5_bptt.mp3",
+      "event": "intro",
+      "topic": "v5_bptt",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Biện pháp tu từ nhé!"
+    },
+    {
+      "id": "girl_intro_v5_lk",
+      "file": "girl/intro/v5_lk.mp3",
+      "event": "intro",
+      "topic": "v5_lk",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Liên kết câu nhé!"
+    },
+    {
+      "id": "girl_intro_v5_tv",
+      "file": "girl/intro/v5_tv.mp3",
+      "event": "intro",
+      "topic": "v5_tv",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_v5_sapxep",
+      "file": "girl/intro/v5_sapxep.mp3",
+      "event": "intro",
+      "topic": "v5_sapxep",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sắp xếp câu nhé!"
+    },
+    {
+      "id": "girl_intro_e5_vocab",
+      "file": "girl/intro/e5_vocab.mp3",
+      "event": "intro",
+      "topic": "e5_vocab",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Từ vựng tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e5_past",
+      "file": "girl/intro/e5_past.mp3",
+      "event": "intro",
+      "topic": "e5_past",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì quá khứ đơn nhé!"
+    },
+    {
+      "id": "girl_intro_e5_future",
+      "file": "girl/intro/e5_future.mp3",
+      "event": "intro",
+      "topic": "e5_future",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thì tương lai nhé!"
+    },
+    {
+      "id": "girl_intro_e5_modal",
+      "file": "girl/intro/e5_modal.mp3",
+      "event": "intro",
+      "topic": "e5_modal",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Should và Must nhé!"
+    },
+    {
+      "id": "girl_intro_e5_compare",
+      "file": "girl/intro/e5_compare.mp3",
+      "event": "intro",
+      "topic": "e5_compare",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về So sánh tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e5_tenses",
+      "file": "girl/intro/e5_tenses.mp3",
+      "event": "intro",
+      "topic": "e5_tenses",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Chia thì nhé!"
+    },
+    {
+      "id": "girl_intro_e5_reading",
+      "file": "girl/intro/e5_reading.mp3",
+      "event": "intro",
+      "topic": "e5_reading",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đọc hiểu tiếng Anh nhé!"
+    },
+    {
+      "id": "girl_intro_e5_translate",
+      "file": "girl/intro/e5_translate.mp3",
+      "event": "intro",
+      "topic": "e5_translate",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dịch câu nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_kh5_biendoi",
+      "file": "girl/intro/kh5_biendoi.mp3",
+      "event": "intro",
+      "topic": "kh5_biendoi",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sự biến đổi nhé!"
+    },
+    {
+      "id": "girl_intro_kh5_nangl",
+      "file": "girl/intro/kh5_nangl.mp3",
+      "event": "intro",
+      "topic": "kh5_nangl",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Năng lượng nhé!"
+    },
+    {
+      "id": "girl_intro_kh5_sinhhoc",
+      "file": "girl/intro/kh5_sinhhoc.mp3",
+      "event": "intro",
+      "topic": "kh5_sinhhoc",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sinh vật và môi trường nhé!"
+    },
+    {
+      "id": "girl_intro_kh5_suckhoe",
+      "file": "girl/intro/kh5_suckhoe.mp3",
+      "event": "intro",
+      "topic": "kh5_suckhoe",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Sức khỏe nhé!"
+    },
+    {
+      "id": "girl_intro_kh5_traidat",
+      "file": "girl/intro/kh5_traidat.mp3",
+      "event": "intro",
+      "topic": "kh5_traidat",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trái Đất và vũ trụ nhé!"
+    },
+    {
+      "id": "girl_intro_sd5_lichsu",
+      "file": "girl/intro/sd5_lichsu.mp3",
+      "event": "intro",
+      "topic": "sd5_lichsu",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Lịch sử Việt Nam cận đại nhé!"
+    },
+    {
+      "id": "girl_intro_sd5_dialy",
+      "file": "girl/intro/sd5_dialy.mp3",
+      "event": "intro",
+      "topic": "sd5_dialy",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Địa lí Việt Nam nhé!"
+    },
+    {
+      "id": "girl_intro_sd5_chaua",
+      "file": "girl/intro/sd5_chaua.mp3",
+      "event": "intro",
+      "topic": "sd5_chaua",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Châu Á nhé!"
+    },
+    {
+      "id": "girl_intro_sd5_thegioi",
+      "file": "girl/intro/sd5_thegioi.mp3",
+      "event": "intro",
+      "topic": "sd5_thegioi",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Thế giới nhé!"
+    },
+    {
+      "id": "girl_intro_dd5_congdan",
+      "file": "girl/intro/dd5_congdan.mp3",
+      "event": "intro",
+      "topic": "dd5_congdan",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Công dân toàn cầu nhé!"
+    },
+    {
+      "id": "girl_intro_dd5_doankiet",
+      "file": "girl/intro/dd5_doankiet.mp3",
+      "event": "intro",
+      "topic": "dd5_doankiet",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đoàn kết nhé!"
+    },
+    {
+      "id": "girl_intro_dd5_hoabinh",
+      "file": "girl/intro/dd5_hoabinh.mp3",
+      "event": "intro",
+      "topic": "dd5_hoabinh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Hòa bình nhé!"
+    },
+    {
+      "id": "girl_intro_dd5_trachnhiem",
+      "file": "girl/intro/dd5_trachnhiem.mp3",
+      "event": "intro",
+      "topic": "dd5_trachnhiem",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trách nhiệm xã hội nhé!"
+    },
+    {
+      "id": "girl_intro_th5_media",
+      "file": "girl/intro/th5_media.mp3",
+      "event": "intro",
+      "topic": "th5_media",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Đa phương tiện nhé!"
+    },
+    {
+      "id": "girl_intro_th5_laptrinh",
+      "file": "girl/intro/th5_laptrinh.mp3",
+      "event": "intro",
+      "topic": "th5_laptrinh",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Scratch nâng cao nhé!"
+    },
+    {
+      "id": "girl_intro_th5_slide",
+      "file": "girl/intro/th5_slide.mp3",
+      "event": "intro",
+      "topic": "th5_slide",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Trình bày slide nhé!"
+    },
+    {
+      "id": "girl_intro_th5_duan",
+      "file": "girl/intro/th5_duan.mp3",
+      "event": "intro",
+      "topic": "th5_duan",
+      "character": "girl",
+      "text": "Chào bạn! Hôm nay chúng mình học về Dự án tin học nhé!"
+    }
+  ]
+}

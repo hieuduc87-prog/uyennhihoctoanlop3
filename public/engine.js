@@ -23,6 +23,82 @@ function sndLevelUp(){var n=[392,494,587,659,784,988,1047];for(var i=0;i<n.lengt
 function sndStart(){tone(523,.12,'sine',.2);tone(659,.12,'sine',.2,.1);tone(784,.12,'sine',.25,.2);tone(1047,.25,'triangle',.3,.3)}
 function sndFail(){tone(392,.2,'triangle',.15);tone(330,.3,'triangle',.12,.15)}
 
+// ============ VOICE SYSTEM ============
+var _voiceManifest=null;
+var _voiceAudio=new Audio();
+var _voiceEnabled=true;
+var _voiceLoaded=false;
+var _idleTimer=null;
+var _speechSynth=window.speechSynthesis||null;
+
+// Load voice manifest
+(function(){
+  fetch('/voice/voice_manifest.json').then(function(r){return r.json()}).then(function(data){
+    _voiceManifest=data;_voiceLoaded=true;
+    console.log('[Voice] Loaded manifest: '+data.total_files+' entries');
+  }).catch(function(e){console.log('[Voice] No manifest found, voice disabled')});
+})();
+
+function voiceEnabled(){
+  if(!_voiceEnabled||!sndEnabled())return false;
+  try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceEnabled===false)return false}catch(e){}
+  return true;
+}
+function voiceReadEnabled(){
+  try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceReadEnabled===false)return false}catch(e){}
+  return true;
+}
+function getVoiceChar(){return PP.gender==='boy'?'boy':'girl'}
+
+// Play a pre-recorded voice line
+function voicePlay(event,topicId){
+  if(!voiceEnabled()||!_voiceManifest)return;
+  var char=getVoiceChar();
+  var entries=_voiceManifest.entries.filter(function(e){
+    return e.event===event&&e.character===char&&(!topicId||e.topic===topicId);
+  });
+  if(!entries.length&&topicId){
+    // Fallback: try without topic
+    entries=_voiceManifest.entries.filter(function(e){return e.event===event&&e.character===char&&!e.topic});
+  }
+  if(!entries.length)return;
+  var pick=entries[Math.floor(Math.random()*entries.length)];
+  try{
+    _voiceAudio.pause();_voiceAudio.currentTime=0;
+    _voiceAudio.src='/voice/'+pick.file;
+    _voiceAudio.volume=0.8;
+    _voiceAudio.play().catch(function(){});
+  }catch(e){}
+}
+
+// Read question text aloud using browser TTS
+function voiceReadQuestion(text){
+  if(!voiceEnabled()||!_speechSynth||!voiceReadEnabled())return;
+  try{
+    _speechSynth.cancel();
+    var clean=text.replace(/[◻️⬜️🔴🔵💛💚🐱🐕🐟🌍🏠📚🎨🐾🌤️🧒💕🙏⭐🧼🔢📖✍️📝🔤💬✏️📚❓⚖️🔀🔷🕐➕➖✖️➗❗📐📏🧮🍕📊🏷️💡🔍🌳🏫🦊🌱🧪⚡🌿🍄💪🌏🎯✅🏡🤝👨‍👩‍👧👗😊📍🚌💻📊🛡️🖥️🌐📝🐱🔒🎬🚀💻🧒👑🗺️🌴🕊️✊🏛️🔬🏥📜⏰🏃💪⏪⏩⚠️📖🌐⏰📦🚗⭕📐📏🧮📝🔗🔤🔀]/g,'');
+    clean=clean.replace(/\n/g,'. ').replace(/\s+/g,' ').trim();
+    if(!clean)return;
+    // Detect language: if mostly ASCII → English
+    var asciiRatio=clean.replace(/[^a-zA-Z]/g,'').length/clean.length;
+    var u=new SpeechSynthesisUtterance(clean);
+    u.lang=asciiRatio>0.5?'en-US':'vi-VN';
+    u.rate=0.9;u.pitch=1.1;u.volume=0.7;
+    _speechSynth.speak(u);
+  }catch(e){}
+}
+
+// Start idle timer (reminder if no interaction for 30s)
+function voiceStartIdle(){
+  voiceStopIdle();
+  _idleTimer=setTimeout(function(){
+    voicePlay('idle');
+    // Repeat every 60s
+    _idleTimer=setTimeout(arguments.callee,60000);
+  },30000);
+}
+function voiceStopIdle(){if(_idleTimer){clearTimeout(_idleTimer);_idleTimer=null}}
+
 // ============ PLAYER PROFILE ============
 var PP=(function(){try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.name)return p}catch(e){}return{name:'Bé',gender:'girl',avatar:'nhinhi',pet:'corgi'}})();
 var ART_MILESTONES=[1,2,3,4,5];
@@ -74,6 +150,9 @@ function showEvolution(type,newLevel){
     (stage.hasCrown?'<div class="evo-bonus">👑 Vương miện!</div>':stage.hasGlow?'<div class="evo-bonus">✨ Phát sáng!</div>':stage.hasCape?'<div class="evo-bonus">🧥 Áo choàng!</div>':stage.hasHat?'<div class="evo-bonus">🎩 Nón phép!</div>':'')+
     '</div>';
   document.body.appendChild(ov);sndLevelUp();spawnConfetti();
+  // Voice: level up or pet evolve
+  if(type==='pet')voicePlay('pet_evolve');
+  else voicePlay('level_up');
   setTimeout(function(){ov.remove()},3000);
 }
 // Pet abilities
@@ -312,7 +391,7 @@ function switchSubject(idx){
   renderGrid();
 }
 function startGame(){sndStart();checkStreak();showScreen('map');document.getElementById('bottomNav').style.display='flex';renderGrid();updateUI()}
-function exitGame(){clearInterval(timerInt);showScreen('map')}
+function exitGame(){clearInterval(timerInt);voiceStopIdle();voicePlay('goodbye');if(_speechSynth)_speechSynth.cancel();showScreen('map')}
 
 // ============ STREAK ============
 function checkStreak(){var t=new Date().toDateString();if(D.lastPlay===t)return;var y=new Date(Date.now()-864e5).toDateString();D.lastPlay===y?D.streak++:D.streak=1;D.lastPlay=t;save()}
@@ -353,6 +432,9 @@ function startSkill(id,subIdx){
   document.getElementById('tQ').textContent=Q_CT;
   document.getElementById('corgiG').innerHTML=CSvg(55);
   document.getElementById('corgiG').style.display='block';
+  // Voice: play skill intro
+  voicePlay('intro',sk.id);
+  voiceStartIdle();
   showQ();
 }
 function replaySkill(){if(curSkill){sndTap();startSkill(curSkill.id,curSubject)}}
@@ -360,8 +442,10 @@ function replaySkill(){if(curSkill){sndTap();startSkill(curSkill.id,curSubject)}
 // ============ SHOW QUESTION ============
 function showQ(){
   if(qIdx>=Q_CT){endRound();return}
-  _answered=false;
+  _answered=false;voiceStopIdle();voiceStartIdle();
   var q=questions[qIdx];var area=document.getElementById('gameArea');timeLeft=TIME_Q;
+  // Voice: read question text (browser TTS)
+  setTimeout(function(){voiceReadQuestion(q.text)},300);
   var fs=q.text.length>60?'16px':q.text.length>35?'22px':'28px';
   var singleCol=q.isText&&q.options.some(function(o){return o.length>12});
   area.innerHTML='<div class="timer-bar"><div class="fill" id="tF" style="width:100%"></div></div>'
@@ -426,6 +510,11 @@ function handleC(){
   setTimeout(function(){cg.classList.remove('corgi-spin','corgi-bounce')},800);
   if(combo>=3)sndCombo(combo);else sndCorrect();
   showEnc(true);
+  // Voice: praise or streak
+  if(combo===10)voicePlay('streak');
+  else if(combo===5)voicePlay('streak');
+  else if(combo===3)voicePlay('streak');
+  else voicePlay('correct');
   if(combo>=2){var cd=document.getElementById('comboDisplay');cd.textContent=combo+'x COMBO \ud83d\udd25';cd.classList.remove('show');requestAnimationFrame(function(){cd.classList.add('show')});setTimeout(function(){cd.classList.remove('show')},1500)}
   spawnFloat('\ud83d\udc95',2);
   // Floating score popup
@@ -441,6 +530,8 @@ function handleW(){
   cg.classList.add('corgi-sad');
   setTimeout(function(){cg.classList.remove('corgi-sad')},600);
   showEnc(false);spawnFloat('\ud83d\udcaa',1);
+  // Voice: encouragement
+  voicePlay('wrong');
 }
 function nextQ(){qIdx++;if(GC.hasLives&&_lives<=0){endRound();return}showQ()}
 
@@ -504,7 +595,10 @@ function endRound(){
   try{updateDaily(correct)}catch(e){}
   var lvReward=checkLevelReward();
   save();showScreen('result');
+  voiceStopIdle();
   if(stars>=3)sndStar();else if(stars>=1)sndCorrect();else sndFail();
+  // Voice: round end feedback
+  setTimeout(function(){voicePlay('round_end')},500);
   var mood=stars>=3?'love':stars>=2?'excited':stars>=1?'happy':'sad';
   document.getElementById('resultScene').innerHTML='<div class="'+(stars>=2?'corgi-happy':'')+'" style="display:flex;align-items:flex-end;justify-content:center;gap:6px">'+UNhi(stars>=2?120:100)+CSvg(stars>=2?90:75)+'</div>';
   var _pn=getPlayerName();
@@ -1130,6 +1224,8 @@ function renderSettings(){
   el.innerHTML=
     '<div class="set-group"><div class="set-title">🎮 Cài đặt Học tập</div>'+
     '<div class="set-row"><span class="set-lbl">🔊 Âm thanh</span><button class="set-toggle '+(sndOn?'on':'')+'" onclick="toggleSound(this)">'+(sndOn?'BẬT':'TẮT')+'</button></div>'+
+    '<div class="set-row"><span class="set-lbl">🎙️ Giọng nói</span><button class="set-toggle '+(voiceEnabled()?'on':'')+'" onclick="toggleVoice(this)">'+(voiceEnabled()?'BẬT':'TẮT')+'</button></div>'+
+    '<div class="set-row"><span class="set-lbl">📖 Đọc đề bài</span><button class="set-toggle '+(voiceReadEnabled()?'on':'')+'" onclick="toggleVoiceRead(this)">'+(voiceReadEnabled()?'BẬT':'TẮT')+'</button></div>'+
     '<div class="set-row"><span class="set-lbl">⏱️ Đồng hồ</span><button class="set-toggle '+(s.timerOn!==false?'on':'')+'" onclick="toggleTimer(this)">'+(s.timerOn!==false?'BẬT':'TẮT')+'</button></div>'+
     '<div class="set-row"><span class="set-lbl">📝 Số câu/lượt</span><div class="set-pills">'+
       [5,10,15,20].map(function(n){return '<button class="set-pill '+(s.qPerRound===n?'active':'')+'" onclick="setQPerRound('+n+',this)">'+n+'</button>'}).join('')+
@@ -1158,6 +1254,14 @@ function toggleSound(btn){
   try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.soundEnabled=!sndEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
   btn.classList.toggle('on');btn.textContent=sndEnabled()?'BẬT':'TẮT';
   if(sndEnabled())sndTap();
+}
+function toggleVoice(btn){
+  try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.voiceEnabled=!voiceEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
+  btn.classList.toggle('on');btn.textContent=voiceEnabled()?'BẬT':'TẮT';sndTap();
+}
+function toggleVoiceRead(btn){
+  try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.voiceReadEnabled=!voiceReadEnabled();localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
+  btn.classList.toggle('on');btn.textContent=voiceReadEnabled()?'BẬT':'TẮT';sndTap();
 }
 function toggleTimer(btn){
   if(!D.settings)D.settings={};D.settings.timerOn=!D.settings.timerOn;save();
