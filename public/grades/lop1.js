@@ -82,6 +82,92 @@ var ENG_SKILLS=[
   {id:'e1_family',name:'Family',emoji:'\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67',color:'rgba(192,132,252,.2)',gen:function(l){var qs=[TQ('M\u1eb9 = ?','mother',['father','sister','brother']),TQ('B\u1ed1 = ?','father',['mother','brother','uncle']),TQ('Em g\u00e1i = ?','sister',['brother','mother','friend']),TQ('\u00d4ng = ?','grandfather',['grandmother','father','uncle'])];return qs[R(0,qs.length-1)]}},
 ];
 
+// ============ TU NHIEN & XA HOI SKILLS ============
+var TNXH_SKILLS=[
+  {id:'tn1_gd',name:'Gia đình',emoji:'👨‍👩‍👧',color:'rgba(102,187,106,.2)',gen:function(l){var qs=[
+    TQ('Ai sinh ra em?','Bố mẹ',['Ông bà','Cô chú','Thầy cô']),
+    TQ('Gia đình gồm những ai?','Bố, mẹ, con cái',['Bạn bè','Cô giáo','Hàng xóm']),
+    TQ('Ai là chị/em của bố?','Cô/Chú',['Ông/Bà','Bố/Mẹ','Anh/Chị']),
+    TQ('Ai là bố/mẹ của bố?','Ông bà nội',['Ông bà ngoại','Cô chú','Bác']),
+    TQ('Ai là bố/mẹ của mẹ?','Ông bà ngoại',['Ông bà nội','Cô chú','Dì']),
+    TQ('Em yêu ai nhất?','Bố mẹ',['Siêu nhân','Robot','Máy tính'],'Gia đình'),
+    TQ('Gia đình em sống ở đâu?','Trong ngôi nhà',['Trên mây','Dưới biển','Trên cây']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn1_truong',name:'Trường học',emoji:'🏫',color:'rgba(66,165,245,.2)',gen:function(l){var qs=[
+    TQ('Ai dạy em ở trường?','Thầy/Cô giáo',['Bố mẹ','Bạn bè','Ông bà']),
+    TQ('Em đến trường để làm gì?','Học tập',['Ngủ','Ăn','Chơi game']),
+    TQ('Bạn bè ở trường cần?','Yêu thương, giúp đỡ',['Đánh nhau','Không chơi','Trêu chọc']),
+    TQ('Giờ ra chơi em làm gì?','Chơi với bạn',['Về nhà','Ngủ','Đánh nhau']),
+    TQ('Đồ dùng học tập gồm?','Sách, vở, bút',['Đồ ăn','Đồ chơi','Quần áo']),
+    TQ('Khi vào lớp em phải?','Chào thầy cô',['Chạy nhảy','La hét','Ngủ']),
+    TQ('Giữ gìn trường lớp bằng cách?','Không xả rác',['Vẽ lên tường','Ném giấy','Bẻ cây']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn1_caycon',name:'Cây cối & Động vật',emoji:'🌳',color:'rgba(76,175,80,.2)',gen:function(l){var qs=[
+    TQ('Cây cần gì để sống?','Nước, ánh sáng',['Kẹo','Sữa','Cơm']),
+    TQ('Con gì biết bay?','Chim',['Cá','Mèo','Rùa']),
+    TQ('Con gì sống dưới nước?','Cá',['Gà','Mèo','Chó']),
+    TQ('Cây có những bộ phận nào?','Rễ, thân, lá, hoa',['Tay, chân','Đầu, mình','Mắt, mũi']),
+    TQ('Con gì cho ta trứng?','Gà',['Chó','Mèo','Cá']),
+    TQ('Con gì cho ta sữa?','Bò',['Gà','Cá','Chim']),
+    TQ('Hoa dùng để làm gì?','Trang trí, ngắm',['Ăn cơm','Viết bài','Chạy nhảy']),
+    TQ('Con gì kêu "meo meo"?','Mèo',['Chó','Gà','Vịt']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn1_thoitiet',name:'Thời tiết',emoji:'🌤️',color:'rgba(255,183,77,.2)',gen:function(l){var qs=[
+    TQ('Trời mưa cần mang gì?','Ô (dù)',['Kính râm','Quạt','Kem chống nắng']),
+    TQ('Mùa nào trời nóng nhất?','Mùa hè',['Mùa đông','Mùa xuân','Mùa thu']),
+    TQ('Mùa nào trời lạnh nhất?','Mùa đông',['Mùa hè','Mùa xuân','Mùa thu']),
+    TQ('Khi trời nắng ta thấy?','Nóng, sáng',['Lạnh, tối','Mưa, gió','Tuyết rơi']),
+    TQ('Mặt trời mọc hướng nào?','Hướng Đông',['Hướng Tây','Hướng Nam','Hướng Bắc']),
+    TQ('Cầu vồng xuất hiện khi?','Sau cơn mưa',['Buổi tối','Mùa đông','Khi tuyết rơi']),
+    TQ('Mây tạo thành từ gì?','Hơi nước',['Bông','Khói','Bụi']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn1_cothe',name:'Cơ thể em',emoji:'🧒',color:'rgba(239,154,154,.2)',gen:function(l){var qs=[
+    TQ('Mắt dùng để làm gì?','Nhìn',['Nghe','Ngửi','Nếm']),
+    TQ('Tai dùng để làm gì?','Nghe',['Nhìn','Ngửi','Sờ']),
+    TQ('Mũi dùng để làm gì?','Ngửi, thở',['Nhìn','Nghe','Nếm']),
+    TQ('Người có mấy giác quan?','5 giác quan',['3 giác quan','2 giác quan','10 giác quan']),
+    TQ('Để khỏe mạnh cần?','Ăn uống, tập thể dục',['Ngủ cả ngày','Ăn kẹo','Chơi game']),
+    TQ('Trước khi ăn phải?','Rửa tay',['Chạy nhảy','Ngủ','Hát']),
+    TQ('Lưỡi dùng để?','Nếm',['Nhìn','Nghe','Ngửi']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
+// ============ DAO DUC SKILLS ============
+var DAODUC_SKILLS=[
+  {id:'dd1_yeu',name:'Yêu thương',emoji:'💕',color:'rgba(236,64,122,.2)',gen:function(l){var qs=[
+    TQ('Khi mẹ mệt, em nên?','Giúp mẹ, hỏi thăm',['Đòi mua đồ','La hét','Không quan tâm']),
+    TQ('Yêu thương gia đình là?','Quan tâm, giúp đỡ',['Đánh nhau','Không nghe lời','Hay khóc']),
+    TQ('Em thể hiện yêu thương bằng?','Ôm, nói lời yêu',['Đánh bạn','Không chào','Nói dối']),
+    TQ('Khi bố đi làm về, em?','Chào bố, lấy nước',['Không chào','Đòi quà','Khóc']),
+    TQ('Bạn bè cần?','Yêu thương nhau',['Ghét nhau','Đánh nhau','Không chơi']),
+    TQ('Khi em trai khóc, em nên?','Dỗ dành, an ủi',['Trêu thêm','Bỏ đi','La mắng']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd1_lephep',name:'Lễ phép',emoji:'🙏',color:'rgba(171,71,188,.2)',gen:function(l){var qs=[
+    TQ('Gặp thầy cô, em phải?','Chào ạ',['Bỏ đi','Không nói gì','Chạy trốn']),
+    TQ('Khi nhận quà, em nói?','Con cảm ơn ạ',['Không nói gì','Đòi thêm','Chê xấu']),
+    TQ('Khi làm sai, em nói?','Con xin lỗi ạ',['Đổ lỗi bạn','Không nói gì','Cười']),
+    TQ('Lễ phép là gì?','Biết chào hỏi, cảm ơn',['Nói to','Chạy nhảy','Nghịch phá']),
+    TQ('Khi người lớn nói, em?','Lắng nghe',['Nói chen vào','Bỏ đi','Nghịch điện thoại']),
+    TQ('Muốn hỏi ai điều gì, em nói?','Cho em hỏi ạ',['Nói luôn','Hét to','Không hỏi']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd1_trungthuc',name:'Trung thực',emoji:'⭐',color:'rgba(255,183,77,.2)',gen:function(l){var qs=[
+    TQ('Trung thực nghĩa là?','Nói thật, không gian dối',['Nói dối','Giấu lỗi','Đổ lỗi']),
+    TQ('Nhặt được tiền, em nên?','Trả lại người mất',['Giữ lấy','Giấu đi','Tiêu luôn']),
+    TQ('Khi mắc lỗi, em nên?','Nhận lỗi, xin lỗi',['Đổ lỗi bạn','Giấu đi','Nói dối']),
+    TQ('Bạn nói dối, em nên?','Khuyên bạn nói thật',['Nói dối theo','Mặc kệ','Trêu bạn']),
+    TQ('Không làm bài tập, em nên?','Nói thật với cô',['Chép bài bạn','Nói dối','Giấu đi']),
+    TQ('Em bé trung thực được?','Mọi người yêu quý',['Bị phạt','Bị ghét','Không ai chơi']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd1_vesinh',name:'Giữ vệ sinh',emoji:'🧼',color:'rgba(129,212,250,.2)',gen:function(l){var qs=[
+    TQ('Trước khi ăn phải?','Rửa tay bằng xà phòng',['Chơi tiếp','Không cần rửa','Lau vào áo']),
+    TQ('Rác bỏ ở đâu?','Thùng rác',['Dưới đất','Ngoài cửa','Dưới bàn']),
+    TQ('Đánh răng mỗi ngày mấy lần?','Ít nhất 2 lần',['Không cần','1 tuần 1 lần','1 tháng 1 lần']),
+    TQ('Giữ lớp sạch sẽ bằng cách?','Không xả rác',['Vứt rác xuống sàn','Vẽ lên bàn','Nhổ nước bọt']),
+    TQ('Sau khi đi vệ sinh phải?','Rửa tay sạch',['Chạy đi chơi','Không cần rửa','Lau vào quần']),
+    TQ('Quần áo cần?','Giặt sạch sẽ',['Mặc bẩn','Không thay','Vứt đi']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
 // ============ ENCOURAGEMENT MESSAGES ============
 var CORGI_TAP=['Paoo!','Y\u00eau b\u00e9!','\ud83d\udc3e','Hehe!','\ud83d\udc95','\ud83d\udc18','Woof!','\ud83c\udf1f','Ch\u01a1i \u0111i!','Gi\u1ecfi!'];
 var C_MSGS=[{t:'Gi\u1ecfi qu\u00e1!',s:'B\u00e9 si\u00eau \u0111\u1ec9nh! \ud83c\udf1f'},{t:'\u0110\u00fang r\u1ed3i!',s:'Voi m\u1eebng l\u1eafm! \ud83d\udc18'},{t:'Tuy\u1ec7t v\u1eddi!',s:'Combo l\u00ean n\u00e0o! \ud83d\udd25'},{t:'Wow!',s:'Thi\u00ean t\u00e0i nh\u00ed! \ud83e\udde0'},{t:'Perfect!',s:'Voi t\u1ef1 h\u00e0o! \ud83d\udc18'},{t:'Amazing!',s:'Keep going! \ud83d\udcaa'},{t:'Si\u00eau sao!',s:'Ng\u00f4i sao s\u00e1ng! \u2b50'}];
@@ -106,10 +192,14 @@ window.GRADE_CONFIG={
     ['To\u00e1n d\u1ec5 l\u1eafm, ch\u01a1i \u0111i!','C\u1ed9ng tr\u1eeb h\u00f4m nay nh\u00e9!','Voi th\u00edch to\u00e1n!'],
     ['Ti\u1ebfng Vi\u1ec7t hay l\u1eafm!','Gh\u00e9p t\u1eeb gi\u1ecfi n\u00e8!','\u0110\u1ecdc ch\u1eef c\u00f9ng Voi!'],
     ['English is fun!','Let\'s learn ABC!','Elephant says Hello!'],
+    ['Thi\u00ean nhi\u00ean k\u1ef3 th\u00fa!','Kh\u00e1m ph\u00e1 th\u1ebf gi\u1edbi n\u00e0o!','Voi bi\u1ebft nhi\u1ec1u l\u1eafm!'],
+    ['B\u00e9 ngoan n\u00e0o!','L\u1ec5 ph\u00e9p gi\u1ecfi gh\u00ea!','Voi y\u00eau b\u00e9 ngoan!'],
   ],
   subjects:[
     {id:'math',name:'To\u00e1n',emoji:'\ud83d\udd22',skills:MATH_SKILLS,color:'#22d3ee'},
     {id:'viet',name:'Ti\u1ebfng Vi\u1ec7t',emoji:'\ud83d\udcd6',skills:VIET_SKILLS,color:'#f472b6'},
     {id:'eng',name:'English',emoji:'\ud83c\udf0d',skills:ENG_SKILLS,color:'#a78bfa'},
+    {id:'tnxh',name:'TN & XH',emoji:'\ud83c\udf3f',skills:TNXH_SKILLS,color:'#66bb6a'},
+    {id:'daoduc',name:'\u0110\u1ea1o \u0110\u1ee9c',emoji:'\ud83d\udc9d',skills:DAODUC_SKILLS,color:'#ec407a'},
   ],
 };

@@ -118,6 +118,125 @@ var ENG_SKILLS=[
     var qs=[TQ('"I love my family" ngh\u0129a l\u00e0?','Em y\u00eau gia \u0111\u00ecnh',['Em \u0111i h\u1ecdc','Em \u0103n c\u01a1m','Em ch\u01a1i game']),TQ('"The cat is cute" ngh\u0129a l\u00e0?','Con m\u00e8o d\u1ec5 th\u01b0\u01a1ng',['Con ch\u00f3 l\u1edbn','Con c\u00e1 b\u01a1i','Con chim bay']),TQ('D\u1ecbch: "Em \u0111i h\u1ecdc"?','I go to school',['I eat lunch','I play games','I like cats']),TQ('"What is your name?"','B\u1ea1n t\u00ean g\u00ec?',['B\u1ea1n \u1edf \u0111\u00e2u?','B\u1ea1n bao tu\u1ed5i?','B\u1ea1n kho\u1ebb kh\u00f4ng?']),TQ('D\u1ecbch: "Tr\u1eddi \u0111\u1eb9p qu\u00e1"','It\'s beautiful',['I\'m happy','Thank you','Good morning']),TQ('"I am eight years old"?','Em 8 tu\u1ed5i',['Em 8 b\u1ea1n','Em l\u1edbp 8','Em 8 gi\u1edd'])];return qs[R(0,qs.length-1)]}},
 ];
 
+// ============ TU NHIEN & XA HOI SKILLS ============
+var TNXH_SKILLS=[
+  {id:'tn3_chat',name:'Chất & NL',emoji:'⚡',color:'rgba(255,183,77,.2)',gen:function(l){var qs=[
+    TQ('Nước tồn tại ở mấy thể?','3 thể (rắn, lỏng, khí)',['1 thể','2 thể','4 thể']),
+    TQ('Nước đá là thể gì?','Thể rắn',['Thể lỏng','Thể khí','Thể plasma']),
+    TQ('Hơi nước là thể gì?','Thể khí',['Thể rắn','Thể lỏng','Thể đặc']),
+    TQ('Nguồn năng lượng lớn nhất?','Mặt Trời',['Mặt Trăng','Gió','Nước']),
+    TQ('Âm thanh truyền qua gì?','Không khí, nước, chất rắn',['Chỉ không khí','Chỉ nước','Không truyền']),
+    TQ('Ánh sáng đi theo đường?','Đường thẳng',['Đường cong','Đường gấp','Đường tròn']),
+    TQ('Nam châm hút vật liệu?','Sắt, thép',['Gỗ','Nhựa','Giấy']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn3_thucvat',name:'TV & ĐV',emoji:'🌿',color:'rgba(76,175,80,.2)',gen:function(l){var qs=[
+    TQ('Cây xanh quang hợp cần?','CO₂ + ánh sáng + nước',['Chỉ nước','Chỉ đất','Chỉ gió']),
+    TQ('Cây hô hấp tạo ra?','CO₂',['O₂','H₂O','Đất']),
+    TQ('Côn trùng có mấy chân?','6 chân',['4 chân','8 chân','2 chân']),
+    TQ('Nhện có mấy chân?','8 chân',['6 chân','4 chân','10 chân']),
+    TQ('Động vật có xương sống?','Cá, chim, thú',['Sâu, giun','Ốc, sên','Bướm, ong']),
+    TQ('Thú nuôi con bằng gì?','Sữa mẹ',['Trứng','Hạt','Lá cây']),
+    TQ('Cá thở bằng gì?','Mang',['Phổi','Da','Mũi']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn3_nam',name:'Nấm & VK',emoji:'🍄',color:'rgba(171,71,188,.2)',gen:function(l){var qs=[
+    TQ('Vi khuẩn có thể nhìn bằng mắt?','Không, rất nhỏ',['Có','Rất to','Bình thường']),
+    TQ('Nấm mốc thường mọc ở?','Thức ăn ôi thiu',['Trên trời','Dưới nước','Trong lửa']),
+    TQ('Vi khuẩn có lợi giúp?','Làm sữa chua, phô mai',['Gây bệnh','Phá đồ','Ăn thức ăn']),
+    TQ('Rửa tay giúp diệt?','Vi khuẩn gây bệnh',['Côn trùng','Động vật','Cây cối']),
+    TQ('Nấm thuộc giới nào?','Giới nấm (không phải TV)',['Thực vật','Động vật','Vi khuẩn']),
+    TQ('Vi khuẩn ở khắp nơi trừ?','Nơi rất nóng (>100°C)',['Trong nước','Trên da','Trong đất']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn3_suckhoe',name:'Sức khỏe',emoji:'💪',color:'rgba(239,154,154,.2)',gen:function(l){var qs=[
+    TQ('Thức ăn chia thành mấy nhóm?','4 nhóm chính',['1 nhóm','2 nhóm','10 nhóm']),
+    TQ('Vitamin C có nhiều trong?','Cam, chanh',['Thịt bò','Cơm','Sữa']),
+    TQ('Protein (đạm) có trong?','Thịt, cá, trứng',['Cơm','Rau','Kẹo']),
+    TQ('Canxi tốt cho?','Xương và răng',['Tóc','Mắt','Tai']),
+    TQ('Bệnh cận thị do?','Xem gần nhiều',['Ăn nhiều','Ngủ nhiều','Chạy nhiều']),
+    TQ('Phòng bệnh tốt nhất bằng?','Vệ sinh, tiêm phòng',['Uống thuốc','Không ăn','Ngủ nhiều']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn3_traidat',name:'Trái Đất',emoji:'🌏',color:'rgba(66,165,245,.2)',gen:function(l){var qs=[
+    TQ('Trái Đất quay quanh?','Mặt Trời',['Mặt Trăng','Sao Hỏa','Sao Kim']),
+    TQ('1 ngày Trái Đất quay mấy vòng?','1 vòng quanh trục',['2 vòng','Không quay','10 vòng']),
+    TQ('Lớp ngoài Trái Đất gọi là?','Vỏ Trái Đất',['Nhân','Lõi','Mây']),
+    TQ('Đại dương nào lớn nhất?','Thái Bình Dương',['Đại Tây Dương','Ấn Độ Dương','Bắc Băng Dương']),
+    TQ('Núi lửa phun ra gì?','Dung nham (magma)',['Nước','Gió','Đất']),
+    TQ('Nước chiếm bao nhiêu % bề mặt?','Khoảng 70%',['30%','50%','90%']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
+// ============ DAO DUC SKILLS ============
+var DAODUC_SKILLS=[
+  {id:'dd3_tuchu',name:'Tự chủ',emoji:'🎯',color:'rgba(236,64,122,.2)',gen:function(l){var qs=[
+    TQ('Tự chủ nghĩa là?','Kiểm soát bản thân',['Làm bừa','Theo bạn','Không nghe ai']),
+    TQ('Khi tức giận em nên?','Hít thở sâu, bình tĩnh',['Đánh bạn','La hét','Đập đồ']),
+    TQ('Bạn rủ nghỉ học đi chơi?','Từ chối, đi học',['Đi chơi luôn','Phân vân','Rủ thêm bạn']),
+    TQ('Tự giác làm bài tập là?','Tự chủ tốt',['Lười biếng','Bắt buộc','Không cần']),
+    TQ('Khi gặp khó khăn em nên?','Cố gắng, không bỏ cuộc',['Bỏ cuộc','Khóc','Đổ lỗi']),
+    TQ('Em tự dọn phòng không cần ai nhắc là?','Tự giác, tự chủ',['Bị bắt','Lười biếng','Sợ mẹ']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd3_trachnhiem',name:'Trách nhiệm',emoji:'✅',color:'rgba(66,165,245,.2)',gen:function(l){var qs=[
+    TQ('Trách nhiệm của HS là?','Học tập tốt',['Chơi game','Ngủ','Xem TV']),
+    TQ('Khi nhận nhiệm vụ trực nhật?','Làm đầy đủ',['Trốn về','Nhờ bạn','Quên luôn']),
+    TQ('Làm hỏng đồ của bạn, em?','Xin lỗi và đền',['Giấu đi','Đổ lỗi','Bỏ chạy']),
+    TQ('Có trách nhiệm nghĩa là?','Hoàn thành việc được giao',['Chơi cả ngày','Đổ lỗi','Quên hết']),
+    TQ('Em phải chịu trách nhiệm về?','Hành động của mình',['Hành động của bạn','Thời tiết','Điểm của bạn']),
+    TQ('Quên làm BT, em nên?','Nhận lỗi, làm bù',['Nói dối','Chép bài bạn','Khóc']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd3_quehuong',name:'Yêu quê hương',emoji:'🏡',color:'rgba(76,175,80,.2)',gen:function(l){var qs=[
+    TQ('Thủ đô Việt Nam là?','Hà Nội',['TP.HCM','Đà Nẵng','Huế']),
+    TQ('Quốc kỳ VN màu gì?','Đỏ, sao vàng',['Xanh trắng','Đỏ trắng','Vàng xanh']),
+    TQ('Quốc ca VN tên gì?','Tiến Quân Ca',['Đoàn Ca','Hát Mãi','Quốc Ca']),
+    TQ('Ngày Quốc khánh VN là?','2 tháng 9',['1 tháng 1','30 tháng 4','20 tháng 11']),
+    TQ('Yêu quê hương bằng cách?','Giữ gìn, xây dựng',['Phá hoại','Xả rác','Bỏ đi']),
+    TQ('Di sản nổi tiếng VN?','Vịnh Hạ Long',['Tháp Eiffel','Kim tự tháp','Vạn lý trường thành']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd3_hoptac',name:'Hợp tác',emoji:'🤝',color:'rgba(255,183,77,.2)',gen:function(l){var qs=[
+    TQ('Hợp tác nghĩa là?','Cùng nhau làm việc',['Làm một mình','Không giúp ai','Tranh giành']),
+    TQ('Khi làm nhóm, em nên?','Chia công việc, cùng làm',['Để bạn làm hết','Chơi','Không tham gia']),
+    TQ('"Một cây làm chẳng nên non"\nNghĩa là?','Cần hợp tác',['Trồng cây','Leo núi','Một mình']),
+    TQ('Bạn trong nhóm chưa hiểu, em?','Giải thích giúp bạn',['Mặc kệ','Chê bạn','Bỏ nhóm']),
+    TQ('Kết quả nhóm tốt khi?','Mọi người cùng cố gắng',['Một người làm','Không ai làm','Tranh cãi']),
+    TQ('Hợp tác giúp em?','Hoàn thành tốt hơn',['Mệt hơn','Chậm hơn','Khó hơn']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
+// ============ TIN HOC SKILLS ============
+var TINHOC_SKILLS=[
+  {id:'th3_maytinh',name:'Máy tính',emoji:'💻',color:'rgba(92,107,192,.2)',gen:function(l){var qs=[
+    TQ('Bộ phận nào hiển thị hình ảnh?','Màn hình',['Chuột','Bàn phím','Loa']),
+    TQ('Bàn phím dùng để?','Gõ chữ, nhập dữ liệu',['Xem hình','Nghe nhạc','In giấy']),
+    TQ('Chuột dùng để?','Di chuyển, nhấp chọn',['Gõ chữ','Nghe nhạc','Chụp ảnh']),
+    TQ('CPU là gì?','Bộ xử lý trung tâm',['Màn hình','Bàn phím','Loa']),
+    TQ('Máy tính lưu dữ liệu ở?','Ổ cứng / Bộ nhớ',['Màn hình','Chuột','Loa']),
+    TQ('USB dùng để?','Lưu trữ, chuyển dữ liệu',['Nghe nhạc','Gõ chữ','Xem phim']),
+    TQ('Máy in dùng để?','In tài liệu ra giấy',['Gõ chữ','Lướt web','Nghe nhạc']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'th3_thongtin',name:'Thông tin',emoji:'📊',color:'rgba(66,165,245,.2)',gen:function(l){var qs=[
+    TQ('Thông tin có thể là?','Chữ, số, hình, âm thanh',['Chỉ chữ','Chỉ số','Chỉ hình']),
+    TQ('File ảnh thường có đuôi?','.jpg, .png',['doc','mp3','pdf']),
+    TQ('File nhạc thường có đuôi?','.mp3',['jpg','doc','png']),
+    TQ('Folder (thư mục) dùng để?','Chứa nhiều file',['Xóa file','In file','Gửi mail']),
+    TQ('Để tìm file trên máy tính?','Dùng tính năng Search',['Tắt máy','Khởi động lại','Rút USB']),
+    TQ('Dữ liệu số là gì?','Thông tin lưu trên máy tính',['Sách giấy','Bảng đen','Vở ghi']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'th3_daoduc',name:'Văn hóa số',emoji:'🛡️',color:'rgba(236,64,122,.2)',gen:function(l){var qs=[
+    TQ('Không nên chia sẻ gì trên mạng?','Mật khẩu, địa chỉ nhà',['Bài hát','Hình phong cảnh','Bài học']),
+    TQ('Ngồi máy tính lâu gây?','Mỏi mắt, đau lưng',['Cao hơn','Khỏe hơn','Đẹp hơn']),
+    TQ('Nên dùng máy tính bao lâu?','30 phút rồi nghỉ',['Cả ngày','Không giới hạn','12 tiếng']),
+    TQ('Gặp người lạ trên mạng, em?','Không trả lời, nói bố mẹ',['Kết bạn ngay','Cho số ĐT','Cho địa chỉ']),
+    TQ('Chơi game quá nhiều gây?','Nghiện, học kém',['Thông minh','Khỏe mạnh','Giỏi hơn']),
+    TQ('Tin giả (fake news) là?','Tin không đúng sự thật',['Tin hay','Tin vui','Tin buồn']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'th3_ungdung',name:'Ứng dụng',emoji:'🖥️',color:'rgba(76,175,80,.2)',gen:function(l){var qs=[
+    TQ('Phần mềm vẽ tranh là?','Paint',['Word','Excel','PowerPoint']),
+    TQ('Phần mềm soạn văn bản?','Word',['Paint','Calculator','Camera']),
+    TQ('Để tính toán dùng phần mềm?','Calculator (Máy tính)',['Paint','Word','Camera']),
+    TQ('Trình duyệt web dùng để?','Lướt Internet',['Vẽ tranh','Tính toán','Soạn nhạc']),
+    TQ('Google dùng để?','Tìm kiếm thông tin',['Vẽ tranh','Chơi game','Tính toán']),
+    TQ('Email dùng để?','Gửi thư điện tử',['Vẽ tranh','Xem phim','Chơi game']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
 // ============ ENCOURAGEMENT MESSAGES ============
 var CORGI_TAP=['G\u00e2u!','Y\u00eau Nhi!','\ud83d\udc3e','Hehe!','\ud83d\udc95','Woof!','\ud83c\udf1f','Ch\u01a1i \u0111i!','Good job!','Gi\u1ecfi!'];
 var C_MSGS=[{t:'Gi\u1ecfi qu\u00e1!',s:'Nhi si\u00eau \u0111\u1ec9nh! \ud83c\udf1f'},{t:'\u0110\u00fang r\u1ed3i!',s:'Corgi m\u1eebng l\u1eafm! \ud83d\udc3e'},{t:'Tuy\u1ec7t v\u1eddi!',s:'Combo l\u00ean n\u00e0o! \ud83d\udd25'},{t:'Wow!',s:'Thi\u00ean t\u00e0i nh\u00ed! \ud83e\udde0'},{t:'Perfect!',s:'Corgi t\u1ef1 h\u00e0o! \ud83d\udc15'},{t:'Amazing!',s:'Keep going! \ud83d\udcaa'},{t:'Si\u00eau sao!',s:'Ng\u00f4i sao s\u00e1ng! \u2b50'}];
@@ -138,13 +257,19 @@ window.GRADE_CONFIG={
   timePerQuestion:30,
   levelRewardRate:50,
   speeches:[
-    ['To\u00e1n d\u1ec5 l\u1eafm, ch\u01a1i \u0111i Nhi!','B\u1ea3ng c\u1eedu ch\u01b0\u01a1ng h\u00f4m nay nh\u00e9!','Corgi th\u00edch ph\u00e9p nh\u00e2n!'],
-    ['Ti\u1ebfng Vi\u1ec7t hay l\u1eafm!','Nhi vi\u1ebft ch\u00ednh t\u1ea3 gi\u1ecfi n\u00e8!','\u0110\u1ecdc truy\u1ec7n c\u00f9ng Corgi!'],
+    ['Toán dễ lắm, chơi đi Nhi!','Bảng cửu chương hôm nay nhé!','Corgi thích phép nhân!'],
+    ['Tiếng Việt hay lắm!','Nhi viết chính tả giỏi nè!','Đọc truyện cùng Corgi!'],
     ['English is fun!','Let\'s learn English!','Corgi speaks English too!'],
+    ['Thiên nhiên kỳ thú!','Khám phá thế giới nào!','Corgi biết nhiều lắm!'],
+    ['Bé ngoan giỏi ghê!','Yêu quê hương nhé!','Corgi yêu bé ngoan!'],
+    ['Tin học vui lắm!','Máy tính thú vị!','Corgi giỏi tin học!'],
   ],
   subjects:[
-    {id:'math',name:'To\u00e1n',emoji:'\ud83d\udd22',skills:MATH_SKILLS,color:'#fb7185'},
-    {id:'viet',name:'Ti\u1ebfng Vi\u1ec7t',emoji:'\ud83d\udcd6',skills:VIET_SKILLS,color:'#38bdf8'},
-    {id:'eng',name:'English',emoji:'\ud83c\udf0d',skills:ENG_SKILLS,color:'#a78bfa'},
+    {id:'math',name:'Toán',emoji:'🔢',skills:MATH_SKILLS,color:'#fb7185'},
+    {id:'viet',name:'Tiếng Việt',emoji:'📖',skills:VIET_SKILLS,color:'#38bdf8'},
+    {id:'eng',name:'English',emoji:'🌍',skills:ENG_SKILLS,color:'#a78bfa'},
+    {id:'tnxh',name:'TN & XH',emoji:'🌿',skills:TNXH_SKILLS,color:'#66bb6a'},
+    {id:'daoduc',name:'Đạo Đức',emoji:'💝',skills:DAODUC_SKILLS,color:'#ec407a'},
+    {id:'tinhoc',name:'Tin Học',emoji:'💻',skills:TINHOC_SKILLS,color:'#5c6bc0'},
   ],
 };

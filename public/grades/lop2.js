@@ -178,6 +178,83 @@ var ENG_SKILLS=[
   ];return qs[R(0,qs.length-1)]}},
 ];
 
+// ============ TU NHIEN & XA HOI SKILLS ============
+var TNXH_SKILLS=[
+  {id:'tn2_cothe',name:'Cơ thể người',emoji:'🧒',color:'rgba(239,154,154,.2)',gen:function(l){var qs=[
+    TQ('Bộ phận nào giúp ta thở?','Phổi',['Tim','Dạ dày','Gan']),
+    TQ('Tim nằm ở đâu?','Trong lồng ngực',['Trong bụng','Trên đầu','Ở tay']),
+    TQ('Xương giúp cơ thể?','Nâng đỡ, bảo vệ',['Tiêu hóa','Thở','Nghe']),
+    TQ('Cơ quan nào tiêu hóa?','Dạ dày, ruột',['Phổi','Tim','Não']),
+    TQ('Não nằm ở đâu?','Trong hộp sọ',['Trong bụng','Ở ngực','Ở tay']),
+    TQ('Máu được bơm bởi?','Tim',['Phổi','Gan','Thận']),
+    TQ('Người có bao nhiêu răng sữa?','20 răng',['32 răng','10 răng','50 răng']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn2_thucvat',name:'Thực vật & ĐV',emoji:'🌱',color:'rgba(76,175,80,.2)',gen:function(l){var qs=[
+    TQ('Cây xanh tạo ra gì?','Ôxy (khí thở)',['Nước','Lửa','Đất']),
+    TQ('Động vật ăn cỏ gọi là?','Động vật ăn cỏ',['Động vật ăn thịt','Động vật bay','Động vật bơi']),
+    TQ('Con nào là động vật ăn thịt?','Hổ',['Bò','Dê','Thỏ']),
+    TQ('Cây lấy nước qua đâu?','Rễ',['Lá','Hoa','Thân']),
+    TQ('Quang hợp cần gì?','Ánh sáng + nước',['Tối + khô','Gió + mưa','Lửa + đất']),
+    TQ('Con nào đẻ trứng?','Gà',['Chó','Mèo','Bò']),
+    TQ('Con nào là côn trùng?','Bướm',['Cá','Ếch','Chim']),
+    TQ('Hạt nảy mầm cần gì?','Nước, đất, ánh sáng',['Kẹo','Sữa','Cơm']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn2_traidat',name:'Trái Đất',emoji:'🌍',color:'rgba(66,165,245,.2)',gen:function(l){var qs=[
+    TQ('Trái Đất có hình gì?','Hình cầu (tròn)',['Hình vuông','Hình tam giác','Phẳng']),
+    TQ('Mặt Trời là gì?','Ngôi sao',['Hành tinh','Mặt Trăng','Đám mây']),
+    TQ('Ngày và đêm do đâu?','Trái Đất quay',['Mặt Trăng','Gió thổi','Mây che']),
+    TQ('Bề mặt Trái Đất có gì?','Đất liền và đại dương',['Chỉ nước','Chỉ đất','Chỉ cát']),
+    TQ('Mặt Trăng quay quanh?','Trái Đất',['Mặt Trời','Sao Hỏa','Sao Kim']),
+    TQ('Một năm có mấy mùa?','4 mùa',['2 mùa','3 mùa','12 mùa']),
+    TQ('Nước biển có vị gì?','Mặn',['Ngọt','Chua','Đắng']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'tn2_suckhoe',name:'Sức khỏe',emoji:'💪',color:'rgba(255,138,101,.2)',gen:function(l){var qs=[
+    TQ('Để khỏe mạnh cần?','Ăn đủ chất, tập TD',['Ăn kẹo nhiều','Ngủ cả ngày','Chơi game']),
+    TQ('Thực phẩm nào tốt cho sức khỏe?','Rau, trái cây',['Kẹo, bánh ngọt','Nước ngọt','Mì tôm']),
+    TQ('Ngủ đủ giấc giúp?','Khỏe mạnh, thông minh',['Béo lên','Lười hơn','Chậm hơn']),
+    TQ('Khi bị ốm em nên?','Nói bố mẹ, đi khám',['Giấu đi','Tự uống thuốc','Không nói ai']),
+    TQ('Nên uống gì mỗi ngày?','Nước lọc',['Nước ngọt','Trà sữa','Coca']),
+    TQ('Tập thể dục giúp?','Khỏe mạnh',['Ốm hơn','Mệt mãi','Lười hơn']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
+// ============ DAO DUC SKILLS ============
+var DAODUC_SKILLS=[
+  {id:'dd2_bieton',name:'Biết ơn',emoji:'🙏',color:'rgba(255,183,77,.2)',gen:function(l){var qs=[
+    TQ('Em biết ơn ai nhất?','Bố mẹ, thầy cô',['Siêu nhân','Robot','Máy tính']),
+    TQ('Ngày Nhà giáo VN là?','20 tháng 11',['1 tháng 6','8 tháng 3','2 tháng 9']),
+    TQ('Biết ơn thầy cô bằng cách?','Học giỏi, lễ phép',['Nghỉ học','Không nghe lời','Nói xấu']),
+    TQ('"Ăn quả nhớ kẻ trồng cây" là?','Biết ơn',['Trồng cây','Ăn quả','Quên ơn']),
+    TQ('Biết ơn bố mẹ bằng cách?','Nghe lời, giúp việc nhà',['Đòi mua đồ','Không học','La hét']),
+    TQ('Ai nuôi em lớn?','Bố mẹ',['Thầy cô','Bạn bè','Hàng xóm']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd2_chiase',name:'Chia sẻ',emoji:'🤝',color:'rgba(129,212,250,.2)',gen:function(l){var qs=[
+    TQ('Bạn không có bút, em nên?','Cho bạn mượn',['Mặc kệ','Giấu bút đi','Trêu bạn']),
+    TQ('Chia sẻ là gì?','Cho bạn cùng dùng',['Giữ hết cho mình','Giấu đồ','Không cho ai']),
+    TQ('Khi có nhiều kẹo, em?','Chia cho bạn',['Ăn hết','Giấu đi','Khoe bạn']),
+    TQ('Bạn buồn, em nên?','An ủi, chia sẻ',['Trêu bạn','Bỏ đi','Cười bạn']),
+    TQ('Chia sẻ giúp em?','Có nhiều bạn tốt',['Mất đồ','Bị ghét','Buồn hơn']),
+    TQ('Khi bạn ngã, em nên?','Đỡ bạn dậy',['Cười','Bỏ đi','Trêu bạn']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd2_moitruong',name:'Bảo vệ MT',emoji:'🌍',color:'rgba(76,175,80,.2)',gen:function(l){var qs=[
+    TQ('Rác thải bỏ ở đâu?','Thùng rác',['Sông suối','Bãi cỏ','Đường đi']),
+    TQ('Trồng cây giúp gì?','Không khí sạch',['Nóng hơn','Bẩn hơn','Ồn hơn']),
+    TQ('Tiết kiệm nước bằng cách?','Tắt vòi khi không dùng',['Mở vòi cả ngày','Đổ nước đi','Tắm lâu']),
+    TQ('Ô nhiễm là gì?','Nước, không khí bẩn',['Trời đẹp','Nước sạch','Không khí trong']),
+    TQ('Giấy có thể tái chế không?','Có',['Không','Không biết','Cũng được']),
+    TQ('Nên đi bằng gì để bảo vệ MT?','Xe đạp, đi bộ',['Ô tô','Máy bay','Xe máy']),
+  ];return qs[R(0,qs.length-1)]}},
+  {id:'dd2_giaothong',name:'An toàn GT',emoji:'🚦',color:'rgba(239,83,80,.2)',gen:function(l){var qs=[
+    TQ('Đèn đỏ nghĩa là?','Dừng lại',['Đi tiếp','Chạy nhanh','Đi chậm']),
+    TQ('Đèn xanh nghĩa là?','Được đi',['Dừng lại','Đi chậm','Quay lại']),
+    TQ('Đèn vàng nghĩa là?','Chuẩn bị dừng',['Chạy nhanh','Đi tiếp','Quay lại']),
+    TQ('Qua đường phải đi ở đâu?','Vạch kẻ đường',['Giữa đường','Đâu cũng được','Chạy qua']),
+    TQ('Ngồi xe máy phải đội?','Mũ bảo hiểm',['Mũ lưỡi trai','Nón lá','Không cần']),
+    TQ('Đi bộ phải đi ở?','Vỉa hè',['Giữa đường','Lòng đường','Đâu cũng được']),
+    TQ('Khi qua đường em phải?','Nhìn trái, nhìn phải',['Nhắm mắt chạy','Không cần nhìn','Chạy thật nhanh']),
+  ];return qs[R(0,qs.length-1)]}},
+];
+
 // ============ ENCOURAGEMENT MESSAGES ============
 var CORGI_TAP=['Cáo yêu bé!','Hoan hô!','🦊','Giỏi!','💕','Wow!','🌟','Chơi tiếp!','Tuyệt!','👏'];
 var C_MSGS=[{t:'Giỏi quá!',s:'Bé siêu đỉnh! 🌟'},{t:'Đúng rồi!',s:'Cáo mừng lắm! 🦊'},{t:'Tuyệt vời!',s:'Combo lên nào! 🔥'},{t:'Wow!',s:'Thiên tài nhí! 🧠'},{t:'Perfect!',s:'Cáo tự hào! 🦊'},{t:'Amazing!',s:'Keep going! 💪'},{t:'Siêu sao!',s:'Ngôi sao sáng! ⭐'}];
@@ -202,10 +279,14 @@ window.GRADE_CONFIG={
     ['Toán lớp 2 dễ lắm!','Nhân chia hôm nay nhé!','Cáo thích toán!'],
     ['Tiếng Việt hay lắm!','Chính tả giỏi nè!','Đọc chữ cùng Cáo!'],
     ['English is fun!','Let\'s learn together!','Fox says Hello!'],
+    ['Thiên nhiên thú vị!','Cơ thể kỳ diệu!','Cáo biết nhiều lắm!'],
+    ['Bé ngoan lắm!','An toàn giao thông nhé!','Cáo yêu bé ngoan!'],
   ],
   subjects:[
     {id:'math',name:'Toán',emoji:'🔢',skills:MATH_SKILLS,color:'#22d3ee'},
     {id:'viet',name:'Tiếng Việt',emoji:'📖',skills:VIET_SKILLS,color:'#f472b6'},
     {id:'eng',name:'English',emoji:'🌍',skills:ENG_SKILLS,color:'#a78bfa'},
+    {id:'tnxh',name:'TN & XH',emoji:'🌿',skills:TNXH_SKILLS,color:'#66bb6a'},
+    {id:'daoduc',name:'Đạo Đức',emoji:'💝',skills:DAODUC_SKILLS,color:'#ec407a'},
   ],
 };
