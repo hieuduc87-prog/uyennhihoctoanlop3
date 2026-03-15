@@ -21,6 +21,7 @@ function sndCombo(n){var f=[523,659,784,1047,1319];for(var i=0;i<Math.min(n,5);i
 function sndStar(){var n=[523,659,784,1047,1319,1568];for(var i=0;i<n.length;i++)tone(n[i],.12,'triangle',.25,i*.09)}
 function sndLevelUp(){var n=[392,494,587,659,784,988,1047];for(var i=0;i<n.length;i++)tone(n[i],.15,'triangle',.28,i*.1)}
 function sndStart(){tone(523,.12,'sine',.2);tone(659,.12,'sine',.2,.1);tone(784,.12,'sine',.25,.2);tone(1047,.25,'triangle',.3,.3)}
+function sndWhoosh(){if(!sndEnabled())return;try{var c=aCtx();if(!c)return;var t=c.currentTime;var o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(800,t);o.frequency.exponentialRampToValueAtTime(200,t+.15);g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+.15);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.2)}catch(e){}}
 function sndFail(){tone(392,.2,'triangle',.15);tone(330,.3,'triangle',.12,.15)}
 
 // ============ QUESTION POOL ============
@@ -181,7 +182,9 @@ function showEvolution(type,newLevel){
     '<div class="evo-subtitle" style="color:'+stage.color+'">'+stage.title+'</div>'+
     (stage.hasCrown?'<div class="evo-bonus">👑 Vương miện!</div>':stage.hasGlow?'<div class="evo-bonus">✨ Phát sáng!</div>':stage.hasCape?'<div class="evo-bonus">🧥 Áo choàng!</div>':stage.hasHat?'<div class="evo-bonus">🎩 Nón phép!</div>':'')+
     '</div>';
-  document.body.appendChild(ov);sndLevelUp();spawnConfetti();
+  document.body.appendChild(ov);levelFlash();sndLevelUp();spawnConfetti();
+  // Sparkle burst at center
+  setTimeout(function(){spawnSparkleBurst(window.innerWidth/2,window.innerHeight/2,18)},300);
   // Voice: level up or pet evolve
   if(type==='pet')voicePlay('pet_evolve');
   else voicePlay('level_up');
@@ -411,7 +414,7 @@ var _lastTransType=0;
 function getNextTransType(){_lastTransType=(_lastTransType+1)%_transitionTypes.length;return _transitionTypes[_lastTransType]}
 function irisTransition(cb){
   if(_transitionBusy)return cb&&cb();
-  _transitionBusy=true;
+  _transitionBusy=true;sndWhoosh();
   var ov=document.createElement('div');ov.className='iris-transition iris-close';
   var colors=['#1b0a3c','#2d1463','#3a1878','#1a0535'];
   ov.style.setProperty('--iris-bg',colors[R(0,colors.length-1)]);
@@ -425,7 +428,7 @@ function irisTransition(cb){
 }
 function curtainTransition(cb){
   if(_transitionBusy)return cb&&cb();
-  _transitionBusy=true;
+  _transitionBusy=true;sndWhoosh();
   var ov=document.createElement('div');ov.className='curtain-transition curtain-close';
   ov.innerHTML='<div class="curtain-left"></div><div class="curtain-right"></div>';
   document.body.appendChild(ov);
@@ -618,6 +621,7 @@ function handleW(){
   cg.classList.add('corgi-sad');
   setTimeout(function(){cg.classList.remove('corgi-sad')},600);
   showEnc(false);spawnFloat('\ud83d\udcaa',1);
+  screenShake();
   // Voice: encouragement
   voicePlay('wrong');
 }
@@ -685,11 +689,14 @@ function endRound(){
   _ga('level_completed',{level:D.level,stars_earned:stars,gems_earned:gemE,correct:correct,total:Q_CT,difficulty:getDifficulty()});
   save();showScreen('result');
   voiceStopIdle();
-  if(stars>=3)sndStar();else if(stars>=1)sndCorrect();else sndFail();
+  if(stars>=3){sndStar();levelFlash();setTimeout(function(){spawnSparkleBurst(window.innerWidth/2,window.innerHeight*0.35,20)},200)}
+  else if(stars>=1)sndCorrect();else sndFail();
   // Voice: round end feedback
   setTimeout(function(){voicePlay('round_end')},500);
+  // Star fly to results
+  if(stars>=2){for(var si=0;si<stars;si++){(function(idx){setTimeout(function(){spawnStarFly(window.innerWidth/2+R(-60,60),window.innerHeight/2+R(-30,30),'#rStars','\u2b50')},400+idx*200)})(si)}}
   var mood=stars>=3?'love':stars>=2?'excited':stars>=1?'happy':'sad';
-  document.getElementById('resultScene').innerHTML='<div class="'+(stars>=2?'corgi-happy':'')+'" style="display:flex;align-items:flex-end;justify-content:center;gap:6px">'+UNhi(stars>=2?120:100)+CSvg(stars>=2?90:75)+'</div>';
+  document.getElementById('resultScene').innerHTML='<div class="bounce-in '+(stars>=2?'corgi-happy':'')+'" style="display:flex;align-items:flex-end;justify-content:center;gap:6px">'+UNhi(stars>=2?120:100)+CSvg(stars>=2?90:75)+'</div>';
   var _pn=getPlayerName();
   document.getElementById('rTitle').textContent=stars>=3?'TUY\u1ec6T V\u1edcI, '+_pn+'! \ud83c\udfc6':stars>=2?'Gi\u1ecfi l\u1eafm! \ud83c\udf89':stars>=1?'C\u1ed1 th\u00eam nh\u00e9! \ud83d\udcaa':'L\u1ea7n sau s\u1ebd gi\u1ecfi h\u01a1n! \ud83e\udd17';
   document.getElementById('rStars').textContent='\u2b50'.repeat(stars)+'\u2606'.repeat(3-stars);
@@ -1801,12 +1808,28 @@ function levelFlash(){
   var emojis=['\u2b50','\u2728','\ud83c\udf1f','\ud83d\udcab','\u2b50','\u2728','\ud83c\udf1f','\ud83d\udcab'];
   if(fs)for(var j=0;j<emojis.length;j++){var st=document.createElement('div');st.className='fstar';st.textContent=emojis[j];st.style.left=R(5,95)+'%';st.style.top=R(5,85)+'%';st.style.setProperty('--dur',R(30,60)/10+'s');st.style.setProperty('--del',R(0,30)/10+'s');fs.appendChild(st)}
   var ss=document.getElementById('splashScene');
-  if(ss)ss.innerHTML='<div style="display:flex;align-items:flex-end;justify-content:center;gap:8px"><div style="animation:float 3s ease-in-out infinite">'+UNhi(130)+'</div><div style="animation:float 3s .3s ease-in-out infinite">'+CSvg(100)+'</div></div>';
+  if(ss)ss.innerHTML='<div style="display:flex;align-items:flex-end;justify-content:center;gap:8px"><div class="bounce-in" style="animation-delay:.2s;animation:bounceIn .8s .2s cubic-bezier(.34,1.56,.64,1) both,float 3s 1s ease-in-out infinite">'+UNhi(130)+'</div><div class="bounce-in" style="animation:bounceIn .8s .4s cubic-bezier(.34,1.56,.64,1) both,float 3s 1.3s ease-in-out infinite">'+CSvg(100)+'</div></div>';
   // Set dynamic grade name on splash
   var sgn=document.getElementById('splashGradeName');if(sgn&&GC.gradeName)sgn.textContent=GC.gradeName+' \u2014 To\u00e1n \u00b7 Ti\u1ebfng Vi\u1ec7t \u00b7 English';
   // Set dynamic player name
   var pn=getPlayerName();
   var sn=document.getElementById('splashName');if(sn)sn.textContent=pn+' & '+PP.pet.charAt(0).toUpperCase()+PP.pet.slice(1);
+  // Letter pop animation for splash title
+  var splashTitle=document.querySelector('.splash-title');
+  if(splashTitle){
+    var txt=splashTitle.textContent||'';
+    splashTitle.innerHTML='';splashTitle.classList.add('letter-pop');
+    for(var li=0;li<txt.length;li++){
+      var sp=document.createElement('span');
+      sp.textContent=txt[li]===' '?'\u00a0':txt[li];
+      sp.style.animationDelay=(li*0.04)+'s';
+      splashTitle.appendChild(sp);
+    }
+  }
+  // Sparkle burst on splash after characters land
+  setTimeout(function(){
+    try{spawnSparkleBurst(window.innerWidth/2,window.innerHeight*0.4,16)}catch(e){}
+  },900);
   var dg=document.getElementById('dailyGreet');if(dg)dg.textContent='Hoàn thành để nhận quà, '+pn+'!';
   var pt=document.getElementById('profTopName');if(pt)pt.textContent='\ud83d\udc64 '+pn;
   var pnm=document.getElementById('profName');if(pnm)pnm.textContent=pn;
