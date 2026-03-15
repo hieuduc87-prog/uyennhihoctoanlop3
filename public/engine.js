@@ -25,8 +25,18 @@ function sndFail(){tone(392,.2,'triangle',.15);tone(330,.3,'triangle',.12,.15)}
 
 // ============ PLAYER PROFILE ============
 var PP=(function(){try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.name)return p}catch(e){}return{name:'Bé',gender:'girl',avatar:'uyennhi',pet:'corgi'}})();
-function getAvatarSrc(){return PP.gender==='boy'||PP.avatar==='voi'?'/voi.png':'/uyennhi.png'}
-function getPetSrc(){return PP.pet==='cat'?'/cat.png':PP.pet==='elephant'?'/voi.png':'/corgi.png'}
+var ART_MILESTONES=[1,3,5,7,10];
+function getArtLevel(lv){for(var i=ART_MILESTONES.length-1;i>=0;i--){if(lv>=ART_MILESTONES[i])return ART_MILESTONES[i]}return 1}
+function getAvatarSrc(){
+  var charId=PP.gender==='boy'?'boy':'girl';
+  var lv=D&&D.charLevel?getArtLevel(D.charLevel):1;
+  return'/characters/'+charId+'_level_'+lv+'.svg';
+}
+function getPetSrc(){
+  var petId=PP.pet||'corgi';
+  var lv=D&&D.petLevel?getArtLevel(D.petLevel):1;
+  return'/pets/'+petId+'_level_'+lv+'.svg';
+}
 function getPetName(){return PP.pet==='cat'?'Mèo Bông':PP.pet==='elephant'?'Voi Con':'Corgi Béo'}
 function getCharName(){return PP.gender==='boy'?'Bin':'Uyển Nhi'}
 function getPlayerName(){return PP.name||'Bé'}
