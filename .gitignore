@@ -45,3 +45,9 @@ supabase/.temp/
 # Generated art source PNGs (large originals before rembg)
 # public/characters/*.png
 # public/pets/*.png
+
+# Generated question voice files (142MB, too large for git)
+# Re-generate with: python3 gen_question_voice.py
+public/voice/questions/
+public/voice/question_manifest.json
+question_texts.json
