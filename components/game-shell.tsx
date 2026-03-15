@@ -522,6 +522,38 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .report-sk-stats{font-size:10px;font-weight:700;color:var(--dim);text-align:right;min-width:60px;flex-shrink:0}
 .report-sk-lv{font-size:9px;font-weight:800;color:var(--gold);background:rgba(255,194,51,.15);
   padding:2px 6px;border-radius:8px;display:inline-block;margin-top:2px}
+/* ========== SHOP ========== */
+.shop-balance{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
+.shop-bal-item{display:flex;align-items:center;gap:6px;padding:8px 16px;
+  background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:14px;font-size:14px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.shop-bal-num{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800}
+.shop-cat-title{font-family:'Baloo 2',cursive;font-size:15px;color:var(--peach);
+  margin:14px 0 8px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
+.shop-item{display:flex;align-items:center;gap:10px;padding:12px;
+  background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:16px;margin-bottom:8px;box-shadow:0 3px 0 rgba(0,0,0,.12),var(--shine)}
+.shop-item.owned{border-color:rgba(45,219,166,.2);background:rgba(45,219,166,.06)}
+.shop-item.equipped{border-color:var(--gold);box-shadow:0 3px 0 rgba(180,120,0,.2),0 0 12px rgba(255,194,51,.1)}
+.shop-item-icon{font-size:28px;flex-shrink:0}
+.shop-item-info{flex:1;min-width:0}
+.shop-item-name{font-size:13px;font-weight:800;color:var(--text)}
+.shop-item-desc{font-size:10px;color:var(--dim);font-weight:600;margin-top:1px}
+.shop-item-actions{display:flex;gap:4px;flex-shrink:0}
+.shop-buy-btn{padding:5px 10px;border-radius:10px;border:none;font-size:11px;font-weight:800;
+  font-family:'Nunito',sans-serif;cursor:pointer;
+  background:linear-gradient(135deg,var(--gold),#ffab00);color:#1b0a3c;
+  box-shadow:0 2px 0 rgba(180,120,0,.3);transition:all .1s}
+.shop-buy-btn.gem{background:linear-gradient(135deg,var(--purple),#9b3dff);color:#fff;
+  box-shadow:0 2px 0 rgba(130,50,200,.3)}
+.shop-buy-btn.disabled{opacity:.3;cursor:not-allowed}
+.shop-buy-btn:active:not(.disabled){transform:translateY(2px);box-shadow:0 0 0}
+.shop-equip-btn{padding:5px 12px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);
+  font-size:11px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;
+  background:rgba(255,255,255,.08);color:var(--dim);transition:all .2s}
+.shop-equip-btn.active{background:linear-gradient(135deg,var(--mint),#14cca0);color:#1b0a3c;
+  border-color:var(--mint);box-shadow:0 2px 0 rgba(10,130,80,.3)}
+.shop-owned{font-size:14px;color:var(--mint)}
 /* ========== QUEST/STREAK ENHANCEMENTS ========== */
 .streak-info-card{background:linear-gradient(135deg,rgba(255,90,158,.12),rgba(255,194,51,.08));
   border:1.5px solid rgba(255,90,158,.2);border-radius:18px;padding:14px;margin-bottom:14px;
@@ -948,6 +980,7 @@ const gameHTML = `
       </div>
     </div>
     <div style="display:flex;gap:6px">
+      <div class="stat-pill"><span class="ic">🪙</span><span id="coinC">0</span></div>
       <div class="stat-pill"><span class="ic">⭐</span><span id="stC">0</span></div>
       <div class="stat-pill"><span class="ic">💎</span><span id="gmC">0</span></div>
       <div class="stat-pill"><span class="ic">🔥</span><span id="skC">0</span></div>
@@ -979,6 +1012,7 @@ const gameHTML = `
     <div class="r-stat"><div class="num" id="rCor">0</div><div class="lbl">Đúng</div></div>
     <div class="r-stat"><div class="num" id="rAcc">0%</div><div class="lbl">Chính xác</div></div>
     <div class="r-stat"><div class="num" id="rXP">+0</div><div class="lbl">XP</div></div>
+    <div class="r-stat"><div class="num" id="rCoin">+0</div><div class="lbl">🪙</div></div>
     <div class="r-stat"><div class="num" id="rGem">+0</div><div class="lbl">💎</div></div>
   </div>
   <div class="btn-group">
@@ -1026,7 +1060,7 @@ const gameHTML = `
   </div>
 </div>
 <div id="profile" class="screen">
-  <div class="top-bar"><span style="font-weight:800;font-size:15px" id="profTopName">👤 Bé</span><div style="display:flex;gap:8px"><button class="back-btn" onclick="showScreen('settings')">⚙️</button><button class="back-btn" onclick="resetProgress()">🔄</button></div></div>
+  <div class="top-bar"><span style="font-weight:800;font-size:15px" id="profTopName">👤 Bé</span><div style="display:flex;gap:8px"><button class="back-btn" onclick="showScreen('shop')">🛒</button><button class="back-btn" onclick="showScreen('settings')">⚙️</button><button class="back-btn" onclick="resetProgress()">🔄</button></div></div>
   <div class="profile-hero">
     <div id="profAv" style="margin:0 auto 10px"></div>
     <div class="profile-name" id="profName">Bé</div>
@@ -1070,6 +1104,10 @@ const gameHTML = `
   </div>
   <h3 style="margin-top:18px;font-family:'Baloo 2',cursive;font-size:17px;text-shadow:0 1px 4px rgba(0,0,0,.2)">🏆 Thành Tựu</h3>
   <div class="ach-grid" id="achGrid"></div>
+</div>
+<div id="shop" class="screen">
+  <div class="top-bar"><span style="font-weight:800;font-size:15px">🛒 Cửa Hàng</span><button class="back-btn" onclick="showScreen('profile')">← Quay lại</button></div>
+  <div id="shopContent" style="padding:0 14px 100px"></div>
 </div>
 <div id="settings" class="screen">
   <div class="top-bar"><span style="font-weight:800;font-size:15px">⚙️ Cài Đặt</span><button class="back-btn" onclick="showScreen('profile')">← Quay lại</button></div>

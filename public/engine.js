@@ -121,7 +121,7 @@ var SUBJECTS=GC.subjects||[];
 var SK=GC.saveKey||'uynhi3sub_v1';
 var OLD_SK=GC.oldSaveKey||'';
 var D=load();
-function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1,difficulty:1,diffHistory:[],weekly:{w:null,m:[]},streakFreeze:0,lastStreakFreeze:null}}
+function def(){return{level:1,xp:0,stars:0,gems:0,streak:0,lastPlay:null,sp:{},ach:{},daily:{d:null,m:[]},tc:0,tp:0,combo:0,mc:0,ct:0,tickets:0,rewardHistory:[],exchanges:[],x2xp:false,studyTime:0,dailyLog:{},settings:{diffMode:'auto',qPerRound:10,timerOn:true},charXP:0,charLevel:1,petXP:0,petLevel:1,difficulty:1,diffHistory:[],weekly:{w:null,m:[]},streakFreeze:0,lastStreakFreeze:null,coins:0,inventory:[],equipped:{frame:null,title:null}}}
 function load(){
   try{var d=JSON.parse(localStorage.getItem(SK));if(d&&d.level){var df=def();for(var k in df){if(!d.hasOwnProperty(k))d[k]=df[k]};if(!d.daily||!d.daily.m)d.daily={d:null,m:[]};
   // Migrate boolean ach to tier 1
@@ -262,7 +262,7 @@ function showScreen(id){
   nav.style.display=['map','daily','wheel','profile'].indexOf(id)>=0?'flex':'none';
   var cg=document.getElementById('corgiG');
   if(cg)cg.style.display=id==='game'?'block':'none';
-  if(id==='map')renderGrid();if(id==='daily')renderDaily();if(id==='wheel')renderWheel();if(id==='profile')renderProfile();if(id==='settings')renderSettings();
+  if(id==='map')renderGrid();if(id==='daily')renderDaily();if(id==='wheel')renderWheel();if(id==='profile')renderProfile();if(id==='settings')renderSettings();if(id==='shop')renderShop();
 }
 function switchTab(id){
   sndTap();showScreen(id);
@@ -290,6 +290,7 @@ function updateUI(){
     if(g('gmC'))g('gmC').textContent=D.gems;
   });
   var tk=document.getElementById('tkC');if(tk)tk.textContent=D.tickets||0;
+  var cn=document.getElementById('coinC');if(cn)cn.textContent=D.coins||0;
   var sk=document.getElementById('skC');if(sk)sk.textContent=D.streak;
   var xm=document.getElementById('xpM');if(xm)xm.style.width=p+'%';
   // Update avatars with mini corgi
@@ -418,6 +419,13 @@ function endRound(){
   var streakM=getStreakMult();
   var xpE=Math.round((correct*10+stars*15)*diffMult*streakM);if(D.x2xp){xpE*=2;D.x2xp=false}var gemE=stars>=2?R(3,8):stars>=1?R(1,3):0;
   gemE=Math.round(gemE*diffMult);
+  // Coin earning: 1-3 per correct, bonus for combo/stars/difficulty
+  if(!D.coins)D.coins=0;
+  var coinBase=correct*R(1,3);
+  var coinBonus=stars>=3?10:stars>=2?5:0;
+  coinBonus+=Math.floor((getDifficulty()-1)*2);
+  var coinE=coinBase+coinBonus;
+  D.coins+=coinE;
   D.xp+=xpE;D.stars+=stars;D.gems+=gemE;D.tp+=Q_CT;
   // Track study time
   if(!D.studyTime)D.studyTime=0;
@@ -455,6 +463,7 @@ function endRound(){
   document.getElementById('rAcc').textContent=acc+'%';
   document.getElementById('rXP').textContent='+'+xpE+(diffMult>1?' (x'+diffMult+')':'');
   document.getElementById('rGem').textContent='+'+gemE;
+  var rCoin=document.getElementById('rCoin');if(rCoin)rCoin.textContent='+'+coinE;
   if(stars>=2)spawnConfetti();
   // Show difficulty change
   if(newDiff!==oldDiff){
@@ -832,6 +841,80 @@ function renderCharCard(cStage,pStage){
       '<span class="cp-ability-icon">'+(PP.pet==='cat'?'🐱':PP.pet==='elephant'?'🐘':'🐕')+'</span>'+
       '<span class="cp-ability-label">Năng lực: '+petBonus.label+'</span>'+
     '</div>';
+}
+
+// ============ SHOP ============
+var SHOP_ITEMS=[
+  {id:'freeze',name:'Streak Freeze',desc:'Bảo vệ streak 1 ngày',price:100,gem:10,cat:'consumable',emoji:'🧊',max:5},
+  {id:'hint',name:'Hint Token',desc:'Hiện đáp án 3 giây',price:50,gem:5,cat:'consumable',emoji:'💡',max:10},
+  {id:'x2xp',name:'2x XP (1h)',desc:'Nhân đôi XP 1 giờ',price:200,gem:20,cat:'consumable',emoji:'⚡',max:3},
+  {id:'frame_star',name:'Khung Ngôi Sao',desc:'Khung avatar lấp lánh',price:0,gem:100,cat:'frame',emoji:'⭐',max:1},
+  {id:'frame_fire',name:'Khung Lửa',desc:'Khung avatar rực lửa',price:0,gem:200,cat:'frame',emoji:'🔥',max:1},
+  {id:'frame_rain',name:'Khung Cầu Vồng',desc:'Khung avatar cầu vồng',price:0,gem:500,cat:'frame',emoji:'🌈',max:1},
+  {id:'title_smart',name:'Danh Hiệu: Thông Minh',desc:'Hiện dưới tên',price:200,gem:0,cat:'title',emoji:'🧠',max:1},
+  {id:'title_fire',name:'Danh Hiệu: Lửa Chiến',desc:'Hiện dưới tên',price:300,gem:0,cat:'title',emoji:'🔥',max:1},
+  {id:'title_king',name:'Danh Hiệu: Vua Học Giỏi',desc:'Hiện dưới tên',price:0,gem:300,cat:'title',emoji:'👑',max:1},
+];
+function getOwnedCount(id){if(!D.inventory)D.inventory=[];return D.inventory.filter(function(x){return x===id}).length}
+function buyItem(id,useGem){
+  var item=SHOP_ITEMS.find(function(x){return x.id===id});if(!item)return;
+  if(!D.inventory)D.inventory=[];if(!D.coins)D.coins=0;
+  var owned=getOwnedCount(id);
+  if(owned>=item.max){renderShop();return}
+  if(useGem){
+    if(!item.gem||D.gems<item.gem)return;
+    D.gems-=item.gem;
+  }else{
+    if(!item.price||D.coins<item.price)return;
+    D.coins-=item.price;
+  }
+  D.inventory.push(id);
+  // Apply consumables immediately
+  if(id==='freeze'){if(!D.streakFreeze)D.streakFreeze=0;D.streakFreeze++}
+  if(id==='x2xp')D.x2xp=true;
+  sndCorrect();save();updateUI();renderShop();
+}
+function equipItem(id){
+  if(!D.equipped)D.equipped={frame:null,title:null};
+  var item=SHOP_ITEMS.find(function(x){return x.id===id});if(!item)return;
+  if(item.cat==='frame')D.equipped.frame=D.equipped.frame===id?null:id;
+  if(item.cat==='title')D.equipped.title=D.equipped.title===id?null:id;
+  sndTap();save();renderShop();
+}
+function renderShop(){
+  var el=document.getElementById('shopContent');if(!el)return;
+  if(!D.coins)D.coins=0;if(!D.inventory)D.inventory=[];if(!D.equipped)D.equipped={frame:null,title:null};
+  var html='<div class="shop-balance">'+
+    '<div class="shop-bal-item"><span>🪙</span><span class="shop-bal-num" style="color:var(--gold)">'+D.coins+'</span></div>'+
+    '<div class="shop-bal-item"><span>💎</span><span class="shop-bal-num" style="color:var(--purple)">'+D.gems+'</span></div>'+
+  '</div>';
+  var cats=[{id:'consumable',name:'🧪 Vật phẩm'},{id:'frame',name:'🖼️ Khung Avatar'},{id:'title',name:'🏷️ Danh Hiệu'}];
+  cats.forEach(function(cat){
+    var items=SHOP_ITEMS.filter(function(x){return x.cat===cat.id});
+    if(items.length===0)return;
+    html+='<div class="shop-cat-title">'+cat.name+'</div>';
+    html+=items.map(function(item){
+      var owned=getOwnedCount(item.id);
+      var maxed=owned>=item.max;
+      var isEquipped=D.equipped.frame===item.id||D.equipped.title===item.id;
+      var canCoin=item.price>0&&D.coins>=item.price&&!maxed;
+      var canGem=item.gem>0&&D.gems>=item.gem&&!maxed;
+      return '<div class="shop-item'+(maxed?' owned':'')+(isEquipped?' equipped':'')+'">'+
+        '<div class="shop-item-icon">'+item.emoji+'</div>'+
+        '<div class="shop-item-info">'+
+          '<div class="shop-item-name">'+item.name+'</div>'+
+          '<div class="shop-item-desc">'+item.desc+'</div>'+
+        '</div>'+
+        '<div class="shop-item-actions">'+
+          (maxed?(item.cat==='frame'||item.cat==='title'?
+            '<button class="shop-equip-btn'+(isEquipped?' active':'')+'" onclick="equipItem(\''+item.id+'\')">'+(isEquipped?'✅':'Đeo')+'</button>':
+            '<span class="shop-owned">✅</span>'):
+            (item.price>0?'<button class="shop-buy-btn'+(canCoin?'':' disabled')+'" onclick="buyItem(\''+item.id+'\',false)">🪙'+item.price+'</button>':'')+
+            (item.gem>0?'<button class="shop-buy-btn gem'+(canGem?'':' disabled')+'" onclick="buyItem(\''+item.id+'\',true)">💎'+item.gem+'</button>':''))+
+        '</div></div>';
+    }).join('');
+  });
+  el.innerHTML=html;
 }
 
 // ============ SETTINGS ============
