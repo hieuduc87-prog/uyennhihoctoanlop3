@@ -40,7 +40,7 @@ var MATH_SKILLS=[
   {id:'m2_geo',name:'Hình học',emoji:'📐',color:'rgba(192,132,252,.2)',gen:function(l){
     if(l<=4){var a=R(3,10),b=R(3,10),c=R(3,10);return MQ('Đường gấp khúc gồm\n'+a+'cm, '+b+'cm, '+c+'cm\nĐộ dài = ? cm',a+b+c,'Cộng các đoạn')}
     if(l<=6){var a=R(3,15),b=R(3,15),c=R(3,15);return MQ('Tam giác có 3 cạnh:\n'+a+'cm, '+b+'cm, '+c+'cm\nChu vi = ? cm',a+b+c)}
-    var a=R(5,20),b=R(3,15);return MQ('HCN dài '+a+'cm, rộng '+b+'cm\nChu vi = ? cm',(a+b)*2,'(dài+rộng)×2')}},
+    var a=R(5,20),b=R(3,15);return MQ('Hình chữ nhật dài '+a+'cm, rộng '+b+'cm\nChu vi = ? cm',(a+b)*2,'(dài+rộng)×2')}},
   {id:'m2_meas',name:'Đo & Tiền',emoji:'📏',color:'rgba(251,191,36,.2)',gen:function(l){var qs=[
     MQ('1 m = ? cm',100),MQ('1 km = ? m',1000),MQ('1 dm = ? cm',10),
     TQ('1 kg = ? g','1000 g',['100 g','10 g','10000 g']),

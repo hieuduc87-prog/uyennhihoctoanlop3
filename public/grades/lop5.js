@@ -4,10 +4,10 @@
 // ============ MATH SKILLS ============
 var MATH_SKILLS=[
   {id:'m5_dec',name:'Số Thập Phân',emoji:'🔢',color:'rgba(52,211,153,.2)',gen:function(l){
-    if(l<=2){var a=(R(10,99)/10),b=(R(10,99)/10);a=Math.round(a*10)/10;b=Math.round(b*10)/10;return MQ(a+' + '+b+' = ?',Math.round((a+b)*10)/10,'Cộng STP')}
-    if(l<=3){var a=(R(100,999)/10),b=(R(100,999)/10);a=Math.round(a*10)/10;b=Math.round(b*10)/10;if(a<b){var t=a;a=b;b=t}return MQ(a+' − '+b+' = ?',Math.round((a-b)*10)/10,'Trừ STP')}
-    if(l<=4){var a=(R(10,50)/10),b=R(2,9);a=Math.round(a*10)/10;return MQ(a+' × '+b+' = ?',Math.round(a*b*10)/10,'Nhân STP')}
-    var a=R(2,9)*R(2,9),b=R(2,9);return MQ(a+' : '+b+' = ?',Math.round(a/b*10)/10,'Chia → STP')}},
+    if(l<=2){var a=(R(10,99)/10),b=(R(10,99)/10);a=Math.round(a*10)/10;b=Math.round(b*10)/10;return MQ(a+' + '+b+' = ?',Math.round((a+b)*10)/10,'Cộng số thập phân')}
+    if(l<=3){var a=(R(100,999)/10),b=(R(100,999)/10);a=Math.round(a*10)/10;b=Math.round(b*10)/10;if(a<b){var t=a;a=b;b=t}return MQ(a+' − '+b+' = ?',Math.round((a-b)*10)/10,'Trừ số thập phân')}
+    if(l<=4){var a=(R(10,50)/10),b=R(2,9);a=Math.round(a*10)/10;return MQ(a+' × '+b+' = ?',Math.round(a*b*10)/10,'Nhân số thập phân')}
+    var a=R(2,9)*R(2,9),b=R(2,9);return MQ(a+' : '+b+' = ?',Math.round(a/b*10)/10,'Chia → số thập phân')}},
   {id:'m5_pct',name:'Phần Trăm',emoji:'%',color:'rgba(255,107,157,.2)',gen:function(l){
     if(l<=2){var pcts=[10,20,25,50];var p=pcts[R(0,3)];var n=R(2,20)*100/p;return MQ(p+'% của '+n+' = ?',n*p/100,'Lấy số × % : 100')}
     if(l<=3){var a=R(10,50),b=R(50,200);return MQ(a+' là bao nhiêu % của '+b+'?',a*100/b,'(a:b)×100')}
@@ -18,21 +18,21 @@ var MATH_SKILLS=[
     if(l<=4){var n1=R(1,5),d1=R(2,6),n2=R(1,5),d2=R(2,6);return MQ(n1+'/'+d1+' × '+n2+'/'+d2+' = ?/'+(d1*d2),n1*n2,'Tử×tử, mẫu×mẫu')}
     var n=R(1,5),d=R(2,9),t=d*R(2,8);return MQ(n+'/'+d+' của '+t+' = ?',Math.round(t*n/d))}},
   {id:'m5_vol',name:'Thể Tích',emoji:'📦',color:'rgba(56,189,248,.2)',gen:function(l){
-    if(l<=2){var a=R(2,10);return Math.random()>.5?MQ('HLP cạnh '+a+'cm\nThể tích = ? cm³',a*a*a,'V = a×a×a'):MQ('HLP cạnh '+a+'cm\nDT toàn phần = ? cm²',a*a*6,'Stp = a×a×6')}
-    if(l<=4){var a=R(3,10),b=R(2,8),c=R(2,6);return Math.random()>.5?MQ('HHCN '+a+'×'+b+'×'+c+'cm\nThể tích = ? cm³',a*b*c,'V = d×r×c'):MQ('HHCN '+a+'×'+b+'×'+c+'cm\nDT xung quanh = ?',(a+b)*2*c,'Sxq = (d+r)×2×c')}
-    var a=R(3,8),b=R(2,6),c=R(2,5);return MQ('HHCN '+a+'×'+b+'×'+c+'cm\nDT toàn phần = ?',(a+b)*2*c+2*a*b,'Stp = Sxq + 2×đáy')}},
+    if(l<=2){var a=R(2,10);return Math.random()>.5?MQ('Hình lập phương cạnh '+a+'cm\nThể tích = ? cm³',a*a*a,'V = a×a×a'):MQ('Hình lập phương cạnh '+a+'cm\nDiện tích toàn phần = ? cm²',a*a*6,'Diện tích toàn phần = a×a×6')}
+    if(l<=4){var a=R(3,10),b=R(2,8),c=R(2,6);return Math.random()>.5?MQ('Hình hộp chữ nhật '+a+'×'+b+'×'+c+'cm\nThể tích = ? cm³',a*b*c,'V = d×r×c'):MQ('Hình hộp chữ nhật '+a+'×'+b+'×'+c+'cm\nDiện tích xung quanh = ?',(a+b)*2*c,'Diện tích xung quanh = (d+r)×2×c')}
+    var a=R(3,8),b=R(2,6),c=R(2,5);return MQ('Hình hộp chữ nhật '+a+'×'+b+'×'+c+'cm\nDiện tích toàn phần = ?',(a+b)*2*c+2*a*b,'Diện tích toàn phần = Diện tích xung quanh + 2×đáy')}},
   {id:'m5_speed',name:'Vận Tốc',emoji:'🚗',color:'rgba(251,191,36,.2)',gen:function(l){
     if(l<=2){var v=R(30,80),t=R(2,5);return MQ('Vận tốc '+v+'km/h\nThời gian '+t+' giờ\nQuãng đường = ? km',v*t,'S = v × t')}
     if(l<=3){var s=R(50,200),t=R(2,5);while(s%t!==0){s++}return MQ('Quãng đường '+s+'km\nThời gian '+t+' giờ\nVận tốc = ? km/h',s/t,'v = S : t')}
     var v=R(30,80),s=R(100,400);while(s%v!==0){s++}return MQ('Vận tốc '+v+'km/h\nQuãng đường '+s+'km\nThời gian = ? giờ',s/v,'t = S : v')}},
   {id:'m5_circle',name:'Hình Tròn',emoji:'⭕',color:'rgba(52,211,153,.2)',gen:function(l){
-    if(l<=2){var r=R(2,10);return MQ('HT bán kính '+r+'cm\nĐường kính = ? cm',r*2,'d = r × 2')}
-    if(l<=3){var r=R(2,10);return MQ('HT bán kính '+r+'cm\nChu vi = ? cm',Math.round(2*r*3.14*100)/100,'C = 2 × r × 3,14')}
-    var r=R(2,8);return MQ('HT bán kính '+r+'cm\nDiện tích = ? cm²',Math.round(r*r*3.14*100)/100,'S = r × r × 3,14')}},
+    if(l<=2){var r=R(2,10);return MQ('Hình tròn bán kính '+r+'cm\nĐường kính = ? cm',r*2,'d = r × 2')}
+    if(l<=3){var r=R(2,10);return MQ('Hình tròn bán kính '+r+'cm\nChu vi = ? cm',Math.round(2*r*3.14*100)/100,'C = 2 × r × 3,14')}
+    var r=R(2,8);return MQ('Hình tròn bán kính '+r+'cm\nDiện tích = ? cm²',Math.round(r*r*3.14*100)/100,'S = r × r × 3,14')}},
   {id:'m5_area',name:'Diện Tích',emoji:'📐',color:'rgba(56,189,248,.2)',gen:function(l){
-    if(l<=2){var a=R(3,15),h=R(3,10);return MQ('Tam giác đáy '+a+'cm\ncao '+h+'cm\nDT = ? cm²',a*h/2,'S = đáy × cao : 2')}
-    if(l<=3){var a=R(5,15),b=R(3,10),h=R(3,8);return MQ('Hình thang\nđáy '+a+'cm, '+b+'cm\ncao '+h+'cm\nDT = ?',(a+b)*h/2,'S = (a+b)×h:2')}
-    var a=R(3,12),h=R(3,10);return MQ('Hình bình hành\nđáy '+a+'cm, cao '+h+'cm\nDT = ?',a*h)}},
+    if(l<=2){var a=R(3,15),h=R(3,10);return MQ('Tam giác đáy '+a+'cm\ncao '+h+'cm\nDiện tích = ? cm²',a*h/2,'S = đáy × cao : 2')}
+    if(l<=3){var a=R(5,15),b=R(3,10),h=R(3,8);return MQ('Hình thang\nđáy '+a+'cm, '+b+'cm\ncao '+h+'cm\nDiện tích = ?',(a+b)*h/2,'S = (a+b)×h:2')}
+    var a=R(3,12),h=R(3,10);return MQ('Hình bình hành\nđáy '+a+'cm, cao '+h+'cm\nDiện tích = ?',a*h)}},
   {id:'m5_conv',name:'Đổi Đơn Vị',emoji:'📏',color:'rgba(192,132,252,.2)',gen:function(l){var qs=[
     MQ('2,5 km = ? m',2500),MQ('3500 m = ? km',3.5),
     MQ('1,5 tấn = ? kg',1500),MQ('2500 g = ? kg',2.5),
@@ -49,7 +49,7 @@ var MATH_SKILLS=[
     function(){var p=R(10,40),n=R(100,500);return MQ(p+'% của '+n+' = ?',n*p/100,'Phần trăm')},
     function(){var v=R(30,60),t=R(2,4);return MQ('Xe chạy '+v+'km/h\nĐi trong '+t+' giờ\nQuãng đường = ?',v*t,'S = v × t')},
     function(){var a=R(3,8),b=R(2,5),c=R(2,4);return MQ('Hộp dài '+a+' rộng '+b+' cao '+c+'cm\nV = ?',a*b*c)},
-    function(){var a=R(10,30),b=R(10,30),c=R(10,30);var s=a+b+c;if(s%3!==0){c=c+(3-s%3)}return MQ('TBC của '+a+', '+b+', '+c+' = ?',(a+b+c)/3)},
+    function(){var a=R(10,30),b=R(10,30),c=R(10,30);var s=a+b+c;if(s%3!==0){c=c+(3-s%3)}return MQ('Trung bình cộng của '+a+', '+b+', '+c+' = ?',(a+b+c)/3)},
   ];return tps[R(0,tps.length-1)]()}},
 ];
 
@@ -70,9 +70,9 @@ var VIET_SKILLS=[
     TQ('"Nếu chăm học thì sẽ giỏi"\nQuan hệ gì?','Điều kiện - Kết quả',['Nguyên nhân','Tương phản','Tăng tiến']),
     TQ('"Tuy mệt nhưng em vẫn học"\nQuan hệ gì?','Tương phản',['Nguyên nhân','Điều kiện','Tăng tiến']),
     TQ('"Không những giỏi mà còn ngoan"\nQuan hệ gì?','Tăng tiến',['Tương phản','Nguyên nhân','Điều kiện']),
-    TQ('Cặp QHT nguyên nhân?','vì...nên',['tuy...nhưng','nếu...thì','không những...mà còn']),
-    TQ('Cặp QHT tương phản?','tuy...nhưng',['vì...nên','nếu...thì','không những...mà còn']),
-    TQ('Cặp QHT điều kiện?','nếu...thì',['vì...nên','tuy...nhưng','không những...mà còn']),
+    TQ('Cặp quan hệ từnguyên nhân?','vì...nên',['tuy...nhưng','nếu...thì','không những...mà còn']),
+    TQ('Cặp quan hệ từtương phản?','tuy...nhưng',['vì...nên','nếu...thì','không những...mà còn']),
+    TQ('Cặp quan hệ từđiều kiện?','nếu...thì',['vì...nên','tuy...nhưng','không những...mà còn']),
     TQ('"Do trời nắng nên rất nóng"\nQuan hệ?','Nguyên nhân - Kết quả',['Điều kiện','Tương phản','Tăng tiến']),
   ];return qs[R(0,qs.length-1)]}},
   {id:'v5_qht',name:'Quan Hệ Từ',emoji:'🔀',color:'rgba(192,132,252,.2)',gen:function(l){var qs=[
@@ -92,7 +92,7 @@ var VIET_SKILLS=[
     TQ('"Ăn cơm" và "ăn Tết"\n"ăn" là?','Từ nhiều nghĩa',['Từ đồng âm','Từ trái nghĩa','Từ láy']),
     TQ('"Bay" (chim bay)\nvà "bay" (màu bay) là?','Từ đồng âm',['Từ nhiều nghĩa','Từ đồng nghĩa','Từ láy']),
   ];return qs[R(0,qs.length-1)]}},
-  {id:'v5_bptt',name:'Biện Pháp TT',emoji:'🎨',color:'rgba(52,211,153,.2)',gen:function(l){var qs=[
+  {id:'v5_bptt',name:'Biện Pháp Tu Từ',emoji:'🎨',color:'rgba(52,211,153,.2)',gen:function(l){var qs=[
     TQ('"Trẻ em như búp trên cành"?\nBiện pháp?','So sánh',['Nhân hóa','Ẩn dụ','Hoán dụ']),
     TQ('"Ông mặt trời tươi cười"?\nBiện pháp?','Nhân hóa',['So sánh','Ẩn dụ','Hoán dụ']),
     TQ('"Thuyền về có nhớ bến chăng"?\n(thuyền=người đi)','Ẩn dụ',['So sánh','Nhân hóa','Hoán dụ'],'Gọi A bằng B'),

@@ -30,17 +30,17 @@ var MATH_SKILLS=[
     TQ('Dấu hiệu chia hết cho 2?','Cuối chẵn',['Cuối lẻ','Tổng CS ⫶2','Cuối = 5']),
   ];return qs[R(0,qs.length-1)]}},
   {id:'m4_avg',name:'Trung Bình Cộng',emoji:'📊',color:'rgba(52,211,153,.2)',gen:function(l){
-    if(l<=3){var a=R(5,20),b=R(5,20);return MQ('TBC của '+a+' và '+b+' = ?',(a+b)/2,'(a+b):2')}
+    if(l<=3){var a=R(5,20),b=R(5,20);return MQ('Trung bình cộng của '+a+' và '+b+' = ?',(a+b)/2,'(a+b):2')}
     var a=R(10,30),b=R(10,30),c=R(10,30);var s=a+b+c;if(s%3!==0){c=c+(3-s%3)}
-    return MQ('TBC của '+a+', '+b+', '+c+' = ?',(a+b+c)/3,'(a+b+c):3')}},
+    return MQ('Trung bình cộng của '+a+', '+b+', '+c+' = ?',(a+b+c)/3,'(a+b+c):3')}},
   {id:'m4_sumdf',name:'Tổng Hiệu',emoji:'🧩',color:'rgba(255,107,157,.2)',gen:function(l){
     var s=R(20,100),d=R(2,20);if((s+d)%2!==0){s++}
     var big=(s+d)/2,small=(s-d)/2;
     return Math.random()>.5?MQ('Tổng 2 số = '+s+'\nHiệu 2 số = '+d+'\nSố lớn = ?',big,'(Tổng+Hiệu):2'):MQ('Tổng 2 số = '+s+'\nHiệu 2 số = '+d+'\nSố bé = ?',small,'(Tổng−Hiệu):2')}},
   {id:'m4_geo',name:'Hình Học',emoji:'📐',color:'rgba(56,189,248,.2)',gen:function(l){
-    if(l<=2){var a=R(3,15);return Math.random()>.5?MQ('HV cạnh '+a+'cm\nChu vi = ?',a*4,'CV = a×4'):MQ('HV cạnh '+a+'cm\nDiện tích = ?',a*a,'DT = a×a')}
-    if(l<=4){var d=R(5,20),r=R(3,12);return Math.random()>.5?MQ('HCN '+d+'×'+r+'cm\nChu vi = ?',(d+r)*2):MQ('HCN '+d+'×'+r+'cm\nDiện tích = ?',d*r)}
-    var a=R(5,15),h=R(3,10);return MQ('Hình bình hành\nđáy '+a+'cm, cao '+h+'cm\nDT = ?',a*h,'DT = đáy × cao')}},
+    if(l<=2){var a=R(3,15);return Math.random()>.5?MQ('Hình vuông cạnh '+a+'cm\nChu vi = ?',a*4,'Chu vi = a×4'):MQ('Hình vuông cạnh '+a+'cm\nDiện tích = ?',a*a,'Diện tích = a×a')}
+    if(l<=4){var d=R(5,20),r=R(3,12);return Math.random()>.5?MQ('Hình chữ nhật '+d+'×'+r+'cm\nChu vi = ?',(d+r)*2):MQ('Hình chữ nhật '+d+'×'+r+'cm\nDiện tích = ?',d*r)}
+    var a=R(5,15),h=R(3,10);return MQ('Hình bình hành\nđáy '+a+'cm, cao '+h+'cm\nDiện tích = ?',a*h,'Diện tích = đáy × cao')}},
   {id:'m4_meas',name:'Đo Lường',emoji:'📏',color:'rgba(192,132,252,.2)',gen:function(l){var qs=[
     MQ('5 m = ? cm',500),MQ('3 km = ? m',3000),
     MQ('2 kg = ? g',2000),MQ('4000 g = ? kg',4),
@@ -100,7 +100,7 @@ var VIET_SKILLS=[
     TQ('"Đi một ngày đàng\nhọc một sàng khôn"?','Đi nhiều biết nhiều',['Học 1 ngày','Đi chợ','Sàng gạo']),
     TQ('"Một cây làm chẳng nên non"?','Đoàn kết',['Trồng cây','Leo núi','Một mình']),
   ];return qs[R(0,qs.length-1)]}},
-  {id:'v4_bptt',name:'Biện Pháp TT',emoji:'🎨',color:'rgba(56,189,248,.2)',gen:function(l){var qs=[
+  {id:'v4_bptt',name:'Biện Pháp Tu Từ',emoji:'🎨',color:'rgba(56,189,248,.2)',gen:function(l){var qs=[
     TQ('"Mặt trời đỏ như quả bóng"\nBiện pháp?','So sánh',['Nhân hóa','Ẩn dụ','Điệp từ'],'Có từ "như"'),
     TQ('"Ông mặt trời thức dậy"\nBiện pháp?','Nhân hóa',['So sánh','Ẩn dụ','Điệp từ'],'Vật làm người'),
     TQ('"Trẻ em như búp trên cành"\nBiện pháp?','So sánh',['Nhân hóa','Ẩn dụ','Hoán dụ']),
