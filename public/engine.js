@@ -51,7 +51,7 @@ function poolGet(skillId,level){
 // ============ VOICE SYSTEM ============
 var _voiceManifest=null;
 var _voiceAudio=new Audio();
-var _voiceEnabled=false;
+var _voiceEnabled=true;
 var _voiceLoaded=false;
 var _idleTimer=null;
 var _speechSynth=window.speechSynthesis||null;
@@ -71,12 +71,12 @@ var _qVoiceManifest=null;
 
 function voiceEnabled(){
   if(!_voiceEnabled||!sndEnabled())return false;
-  try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceEnabled===true)return true}catch(e){}
-  return false;
+  try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceEnabled===false)return false}catch(e){}
+  return true;
 }
 function voiceReadEnabled(){
-  try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceReadEnabled===true)return true}catch(e){}
-  return false;
+  try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.voiceReadEnabled===false)return false}catch(e){}
+  return true;
 }
 function getVoiceChar(){return 'boy'}
 
