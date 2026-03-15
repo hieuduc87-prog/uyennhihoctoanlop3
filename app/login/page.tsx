@@ -17,7 +17,7 @@ function LoginContent() {
   const [email, setEmail] = useState('')
   const [childName, setChildName] = useState('')
   const [gender, setGender] = useState<'girl' | 'boy'>('girl')
-  const [pet, setPet] = useState<'corgi' | 'cat'>('corgi')
+  const [pet, setPet] = useState<'corgi' | 'cat' | 'elephant'>('corgi')
   const [error, setError] = useState(urlError ? 'Đăng nhập thất bại. Thử lại nhé!' : '')
   const [success, setSuccess] = useState('')
   const [loading, setLoading] = useState(false)
@@ -103,7 +103,7 @@ function LoginContent() {
   }
 
   const avatarSrc = gender === 'girl' ? '/uyennhi.png' : '/voi.png'
-  const petSrc = pet === 'corgi' ? '/corgi.png' : '/cat.png'
+  const petSrc = pet === 'corgi' ? '/corgi.png' : pet === 'elephant' ? '/voi.png' : '/cat.png'
 
   return (
     <>
@@ -178,6 +178,10 @@ function LoginContent() {
                     <button type="button" className={`pick-card ${pet === 'cat' ? 'selected' : ''}`} onClick={() => setPet('cat')}>
                       <img src="/cat.png" width={50} height={50} alt="Mèo" style={{ objectFit: 'contain' }} />
                       <span>Mèo</span>
+                    </button>
+                    <button type="button" className={`pick-card ${pet === 'elephant' ? 'selected' : ''}`} onClick={() => setPet('elephant')}>
+                      <img src="/voi.png" width={50} height={50} alt="Voi" style={{ objectFit: 'contain' }} />
+                      <span>Voi</span>
                     </button>
                   </div>
                 </div>

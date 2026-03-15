@@ -522,6 +522,60 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .report-sk-stats{font-size:10px;font-weight:700;color:var(--dim);text-align:right;min-width:60px;flex-shrink:0}
 .report-sk-lv{font-size:9px;font-weight:800;color:var(--gold);background:rgba(255,194,51,.15);
   padding:2px 6px;border-radius:8px;display:inline-block;margin-top:2px}
+/* ========== CHARACTER & PET EVOLUTION ========== */
+.char-pet-card{margin-top:14px}
+.cp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cp-item{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;
+  box-shadow:0 3px 0 rgba(0,0,0,.12),var(--shine)}
+.cp-badge{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:18px;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.cp-info{flex:1;min-width:0}
+.cp-name{font-family:'Baloo 2',cursive;font-size:14px;font-weight:800;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-level{font-size:11px;font-weight:800;letter-spacing:.3px}
+.cp-xp-bar{height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;
+  margin-top:4px;border:1px solid rgba(255,255,255,.04)}
+.cp-xp-bar .fill{height:100%;border-radius:3px;transition:width .5s}
+.cp-xp-text{font-size:9px;color:var(--dim);font-weight:700;margin-top:2px}
+.cp-ability{display:flex;align-items:center;gap:8px;margin-top:8px;padding:8px 12px;
+  background:linear-gradient(135deg,rgba(180,77,255,.1),rgba(61,194,255,.08));
+  border:1px solid rgba(180,77,255,.15);border-radius:12px;font-size:12px;font-weight:700;color:var(--dim)}
+.cp-ability-icon{font-size:16px}
+.cp-ability-label{color:var(--text);font-weight:800}
+/* Char glow/crown/hat overlays */
+.char-glow{position:absolute;width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow-color,#b44dff) 0%,transparent 70%);
+  opacity:.3;top:-5px;left:50%;transform:translateX(-70%);pointer-events:none;
+  animation:charGlowPulse 2s ease-in-out infinite}
+@keyframes charGlowPulse{0%,100%{opacity:.2;transform:translateX(-70%) scale(1)}50%{opacity:.4;transform:translateX(-70%) scale(1.1)}}
+.char-crown{position:absolute;top:-12px;left:50%;transform:translateX(-70%);font-size:24px;
+  filter:drop-shadow(0 2px 6px rgba(255,215,0,.5));animation:crownFloat 2s ease-in-out infinite}
+.char-hat{position:absolute;top:-8px;left:50%;transform:translateX(-70%);font-size:20px;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));animation:crownFloat 3s ease-in-out infinite}
+@keyframes crownFloat{0%,100%{transform:translateX(-70%) translateY(0)}50%{transform:translateX(-70%) translateY(-4px)}}
+.pet-wings{position:absolute;bottom:20px;right:0;font-size:18px;opacity:.6;
+  animation:wingFlap 1s ease-in-out infinite}
+@keyframes wingFlap{0%,100%{transform:scaleX(1)}50%{transform:scaleX(-1)}}
+/* Evolution celebration overlay */
+.evolution-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;
+  justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  animation:evoFadeIn .3s ease}
+@keyframes evoFadeIn{0%{opacity:0}100%{opacity:1}}
+.evo-content{text-align:center;animation:evoBounce .8s cubic-bezier(.34,1.56,.64,1)}
+@keyframes evoBounce{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+.evo-sparkles{font-size:28px;letter-spacing:8px;animation:evoSparkle 1s ease infinite;margin-bottom:8px}
+@keyframes evoSparkle{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+.evo-icon{font-size:64px;margin:8px 0}
+.evo-title{font-family:'Baloo 2',cursive;font-size:32px;font-weight:800;
+  background:linear-gradient(135deg,#ffc233,#ff5a9e,#b44dff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 8px rgba(255,194,51,.4))}
+.evo-detail{font-size:16px;font-weight:700;color:var(--text);margin-top:4px}
+.evo-subtitle{font-family:'Baloo 2',cursive;font-size:22px;font-weight:800;margin-top:4px}
+.evo-bonus{font-size:14px;font-weight:800;color:var(--gold);margin-top:8px;
+  background:rgba(255,194,51,.15);padding:6px 16px;border-radius:20px;display:inline-block}
 .confetti-box{position:fixed;inset:0;pointer-events:none;z-index:9999}
 .conf{position:absolute;animation:confFall var(--dur,3s) var(--del,0s) linear forwards}
 @keyframes confFall{0%{transform:translateY(-10vh) rotate(0) scale(1);opacity:1}50%{opacity:1}100%{transform:translateY(110vh) rotate(720deg) scale(.6);opacity:0}}
@@ -609,6 +663,11 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .profile-name{font-size:28px}
   .streak-card{padding:24px;border-radius:24px}
   .streak-num{font-size:52px}
+  .char-pet-card{margin-top:18px}
+  .cp-item{padding:16px;border-radius:20px}
+  .cp-badge{width:42px;height:42px;font-size:22px}
+  .cp-name{font-size:16px}
+  .cp-level{font-size:12px}
   .gem-stats-card,.gem-exchange-card{padding:20px;border-radius:24px}
   .gem-stat-num{font-size:26px}
   .ach-grid{grid-template-columns:repeat(5,1fr);gap:12px}
@@ -683,6 +742,12 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .daily-hero h2{font-size:18px}
   .mission-card{padding:10px 12px}
   .profile-hero{padding:14px 0 10px}
+  .char-pet-card{margin-top:8px}
+  .cp-item{padding:10px}
+  .cp-badge{width:32px;height:32px;font-size:16px}
+  .cp-name{font-size:13px}
+  .cp-level{font-size:10px}
+  .cp-ability{padding:6px 10px;font-size:11px;margin-top:6px}
   .streak-card{padding:12px;margin-top:10px}
   .streak-num{font-size:36px}
   .gem-stats-card{padding:10px;margin-top:10px}
@@ -781,6 +846,14 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .profile-name{font-size:18px}
   .profile-lv{font-size:11px}
   .xp-bar-full{height:5px;max-width:200px}
+  .char-pet-card{margin-top:6px}
+  .cp-row{gap:6px}
+  .cp-item{padding:8px;border-radius:12px}
+  .cp-badge{width:28px;height:28px;font-size:14px}
+  .cp-name{font-size:12px}
+  .cp-level{font-size:9px}
+  .cp-xp-bar{height:4px}
+  .cp-ability{padding:4px 8px;font-size:10px;margin-top:4px}
   .streak-card{padding:8px;margin-top:6px;border-radius:16px}
   .streak-num{font-size:28px}
   .streak-lbl{font-size:10px}
@@ -938,6 +1011,7 @@ const gameHTML = `
     <div class="xp-bar-full"><div class="fill" id="xpF" style="width:0%"></div></div>
     <div style="font-size:10px;color:var(--dim);margin-top:4px;font-weight:700"><span id="xpC">0</span>/<span id="xpN">100</span> XP</div>
   </div>
+  <div id="charPetCard" class="char-pet-card"></div>
   <div class="streak-card"><div class="streak-num" id="profSk">0</div><div class="streak-lbl">ngày chơi liên tục 🔥</div></div>
   <div class="gem-stats-card">
     <h3>💎 Kim Cương</h3>
