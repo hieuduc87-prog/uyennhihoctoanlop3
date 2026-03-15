@@ -13,7 +13,7 @@ function LoginContent() {
   const [email, setEmail] = useState('')
   const [childName, setChildName] = useState('')
   const [gender, setGender] = useState<'girl' | 'boy'>('girl')
-  const [pet, setPet] = useState<'corgi' | 'cat' | 'elephant'>('corgi')
+  const [pet, setPet] = useState<'corgi' | 'cat' | 'trex' | 'dragon'>('corgi')
   const [grade, setGrade] = useState(1)
   const [error, setError] = useState(urlError ? 'Đăng nhập thất bại. Thử lại nhé!' : '')
   const [success, setSuccess] = useState('')
@@ -44,7 +44,7 @@ function LoginContent() {
       // Restore profile + lastGrade from user data
       const existingProfile = (() => { try { return JSON.parse(localStorage.getItem('player_profile') || '{}') } catch { return {} } })()
       const gradeId = user.grade ? 'lop' + user.grade : existingProfile.lastGrade
-      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'uyennhi' : 'voi', pet: user.pet, lastGrade: gradeId || existingProfile.lastGrade }
+      const profile = { name: user.display_name, gender: user.gender, avatar: user.gender === 'girl' ? 'nhinhi' : 'anan', pet: user.pet, lastGrade: gradeId || existingProfile.lastGrade }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
@@ -92,7 +92,7 @@ function LoginContent() {
         return
       }
       const gradeId = 'lop' + (user.grade || grade || 1)
-      const profile = { name: user.display_name || childName.trim(), gender: user.gender || gender, avatar: (user.gender || gender) === 'girl' ? 'uyennhi' : 'voi', pet: user.pet || pet, lastGrade: gradeId }
+      const profile = { name: user.display_name || childName.trim(), gender: user.gender || gender, avatar: (user.gender || gender) === 'girl' ? 'nhinhi' : 'anan', pet: user.pet || pet, lastGrade: gradeId }
       localStorage.setItem('player_profile', JSON.stringify(profile))
       localStorage.setItem('voicon_user', user.username)
       document.cookie = 'guest_mode=0; path=/; max-age=0'
@@ -112,7 +112,7 @@ function LoginContent() {
   }
 
   const avatarSrc = gender === 'girl' ? '/characters/girl_level_1.svg' : '/characters/boy_level_1.svg'
-  const petSrc = pet === 'corgi' ? '/pets/corgi_level_1.svg' : pet === 'elephant' ? '/pets/elephant_level_1.svg' : '/pets/cat_level_1.svg'
+  const petSrc = `/pets/${pet}_level_1.svg`
 
   return (
     <>
@@ -179,19 +179,13 @@ function LoginContent() {
                 </div>
                 <div className="pick-section">
                   <p className="pick-label">Chọn thú cưng:</p>
-                  <div className="pick-row">
-                    <button type="button" className={`pick-card ${pet === 'corgi' ? 'selected' : ''}`} onClick={() => setPet('corgi')}>
-                      <img src="/pets/corgi_level_1.svg" width={50} height={50} alt="Corgi Béo" style={{ objectFit: 'contain' }} />
-                      <span>Corgi Béo</span>
-                    </button>
-                    <button type="button" className={`pick-card ${pet === 'cat' ? 'selected' : ''}`} onClick={() => setPet('cat')}>
-                      <img src="/pets/cat_level_1.svg" width={50} height={50} alt="Mèo Bông" style={{ objectFit: 'contain' }} />
-                      <span>Mèo Bông</span>
-                    </button>
-                    <button type="button" className={`pick-card ${pet === 'elephant' ? 'selected' : ''}`} onClick={() => setPet('elephant')}>
-                      <img src="/pets/elephant_level_1.svg" width={50} height={50} alt="Voi Con" style={{ objectFit: 'contain' }} />
-                      <span>Voi Con</span>
-                    </button>
+                  <div className="pick-row pet-row">
+                    {([['corgi','Corgi Béo'],['cat','Mèo Bông'],['trex','Khủng Long'],['dragon','Rồng Con']] as const).map(([id, name]) => (
+                      <button key={id} type="button" className={`pick-card ${pet === id ? 'selected' : ''}`} onClick={() => setPet(id as 'corgi'|'cat'|'trex'|'dragon')}>
+                        <img src={`/pets/${id}_level_1.svg`} width={50} height={50} alt={name} style={{ objectFit: 'contain' }} />
+                        <span>{name}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
                 <div className="pick-section">
@@ -366,6 +360,7 @@ const loginCSS = `
 .pick-card.selected{border-color:var(--coral,#ff5a9e);background:rgba(255,90,158,.15);color:#fff;
   box-shadow:0 0 16px rgba(255,90,158,.25)}
 .pick-card img{filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.pet-row{flex-wrap:wrap;gap:8px}
 .grade-row{flex-wrap:wrap;gap:8px}
 .grade-pick{min-width:auto;padding:8px 12px}
 .grade-num{font-size:18px}

@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
   if (action === 'register') {
     const display_name = typeof body.display_name === 'string' ? sanitize(body.display_name, 30) : ''
     const gender = body.gender === 'boy' ? 'boy' : 'girl'
-    const pet = ['corgi', 'cat', 'elephant'].includes(body.pet as string) ? body.pet : 'corgi'
+    const pet = ['corgi', 'cat', 'trex', 'dragon'].includes(body.pet as string) ? body.pet : 'corgi'
     const grade = typeof body.grade === 'number' && body.grade >= 1 && body.grade <= 5 ? body.grade : 1
     const email = typeof body.email === 'string' ? sanitize(body.email, 100) : ''
 

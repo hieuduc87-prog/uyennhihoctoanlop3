@@ -24,8 +24,8 @@ function sndStart(){tone(523,.12,'sine',.2);tone(659,.12,'sine',.2,.1);tone(784,
 function sndFail(){tone(392,.2,'triangle',.15);tone(330,.3,'triangle',.12,.15)}
 
 // ============ PLAYER PROFILE ============
-var PP=(function(){try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.name)return p}catch(e){}return{name:'Bé',gender:'girl',avatar:'uyennhi',pet:'corgi'}})();
-var ART_MILESTONES=[1,3,5,7,10];
+var PP=(function(){try{var p=JSON.parse(localStorage.getItem('player_profile'));if(p&&p.name)return p}catch(e){}return{name:'Bé',gender:'girl',avatar:'nhinhi',pet:'corgi'}})();
+var ART_MILESTONES=[1,2,3,4,5];
 function getArtLevel(lv){for(var i=ART_MILESTONES.length-1;i>=0;i--){if(lv>=ART_MILESTONES[i])return ART_MILESTONES[i]}return 1}
 function getAvatarSrc(){
   var charId=PP.gender==='boy'?'boy':'girl';
@@ -37,8 +37,8 @@ function getPetSrc(){
   var lv=D&&D.petLevel?getArtLevel(D.petLevel):1;
   return'/pets/'+petId+'_level_'+lv+'.svg';
 }
-function getPetName(){return PP.pet==='cat'?'Mèo Bông':PP.pet==='elephant'?'Voi Con':'Corgi Béo'}
-function getCharName(){return PP.gender==='boy'?'Bin':'Uyển Nhi'}
+function getPetName(){return PP.pet==='cat'?'Mèo Bông':PP.pet==='trex'?'Khủng Long':PP.pet==='dragon'?'Rồng Con':'Corgi Béo'}
+function getCharName(){return getPlayerName()}
 function getPlayerName(){return PP.name||'Bé'}
 function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
@@ -53,8 +53,8 @@ function awardCharXP(xpAmount){
   if(!D.charXP)D.charXP=0;if(!D.charLevel)D.charLevel=1;
   if(!D.petXP)D.petXP=0;if(!D.petLevel)D.petLevel=1;
   var oldCharLv=D.charLevel;var oldPetLv=D.petLevel;
-  // Pet ability: Power+ (elephant gives +5% XP)
-  if(PP.pet==='elephant')xpAmount=Math.round(xpAmount*1.05);
+  // Pet ability: Power+ (trex gives +5% XP)
+  if(PP.pet==='trex')xpAmount=Math.round(xpAmount*1.05);
   D.charXP+=xpAmount;D.petXP+=Math.round(xpAmount*0.7);
   D.charLevel=getCharLevel(D.charXP);D.petLevel=getCharLevel(D.petXP);
   var evolved=false;
@@ -80,7 +80,8 @@ function showEvolution(type,newLevel){
 function getPetBonus(){
   var pet=PP.pet||'corgi';
   if(pet==='cat')return{type:'memory',label:'Gợi ý lâu hơn',hintMult:1.5};
-  if(pet==='elephant')return{type:'power',label:'+5% XP',xpMult:1.05};
+  if(pet==='trex')return{type:'power',label:'+5% XP',xpMult:1.05};
+  if(pet==='dragon')return{type:'combo',label:'+2 Combo',comboAdd:2};
   return{type:'speed',label:'+2s Timer',timerAdd:2};
 }
 
@@ -890,7 +891,7 @@ function renderCharCard(cStage,pStage){
       '</div>'+
       '<div class="cp-item" style="--cp-color:'+pStage.color+'">'+
         '<div class="cp-badge" style="background:'+pStage.color+'">'+
-          (PP.pet==='cat'?'🐱':PP.pet==='elephant'?'🐘':'🐕')+'</div>'+
+          (PP.pet==='cat'?'🐱':PP.pet==='trex'?'🦖':PP.pet==='dragon'?'🐉':'🐕')+'</div>'+
         '<div class="cp-info">'+
           '<div class="cp-name">'+getPetName()+'</div>'+
           '<div class="cp-level" style="color:'+pStage.color+'">Lv.'+D.petLevel+' '+pStage.title+'</div>'+
@@ -900,7 +901,7 @@ function renderCharCard(cStage,pStage){
       '</div>'+
     '</div>'+
     '<div class="cp-ability">'+
-      '<span class="cp-ability-icon">'+(PP.pet==='cat'?'🐱':PP.pet==='elephant'?'🐘':'🐕')+'</span>'+
+      '<span class="cp-ability-icon">'+(PP.pet==='cat'?'🐱':PP.pet==='trex'?'🦖':PP.pet==='dragon'?'🐉':'🐕')+'</span>'+
       '<span class="cp-ability-label">Năng lực: '+petBonus.label+'</span>'+
     '</div>';
 }

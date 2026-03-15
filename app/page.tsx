@@ -24,7 +24,7 @@ export default function Landing() {
   function selectGrade(gradeId: string) {
     try {
       const raw = localStorage.getItem('player_profile')
-      const pp = raw ? JSON.parse(raw) : { name: 'Bé', gender: 'girl', avatar: 'uyennhi', pet: 'corgi' }
+      const pp = raw ? JSON.parse(raw) : { name: 'Bé', gender: 'girl', avatar: 'nhinhi', pet: 'corgi' }
       pp.lastGrade = gradeId
       localStorage.setItem('player_profile', JSON.stringify(pp))
     } catch { /* ignore */ }
