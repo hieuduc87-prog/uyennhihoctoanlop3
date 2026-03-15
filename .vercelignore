@@ -1,0 +1,6 @@
+node_modules
+.next
+.env*
+.git
+*.pem
+supabase/.temp/
