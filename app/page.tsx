@@ -61,6 +61,18 @@ export default function Landing() {
             ))}
           </div>
 
+          <button className="landing-logout" onClick={() => {
+            try {
+              localStorage.removeItem('player_profile')
+              localStorage.removeItem('voicon_user')
+              document.cookie = 'logged_in=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/'
+              document.cookie = 'guest_mode=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/'
+            } catch {}
+            window.location.href = '/login'
+          }}>
+            🚪 Đăng xuất
+          </button>
+
           <div className="landing-footer">
             Toán · Tiếng Việt · English cùng thú cưng dễ thương!
           </div>
@@ -119,35 +131,89 @@ html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--bg1);colo
   border-radius:30px;padding:10px 20px;font-weight:800;font-size:14px;
   box-shadow:0 4px 0 rgba(0,0,0,.25),inset 0 2px 0 rgba(255,255,255,.2);
   letter-spacing:.3px}
-.landing-footer{margin-top:40px;font-size:13px;color:var(--dim);letter-spacing:.3px}
-/* Desktop */
+.landing-logout{
+  display:block;margin:28px auto 0;padding:10px 28px;border:1.5px solid rgba(239,68,68,.3);
+  border-radius:40px;background:rgba(239,68,68,.1);color:#ef4444;font-size:13px;font-weight:800;
+  font-family:'Nunito',sans-serif;cursor:pointer;
+  box-shadow:0 3px 0 rgba(0,0,0,.12);transition:all .15s}
+.landing-logout:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.landing-footer{margin-top:16px;font-size:13px;color:var(--dim);letter-spacing:.3px}
+/* ========== TABLET (768px+) ========== */
 @media(min-width:768px){
-  .landing-content{max-width:700px;padding:40px 30px}
-  .landing-title{font-size:48px}
-  .landing-sub{font-size:18px;margin:12px 0 40px}
-  .grade-cards{gap:30px}
-  .grade-card{width:260px;padding:36px 32px 28px;border-radius:28px}
-  .grade-mascot img{width:130px!important;height:130px!important}
-  .grade-emoji{font-size:34px}
-  .grade-name{font-size:30px}
-  .grade-desc{font-size:14px}
-  .grade-btn{padding:12px 28px;font-size:16px}
-  .landing-footer{margin-top:50px;font-size:15px}
+  .landing-content{max-width:800px;padding:40px 30px}
+  .landing-title{font-size:44px}
+  .landing-sub{font-size:17px;margin:10px 0 36px}
+  .grade-cards{gap:24px}
+  .grade-card{width:220px;padding:30px 24px 22px;border-radius:26px}
+  .grade-mascot img{width:110px!important;height:110px!important}
+  .grade-emoji{font-size:30px}
+  .grade-name{font-size:26px}
+  .grade-desc{font-size:13px}
+  .grade-btn{padding:11px 24px;font-size:15px}
+  .landing-footer{margin-top:44px;font-size:14px}
 }
-/* Mobile landscape */
+/* ========== DESKTOP (1024px+) ========== */
+@media(min-width:1024px){
+  .landing-content{max-width:1100px;padding:50px 40px}
+  .landing-title{font-size:52px}
+  .landing-sub{font-size:20px;margin:14px 0 44px}
+  .grade-cards{gap:28px}
+  .grade-card{width:240px;padding:36px 28px 26px;border-radius:28px}
+  .grade-mascot img{width:120px!important;height:120px!important}
+  .grade-emoji{font-size:34px}
+  .grade-name{font-size:28px}
+  .grade-desc{font-size:14px}
+  .grade-btn{padding:13px 28px;font-size:16px;border-radius:32px}
+  .landing-footer{margin-top:50px;font-size:16px}
+}
+/* ========== WIDE DESKTOP (1280px+) ========== */
+@media(min-width:1280px){
+  .landing-content{max-width:1300px;padding:60px 50px}
+  .landing-title{font-size:58px}
+  .landing-sub{font-size:22px;margin:16px 0 50px}
+  .grade-cards{gap:36px}
+  .grade-card{width:280px;padding:40px 32px 30px;border-radius:32px}
+  .grade-mascot img{width:140px!important;height:140px!important}
+  .grade-emoji{font-size:38px}
+  .grade-name{font-size:32px}
+  .grade-desc{font-size:15px;margin-top:6px}
+  .grade-btn{padding:14px 32px;font-size:18px}
+  .landing-footer{margin-top:60px;font-size:17px}
+}
+/* ========== PHONE LANDSCAPE ========== */
 @media(max-height:500px) and (orientation:landscape){
-  .landing{min-height:100vh;padding:10px}
+  .landing{min-height:100vh;padding:10px;overflow-y:auto}
   .landing-content{max-width:100%;padding:10px 20px}
   .landing-title{font-size:26px}
   .landing-sub{font-size:13px;margin:4px 0 12px}
-  .grade-cards{gap:16px;flex-wrap:nowrap}
-  .grade-card{width:180px;padding:14px 16px 12px;border-radius:18px}
-  .grade-mascot img{width:60px!important;height:60px!important}
-  .grade-mascot{margin-bottom:4px}
-  .grade-emoji{font-size:20px}
-  .grade-name{font-size:20px}
-  .grade-desc{font-size:10px}
-  .grade-btn{margin-top:8px;padding:7px 16px;font-size:12px}
-  .landing-footer{margin-top:12px;font-size:11px}
+  .grade-cards{gap:12px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    justify-content:flex-start;padding:4px 10px}
+  .grade-card{width:160px;min-width:160px;padding:12px 14px 10px;border-radius:18px;flex-shrink:0}
+  .grade-mascot img{width:55px!important;height:55px!important}
+  .grade-mascot{margin-bottom:2px}
+  .grade-emoji{font-size:18px}
+  .grade-name{font-size:18px}
+  .grade-desc{font-size:9px;margin-top:2px}
+  .grade-btn{margin-top:6px;padding:6px 14px;font-size:11px}
+  .landing-footer{margin-top:10px;font-size:10px}
+}
+/* ========== TABLET LANDSCAPE (iPad ngang) ========== */
+@media(min-width:1024px) and (max-height:900px) and (orientation:landscape){
+  .landing{overflow-y:auto}
+  .landing-content{max-width:1100px;padding:24px 40px}
+  .landing-title{font-size:42px}
+  .landing-sub{font-size:17px;margin:8px 0 28px}
+  .grade-cards{gap:24px;flex-wrap:nowrap}
+  .grade-card{width:200px;padding:22px 18px 16px}
+  .grade-mascot img{width:85px!important;height:85px!important}
+  .grade-emoji{font-size:26px}
+  .grade-name{font-size:22px}
+  .grade-desc{font-size:12px}
+  .grade-btn{padding:9px 20px;font-size:13px}
+  .landing-footer{margin-top:20px;font-size:13px}
+}
+/* ========== REDUCED MOTION ========== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
 }
 `
