@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import { createHash } from 'crypto'
 import { signSession, sessionCookieOptions } from '@/lib/session'
+import { VALID_GRADE_IDS } from '@/lib/grade-registry'
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
