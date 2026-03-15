@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import { createHash } from 'crypto'
+import { signSession, sessionCookieOptions } from '@/lib/session'
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -96,8 +97,11 @@ export async function POST(req: NextRequest) {
     if (!data || data.length === 0) {
       return NextResponse.json({ error: 'Sai tên đăng nhập hoặc mật khẩu!' }, { status: 401 })
     }
-    // Never return password field
-    return NextResponse.json({ user: data[0] })
+    // Never return password field — set signed session cookie
+    const res = NextResponse.json({ user: data[0] })
+    const opts = sessionCookieOptions()
+    res.cookies.set(opts.name, signSession(data[0].username), opts)
+    return res
   }
 
   if (action === 'register') {
@@ -142,7 +146,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Lỗi đăng ký. Thử lại nhé!' }, { status: 500 })
     }
     const user = Array.isArray(data) ? data[0] : data
-    return NextResponse.json({ user })
+    const res = NextResponse.json({ user })
+    if (user?.username) {
+      const opts = sessionCookieOptions()
+      res.cookies.set(opts.name, signSession(user.username), opts)
+    }
+    return res
   }
 
   if (action === 'change-password') {
