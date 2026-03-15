@@ -106,12 +106,12 @@ function getArtLevel(lv){for(var i=ART_MILESTONES.length-1;i>=0;i--){if(lv>=ART_
 function getAvatarSrc(){
   var charId=PP.gender==='boy'?'boy':'girl';
   var lv=D&&D.charLevel?getArtLevel(D.charLevel):1;
-  return'/characters/'+charId+'_level_'+lv+'.svg';
+  return'/characters/'+charId+'_level_'+lv+'.png';
 }
 function getPetSrc(){
   var petId=PP.pet||'corgi';
   var lv=D&&D.petLevel?getArtLevel(D.petLevel):1;
-  return'/pets/'+petId+'_level_'+lv+'.svg';
+  return'/pets/'+petId+'_level_'+lv+'.png';
 }
 function getPetName(){return PP.pet==='cat'?'Mèo Bông':PP.pet==='trex'?'Khủng Long':PP.pet==='dragon'?'Rồng Con':'Corgi Béo'}
 function getCharName(){return getPlayerName()}

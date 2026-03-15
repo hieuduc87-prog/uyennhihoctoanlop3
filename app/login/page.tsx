@@ -117,8 +117,8 @@ function LoginContent() {
     router.push('/')
   }
 
-  const avatarSrc = gender === 'girl' ? '/characters/girl_level_1.svg' : '/characters/boy_level_1.svg'
-  const petSrc = `/pets/${pet}_level_1.svg`
+  const avatarSrc = gender === 'girl' ? '/characters/girl_level_1.png' : '/characters/boy_level_1.png'
+  const petSrc = `/pets/${pet}_level_1.png`
 
   return (
     <>
@@ -174,11 +174,11 @@ function LoginContent() {
                   <p className="pick-label">Chọn nhân vật:</p>
                   <div className="pick-row">
                     <button type="button" className={`pick-card ${gender === 'girl' ? 'selected' : ''}`} onClick={() => setGender('girl')}>
-                      <img src="/characters/girl_level_1.svg" width={50} height={60} alt="Bé gái" style={{ objectFit: 'contain' }} />
+                      <img src="/characters/girl_level_1.png" width={50} height={60} alt="Bé gái" style={{ objectFit: 'contain' }} />
                       <span>Uyển Nhi</span>
                     </button>
                     <button type="button" className={`pick-card ${gender === 'boy' ? 'selected' : ''}`} onClick={() => setGender('boy')}>
-                      <img src="/characters/boy_level_1.svg" width={50} height={60} alt="Bé trai" style={{ objectFit: 'contain' }} />
+                      <img src="/characters/boy_level_1.png" width={50} height={60} alt="Bé trai" style={{ objectFit: 'contain' }} />
                       <span>Bin</span>
                     </button>
                   </div>
@@ -188,7 +188,7 @@ function LoginContent() {
                   <div className="pick-row pet-row">
                     {([['corgi','Corgi Béo'],['cat','Mèo Bông'],['trex','Khủng Long'],['dragon','Rồng Con']] as const).map(([id, name]) => (
                       <button key={id} type="button" className={`pick-card ${pet === id ? 'selected' : ''}`} onClick={() => setPet(id as 'corgi'|'cat'|'trex'|'dragon')}>
-                        <img src={`/pets/${id}_level_1.svg`} width={50} height={50} alt={name} style={{ objectFit: 'contain' }} />
+                        <img src={`/pets/${id}_level_1.png`} width={50} height={50} alt={name} style={{ objectFit: 'contain' }} />
                         <span>{name}</span>
                       </button>
                     ))}
@@ -261,16 +261,16 @@ function LoginContent() {
         {/* Animated characters running across screen */}
         <div className="running-chars">
           <div className="run-char run-girl">
-            <img src="/characters/girl_level_5.svg" width={60} height={80} alt="" />
+            <img src="/characters/girl_level_5.png" width={60} height={80} alt="" />
           </div>
           <div className="run-char run-cat">
-            <img src="/pets/cat_level_3.svg" width={50} height={50} alt="" />
+            <img src="/pets/cat_level_3.png" width={50} height={50} alt="" />
           </div>
           <div className="run-char run-boy">
-            <img src="/characters/boy_level_5.svg" width={60} height={80} alt="" />
+            <img src="/characters/boy_level_5.png" width={60} height={80} alt="" />
           </div>
           <div className="run-char run-corgi">
-            <img src="/pets/corgi_level_3.svg" width={50} height={50} alt="" />
+            <img src="/pets/corgi_level_3.png" width={50} height={50} alt="" />
           </div>
         </div>
         <div className="login-footer">
