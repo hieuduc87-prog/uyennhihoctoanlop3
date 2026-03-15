@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "🐾 Uyển Nhi & Corgi - Vương Quốc Toán Học",
-  description: "Game học Toán lớp 3 vui nhộn cùng bạn Corgi béo ú!",
+  title: "🏰 Vương Quốc Học Giỏi",
+  description: "Game học Toán · Tiếng Việt · English Lớp 1 & Lớp 3 cùng thú cưng dễ thương!",
 };
 
 export default function RootLayout({

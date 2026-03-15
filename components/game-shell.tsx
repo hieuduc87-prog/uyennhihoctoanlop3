@@ -65,11 +65,18 @@ function migrateOldFormat(old: Record<string, unknown>): Record<string, unknown>
   }
 }
 
+function getPlayerId(): string {
+  try { return localStorage.getItem('voicon_user') || 'guest' }
+  catch { return 'guest' }
+}
+
 async function loadCloudData(sk: string) {
   try {
+    const pid = getPlayerId()
+    if (pid === 'guest') return
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 3000)
-    const res = await fetch('/api/progress?player=uyennhi', { signal: controller.signal })
+    const res = await fetch(`/api/progress?player=${encodeURIComponent(pid)}&grade=${encodeURIComponent(sk)}`, { signal: controller.signal })
     clearTimeout(timeout)
     if (!res.ok) return
     const { data } = await res.json()
@@ -99,7 +106,7 @@ async function saveToCloud(sk: string) {
     await fetch('/api/progress', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ player_id: 'uyennhi', data: JSON.parse(raw) })
+      body: JSON.stringify({ player_id: getPlayerId(), grade: sk, data: JSON.parse(raw) })
     })
   } catch { /* silent */ }
 }
@@ -150,7 +157,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .speech-bubble{position:relative;background:rgba(255,255,255,.15);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1.5px solid rgba(255,255,255,.2);border-radius:22px;padding:10px 18px;font-size:14px;font-weight:800;max-width:280px;text-align:center;animation:bubPop .5s cubic-bezier(.34,1.56,.64,1);margin:0 auto;box-shadow:0 4px 0 rgba(0,0,0,.15),0 8px 24px rgba(0,0,0,.15),var(--shine)}
 .speech-bubble::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);border:10px solid transparent;border-top-color:rgba(255,255,255,.15);border-bottom:0}
 @keyframes bubPop{0%{opacity:0;transform:scale(.4) translateY(15px)}60%{transform:scale(1.08) translateY(-3px)}100%{opacity:1;transform:scale(1) translateY(0)}}
-#splash{justify-content:center;align-items:center;text-align:center;padding:30px;gap:10px;background:
+#splash{justify-content:center;align-items:center;text-align:center;padding:24px;gap:8px;background:
   radial-gradient(ellipse at 50% 60%,rgba(180,77,255,.3),transparent 60%),
   radial-gradient(ellipse at 30% 80%,rgba(255,90,158,.2),transparent 50%),
   linear-gradient(170deg,#1b0a3c,#2d1463 40%,#3a1878)}
@@ -202,7 +209,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   transform:translateY(-2px)}
 .subject-tab .tab-icon{font-size:22px;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
 .subject-tab .tab-label{font-size:10px;margin-top:2px;letter-spacing:.5px}
-#map{padding-bottom:95px}
+#map{padding-bottom:85px}
 .map-header{text-align:center;padding:14px 16px 4px;flex-shrink:0}
 .map-header h2{font-family:'Baloo 2',cursive;font-size:22px;color:var(--peach);
   text-shadow:0 2px 10px rgba(255,181,167,.3);letter-spacing:.3px}
@@ -232,7 +239,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   filter:drop-shadow(0 2px 4px rgba(255,194,51,.5));background:none;height:auto;width:auto;border-radius:0}
 .skill-card.locked{pointer-events:none}
 #game{align-items:center}
-.game-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;width:100%;max-width:560px;position:relative}
+.game-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;width:100%;max-width:560px;position:relative}
 .g-stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);border-radius:14px;
   padding:6px 14px;text-align:center;box-shadow:0 3px 0 rgba(0,0,0,.15),var(--shine)}
 .g-stat .lb{font-size:9px;color:var(--dim);font-weight:700;letter-spacing:.5px;text-transform:uppercase}
@@ -434,7 +441,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .paw-trail{position:fixed;pointer-events:none;z-index:0;font-size:12px;opacity:0;animation:pawFade 2s ease forwards}
 @keyframes pawFade{0%{opacity:.5;transform:scale(.5)}100%{opacity:0;transform:scale(1)}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-#wheel{padding:0 14px 90px;text-align:center}
+#wheel{padding:0 14px 80px;text-align:center}
 .exchange-box{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 14px;margin:6px 16px;
   background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;
   box-shadow:0 3px 0 rgba(0,0,0,.15),var(--shine)}
@@ -475,7 +482,74 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
 .rw-nm{flex:1;color:var(--text)}
 .rw-dt{font-size:10px;color:var(--dim);font-weight:600}
 .rw-empty{text-align:center;padding:16px;color:var(--dim);font-size:12px;font-weight:700}
-@media(max-width:380px){
+/* ========== DESKTOP (min-width:768px) ========== */
+@media(min-width:768px){
+  .screen{max-width:600px;margin:0 auto;left:0;right:0}
+  #splash{padding:40px}
+  .splash-title{font-size:44px}
+  .splash-name{font-size:26px}
+  .btn-play{padding:20px 64px;font-size:24px}
+  .speech-bubble{max-width:360px;font-size:16px;padding:14px 24px}
+  .top-bar{padding:12px 20px}
+  .stat-pill{padding:6px 16px;font-size:14px}
+  .subject-tabs{padding:8px 12px 10px}
+  .subject-tab .tab-icon{font-size:26px}
+  .subject-tab .tab-label{font-size:12px}
+  .map-header h2{font-size:26px}
+  .skill-grid{grid-template-columns:1fr 1fr 1fr;gap:16px;padding:14px 20px;max-width:580px;margin:0 auto}
+  .skill-card{padding:20px 16px 18px}
+  .skill-card .em{font-size:44px}
+  .skill-card .nm{font-size:16px}
+  .game-area{max-width:560px;padding:20px}
+  .question-card{padding:28px 24px}
+  .q-text{font-size:32px}
+  .ans-btn{padding:18px 14px;font-size:20px;min-height:60px;border-radius:20px}
+  .answers-grid{gap:14px}
+  #result{padding:32px}
+  .result-title{font-size:36px}
+  .result-stars{font-size:52px}
+  .r-stat{padding:16px 24px;border-radius:20px}
+  .r-stat .num{font-size:28px}
+  .btn-group .btn-pri,.btn-group .btn-sec{padding:14px 32px;font-size:17px;border-radius:20px}
+  #daily,#profile{padding:0 20px 100px;max-width:600px;margin:0 auto}
+  .daily-hero h2{font-size:26px}
+  .mission-card{padding:16px 20px;border-radius:20px}
+  .mission-card .em{font-size:38px}
+  .mission-card .tt{font-size:16px}
+  .profile-hero{padding:28px 0 18px}
+  .profile-name{font-size:28px}
+  .streak-card{padding:24px;border-radius:24px}
+  .streak-num{font-size:52px}
+  .gem-stats-card,.gem-exchange-card{padding:20px;border-radius:24px}
+  .gem-stat-num{font-size:26px}
+  .ach-grid{grid-template-columns:repeat(5,1fr);gap:12px}
+  .ach{padding:14px 8px;font-size:30px;border-radius:18px}
+  #wheel{padding:0 20px 100px}
+  .wh-wrap{width:260px!important;height:260px!important;margin:8px auto 12px!important}
+  .btn-spin{padding:14px 36px;font-size:18px}
+  .spin-result{font-size:24px;margin:10px 0}
+  .exchange-box{padding:10px 20px;margin:8px auto;max-width:360px;border-radius:20px}
+  .exchange-info{font-size:15px}
+  .exchange-btn{padding:10px 20px;font-size:14px}
+  .rw-section{max-width:400px;margin:12px auto}
+  .rw-list{max-height:200px}
+  .rw-item{padding:10px 16px;font-size:14px;border-radius:14px}
+  .bottom-nav{max-width:600px;left:50%;transform:translateX(-50%);border-radius:20px 20px 0 0;
+    box-shadow:0 -4px 24px rgba(0,0,0,.3)}
+  .nav-item{padding:8px 24px}
+  .nav-item .ic{font-size:26px}
+  .nav-item .lb{font-size:11px}
+  .corgi-game{bottom:24px;right:24px}
+  .enc-text{font-size:52px}
+  .enc-sub{font-size:20px}
+}
+
+/* ========== MOBILE PORTRAIT (narrow, tall) ========== */
+@media(max-width:767px) and (orientation:portrait){
+  .skill-grid{max-width:420px;margin:0 auto}
+  .game-area{max-width:440px}
+}
+@media(max-width:380px) and (orientation:portrait){
   .splash-title{font-size:28px}
   .splash-name{font-size:18px}
   .btn-play{padding:16px 44px;font-size:20px}
@@ -488,10 +562,144 @@ body::after{content:'';position:fixed;inset:0;z-index:0;background:
   .result-title{font-size:24px}
   .r-stat{padding:10px 14px}
   .r-stat .num{font-size:20px}
+  .wh-wrap{width:min(180px,48vw)!important;height:min(180px,48vw)!important}
 }
-@media(min-width:430px){
-  .skill-grid{max-width:420px;margin:0 auto}
-  .game-area{max-width:440px}
+@media(max-height:700px) and (orientation:portrait){
+  #splash{gap:6px;padding:20px}
+  .splash-title{font-size:30px}
+  .btn-play{padding:14px 44px;font-size:20px}
+  .wh-wrap{width:min(200px,50vw)!important;height:min(200px,50vw)!important;margin:2px auto 6px!important}
+  .btn-spin{padding:8px 24px;font-size:14px}
+  .spin-result{font-size:18px;margin:4px 0;min-height:22px}
+  .exchange-box{padding:6px 12px;margin:4px 12px}
+  .rw-section{margin:4px 0}
+  .rw-list{max-height:100px}
+  .daily-hero{padding:10px 0}
+  .daily-hero h2{font-size:18px}
+  .mission-card{padding:10px 12px}
+  .profile-hero{padding:14px 0 10px}
+  .streak-card{padding:12px;margin-top:10px}
+  .streak-num{font-size:36px}
+  .gem-stats-card{padding:10px;margin-top:10px}
+  .gem-exchange-card{padding:12px;margin-top:10px}
+  #daily,#profile{padding:0 12px 85px}
+}
+
+/* ========== MOBILE LANDSCAPE (wide, short) ========== */
+@media(max-height:500px) and (orientation:landscape){
+  html,body{overflow:auto}
+  .screen{overflow-y:auto;-webkit-overflow-scrolling:touch}
+  /* Splash — horizontal layout */
+  #splash{flex-direction:row;padding:12px 24px;gap:20px}
+  #splash #splashScene{margin:0;flex-shrink:0}
+  .splash-title{font-size:24px}
+  .splash-name{font-size:16px}
+  .splash-sub{margin:4px 0 10px;font-size:12px}
+  .btn-play{padding:12px 36px;font-size:18px}
+  /* Top bar compact */
+  .top-bar{padding:4px 12px}
+  .stat-pill{padding:3px 8px;font-size:11px;border-radius:20px}
+  .stat-pill .ic{font-size:12px}
+  .avatar-mini{width:28px;height:28px;font-size:14px}
+  .lv-badge{font-size:9px;padding:1px 6px}
+  .xp-mini{width:48px;height:3px}
+  /* Subject tabs compact */
+  .subject-tabs{padding:2px 4px 4px}
+  .subject-tab{padding:4px 2px}
+  .subject-tab .tab-icon{font-size:16px}
+  .subject-tab .tab-label{font-size:8px;margin-top:0}
+  /* Map */
+  .map-header{padding:6px 12px 2px}
+  .map-header h2{font-size:17px}
+  .corgi-map{padding:2px 0}
+  #map{padding-bottom:55px}
+  .skill-grid{grid-template-columns:repeat(3,1fr);gap:8px;padding:4px 10px;max-width:100%}
+  .skill-card{padding:8px 6px 6px}
+  .skill-card .em{font-size:24px}
+  .skill-card .nm{font-size:10px;margin-top:2px}
+  .skill-card .prog{font-size:8px}
+  .skill-card .pbar{margin:3px auto 0;width:80%}
+  /* Game / Questions */
+  .game-area{padding:6px 12px;max-width:100%}
+  .timer-bar{height:5px;margin-bottom:6px}
+  .question-card{padding:10px 14px;border-radius:16px}
+  .q-text{font-size:20px!important;margin-bottom:4px}
+  .q-hint{font-size:10px;margin-bottom:8px}
+  .answers-grid{gap:6px}
+  .ans-btn{padding:8px 6px;font-size:14px;min-height:36px;border-radius:12px;
+    box-shadow:0 3px 0 rgba(0,0,0,.25),var(--shine)}
+  .g-stat{padding:4px 8px;border-radius:10px}
+  .g-stat .lb{font-size:8px}
+  .g-stat .vl{font-size:14px}
+  .corgi-game{bottom:8px;right:8px}
+  /* Result */
+  #result{padding:10px 20px;flex-direction:column}
+  .result-title{font-size:22px}
+  .result-stars{font-size:30px;margin:4px 0}
+  .result-stats{margin:6px 0;gap:6px}
+  .r-stat{padding:6px 10px;border-radius:12px;min-width:56px}
+  .r-stat .num{font-size:18px}
+  .r-stat .lbl{font-size:8px}
+  .btn-group{margin-top:8px;gap:6px}
+  .btn-group .btn-pri,.btn-group .btn-sec{padding:8px 18px;font-size:13px;border-radius:14px}
+  /* Daily */
+  .daily-hero{padding:6px 0}
+  .daily-hero h2{font-size:16px}
+  #daily{padding:0 10px 55px}
+  .mission-card{padding:8px 10px;margin-bottom:6px;border-radius:14px}
+  .mission-card .em{font-size:24px}
+  .mission-card .tt{font-size:12px}
+  .mission-card .ds{font-size:9px}
+  .mission-card .rw{padding:3px 8px;font-size:9px}
+  /* Wheel — side-by-side layout */
+  #wheel{padding:0 10px 55px;display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:8px}
+  #wheel>.top-bar{width:100%;flex-shrink:0}
+  #wheel>div:nth-child(2){width:100%}
+  .wh-wrap{width:min(160px,35vh)!important;height:min(160px,35vh)!important;margin:2px auto 4px!important}
+  .wh-pointer{font-size:20px;top:-8px}
+  .btn-spin{padding:6px 18px;font-size:12px;border-radius:30px}
+  .spin-result{font-size:14px;margin:2px 0;min-height:18px}
+  .exchange-box{padding:4px 8px;margin:2px 8px;border-radius:12px}
+  .exchange-info{font-size:11px}
+  .exchange-btn{padding:5px 10px;font-size:11px;border-radius:10px}
+  .rw-section{margin:2px 0;padding-bottom:4px}
+  .rw-title{font-size:12px}
+  .rw-list{max-height:60px}
+  .rw-item{padding:4px 8px;font-size:11px;border-radius:8px}
+  #spinMascot{display:none}
+  /* Profile */
+  #profile{padding:0 10px 55px}
+  .profile-hero{padding:8px 0 6px}
+  .profile-name{font-size:18px}
+  .profile-lv{font-size:11px}
+  .xp-bar-full{height:5px;max-width:200px}
+  .streak-card{padding:8px;margin-top:6px;border-radius:16px}
+  .streak-num{font-size:28px}
+  .streak-lbl{font-size:10px}
+  .gem-stats-card{padding:8px;margin-top:6px;border-radius:16px}
+  .gem-stats-card h3{font-size:14px;margin-bottom:4px}
+  .gem-stat-num{font-size:16px}
+  .gem-stat-lbl{font-size:8px}
+  .gem-exchange-card{padding:8px;margin-top:6px;border-radius:16px}
+  .gem-exchange-card h3{font-size:14px}
+  .gem-rate{font-size:11px}
+  .gem-balance{font-size:11px}
+  .gem-val,.gem-vnd{font-size:13px}
+  .gem-prog-bar{height:5px}
+  .btn-exchange{padding:8px 20px;font-size:12px;border-radius:14px}
+  .ach-grid{grid-template-columns:repeat(6,1fr);gap:6px;margin-top:8px}
+  .ach{padding:6px 4px;font-size:20px;border-radius:12px}
+  .ach .anm{font-size:7px}
+  /* Bottom nav compact */
+  .bottom-nav{padding:2px 0 max(2px,env(safe-area-inset-bottom))}
+  .nav-item{padding:3px 12px}
+  .nav-item .ic{font-size:18px}
+  .nav-item .lb{font-size:7px;margin-top:0}
+  /* Overlays */
+  .enc-text{font-size:30px}
+  .enc-sub{font-size:14px}
+  .speech-bubble{padding:6px 12px;font-size:12px;max-width:220px;border-radius:16px}
+  .combo-display{top:44px;font-size:16px;padding:2px 10px}
 }
 `
 
@@ -502,9 +710,9 @@ const gameHTML = `
 <div id="splash" class="screen active">
   <div style="position:absolute;inset:0;pointer-events:none" id="floatingStars"></div>
   <div id="splashScene" style="margin-bottom:10px"></div>
-  <div class="splash-title">Vương Quốc Học Giỏi Lớp 3</div>
+  <div class="splash-title">Vương Quốc Học Giỏi</div>
   <div class="splash-name" id="splashName">Em Học Toán Vui</div>
-  <div class="splash-sub">Toán  ·  Tiếng Việt  ·  English</div>
+  <div class="splash-sub" id="splashGradeName">Toán  ·  Tiếng Việt  ·  English</div>
   <button class="btn-play" onclick="startGame()">Chơi nào!</button>
 </div>
 <div id="map" class="screen">
@@ -575,12 +783,12 @@ const gameHTML = `
       <div class="stat-pill"><span class="ic">💎</span><span id="gmC3">0</span></div>
     </div>
   </div>
-  <div style="text-align:center;padding:6px 0 2px">
-    <h2 style="font-family:'Baloo 2',cursive;font-size:20px;color:var(--gold);text-shadow:0 2px 10px rgba(255,194,51,.3)">🎡 Vòng Quay May Mắn</h2>
+  <div style="text-align:center;padding:4px 0 0">
+    <h2 style="font-family:'Baloo 2',cursive;font-size:18px;color:var(--gold);text-shadow:0 2px 10px rgba(255,194,51,.3)">🎡 Vòng Quay May Mắn</h2>
   </div>
   <div class="wh-wrap">
     <div class="wh-pointer">📍</div>
-    <canvas id="wheelCanvas" class="wh-canvas" width="260" height="260"></canvas>
+    <canvas id="wheelCanvas" class="wh-canvas" width="220" height="220"></canvas>
   </div>
   <button class="btn-spin" id="spinBtn" onclick="spinWheel()">🎰 QUAY!</button>
   <div class="spin-result" id="spinResult"></div>
@@ -588,7 +796,7 @@ const gameHTML = `
     <div class="exchange-info">⭐ <span id="exStars">0</span> sao</div>
     <button class="exchange-btn" id="exBtn" onclick="exchangeStars()">Đổi 3⭐ → 1🎟️</button>
   </div>
-  <div id="spinMascot" style="margin-top:4px;text-align:center"></div>
+  <div id="spinMascot" style="margin-top:2px;text-align:center"></div>
   <div class="rw-section">
     <div class="rw-title">🎁 Phần thưởng đã nhận</div>
     <div class="rw-list" id="rewardList"></div>

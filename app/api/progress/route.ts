@@ -8,12 +8,16 @@ function getSupabase() {
   return createClient(url, key)
 }
 
-// GET /api/progress?player=uyennhi
+// GET /api/progress?player=xxx&grade=vuongquoc_lop1
 export async function GET(req: NextRequest) {
   const supabase = getSupabase()
   if (!supabase) return NextResponse.json({ data: null })
 
-  const playerId = req.nextUrl.searchParams.get('player') || 'uyennhi'
+  const player = req.nextUrl.searchParams.get('player')
+  const grade = req.nextUrl.searchParams.get('grade') || ''
+  if (!player) return NextResponse.json({ data: null })
+
+  const playerId = grade ? `${player}_${grade}` : player
 
   const { data, error } = await supabase
     .from('game_progress')
@@ -25,13 +29,17 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ data: data.data, updated_at: data.updated_at })
 }
 
-// POST /api/progress { player_id, data }
+// POST /api/progress { player_id, grade, data }
 export async function POST(req: NextRequest) {
   const supabase = getSupabase()
   if (!supabase) return NextResponse.json({ error: 'not configured' }, { status: 503 })
 
   const body = await req.json()
-  const playerId = body.player_id || 'uyennhi'
+  const player = body.player_id
+  const grade = body.grade || ''
+  if (!player) return NextResponse.json({ error: 'player_id required' }, { status: 400 })
+
+  const playerId = grade ? `${player}_${grade}` : player
 
   const { error } = await supabase
     .from('game_progress')

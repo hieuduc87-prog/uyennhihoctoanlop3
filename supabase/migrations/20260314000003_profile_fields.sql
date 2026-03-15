@@ -1,0 +1,2 @@
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS gem_rate int DEFAULT 100;
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS parent_pin text DEFAULT NULL;

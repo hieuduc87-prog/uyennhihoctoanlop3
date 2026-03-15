@@ -63,7 +63,7 @@ function LoginContent() {
         display_name: childName.trim(),
         gender,
         pet,
-        grade: 3
+        grade: 0
       }
       if (email.trim()) body.email = email.trim()
       const r = await fetch(`${SB_URL}/rest/v1/users`, {
@@ -126,7 +126,7 @@ function LoginContent() {
             <img src={avatarSrc} width={75} height={100} alt="Avatar" style={{ objectFit: 'contain', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,.25))' }} />
             <img src={petSrc} width={70} height={70} alt="Pet" style={{ objectFit: 'contain', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,.25))' }} />
           </div>
-          <h1 className="login-title">Vương Quốc Học Giỏi Lớp 3</h1>
+          <h1 className="login-title">Vương Quốc Học Giỏi</h1>
           <p className="login-sub">Toán · Tiếng Việt · English</p>
 
           <div className="mode-tabs">

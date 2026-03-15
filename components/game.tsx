@@ -11,12 +11,7 @@ export default function Game() {
     if (loaded) return
     setLoaded(true)
 
-    // Load game.js immediately (don't block on cloud data)
-    const script = document.createElement('script')
-    script.src = '/game.js?v=4'
-    document.body.appendChild(script)
-
-    // Cloud sync in background
+    // Cloud sync in background (game.js loaded via HTML script tag)
     loadCloudData()
 
     let saveTimer: ReturnType<typeof setTimeout>
