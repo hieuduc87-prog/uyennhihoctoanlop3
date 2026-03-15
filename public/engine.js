@@ -86,8 +86,14 @@ function voiceReadQuestion(text){
     clean=clean.replace(/\n/g,'. ').replace(/\s+/g,' ').trim();
     if(!clean)return;
     var u=new SpeechSynthesisUtterance(clean);
-    u.lang=isEng?'en-US':'vi-VN';
-    u.rate=0.9;u.pitch=1.1;u.volume=0.7;
+    var lang=isEng?'en-US':'vi-VN';
+    u.lang=lang;
+    // Pick a male voice if available
+    var voices=_speechSynth.getVoices();
+    var male=voices.filter(function(v){return v.lang.replace('_','-').indexOf(lang)===0&&(/male/i.test(v.name)||/nam|minh|an |quang/i.test(v.name))});
+    if(male.length)u.voice=male[0];
+    else{var any=voices.filter(function(v){return v.lang.replace('_','-').indexOf(lang)===0});if(any.length)u.voice=any[0]}
+    u.rate=0.9;u.pitch=0.9;u.volume=0.7;
     _speechSynth.speak(u);
   }catch(e){}
 }
