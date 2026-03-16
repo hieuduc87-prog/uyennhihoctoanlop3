@@ -44,8 +44,20 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ data: data.data, updated_at: data.updated_at })
 }
 
+// CSRF: verify Origin matches Host
+function verifyCsrf(req: NextRequest): boolean {
+  const origin = req.headers.get('origin')
+  const host = req.headers.get('host')
+  if (!origin || !host) return true
+  try { return new URL(origin).host === host } catch { return false }
+}
+
 // POST /api/progress { player_id, grade, data }
 export async function POST(req: NextRequest) {
+  if (!verifyCsrf(req)) {
+    return NextResponse.json({ error: 'Invalid request origin' }, { status: 403 })
+  }
+
   const supabase = getSupabase()
   if (!supabase) return NextResponse.json({ error: 'not configured' }, { status: 503 })
 
@@ -67,6 +79,12 @@ export async function POST(req: NextRequest) {
   }
 
   const playerId = grade ? `${player}_${grade}` : player
+
+  // Limit data size to prevent abuse (50KB max)
+  const dataStr = JSON.stringify(body.data)
+  if (dataStr.length > 50_000) {
+    return NextResponse.json({ error: 'Data too large' }, { status: 413 })
+  }
 
   const { error } = await supabase
     .from('game_progress')

@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { createHash } from 'crypto'
-import { signSession, sessionCookieOptions } from '@/lib/session'
+import { signSession, sessionCookieOptions, getSessionUser } from '@/lib/session'
 import { VALID_GRADE_IDS } from '@/lib/grade-registry'
 
 const BCRYPT_ROUNDS = 10
@@ -48,8 +48,24 @@ function setSessionCookie(res: NextResponse, username: string) {
 
 const USER_SELECT = 'id,username,display_name,gender,pet,grade,created_at'
 
+// CSRF: verify Origin matches Host
+function verifyCsrf(req: NextRequest): boolean {
+  const origin = req.headers.get('origin')
+  const host = req.headers.get('host')
+  if (!origin || !host) return true // Allow non-browser clients (no Origin header)
+  try {
+    return new URL(origin).host === host
+  } catch {
+    return false
+  }
+}
+
 // POST /api/auth — login / register / change-password
 export async function POST(req: NextRequest) {
+  if (!verifyCsrf(req)) {
+    return NextResponse.json({ error: 'Invalid request origin' }, { status: 403 })
+  }
+
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
     || req.headers.get('x-real-ip')
     || 'unknown'
@@ -97,8 +113,8 @@ export async function POST(req: NextRequest) {
     if (storedPw.startsWith('$2')) {
       verified = await bcrypt.compare(password, storedPw)
     } else {
-      // Legacy: SHA-256 or plaintext — auto-migrate to bcrypt
-      verified = storedPw === legacyHash(password) || storedPw === password
+      // Legacy: SHA-256 only — auto-migrate to bcrypt
+      verified = storedPw === legacyHash(password)
       if (verified) {
         const hashed = await bcrypt.hash(password, BCRYPT_ROUNDS)
         await supabase.from('users').update({ password: hashed }).eq('id', user.id)
@@ -171,6 +187,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (action === 'change-password') {
+    // Verify session: only allow changing own password
+    const sessionUser = getSessionUser(req)
+    if (!sessionUser || sessionUser !== username) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    }
+
     const newPassword = typeof body.new_password === 'string' ? (body.new_password as string).slice(0, 100) : ''
     if (!username || !password || !newPassword) {
       return NextResponse.json({ error: 'Thiếu thông tin' }, { status: 400 })
@@ -198,7 +220,7 @@ export async function POST(req: NextRequest) {
     if (storedPw.startsWith('$2')) {
       verified = await bcrypt.compare(password, storedPw)
     } else {
-      verified = storedPw === legacyHash(password) || storedPw === password
+      verified = storedPw === legacyHash(password)
     }
 
     if (!verified) {
