@@ -392,11 +392,8 @@ function renderGrid(){
       +lockMsg
       +'<div class="pbar"><div class="fill" style="width:'+Math.min(100,pr.level/maxLv*100)+'%"></div></div></div>';
   }).join('');
-  var speeches=GC.speeches||[['Ch\u01a1i \u0111i!']];
-  var sp=speeches[curSubject]||speeches[0];
   var cm=document.getElementById('corgiMap');
-  cm.innerHTML='<div class="speech-bubble" style="margin-bottom:-4px">'+sp[R(0,sp.length-1)]+'</div>'
-    +'<div onclick="tapCorgiMap(this)" style="cursor:pointer;display:flex;align-items:flex-end;justify-content:center;gap:4px">'+UNhi(90)+CSvg(70)+'</div>';
+  cm.innerHTML='<div onclick="tapCorgiMap(this)" style="cursor:pointer;display:flex;align-items:flex-end;justify-content:center;gap:4px">'+UNhi(90)+CSvg(70)+'</div>';
   updateUI();
 }
 
