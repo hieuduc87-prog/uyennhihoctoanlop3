@@ -514,20 +514,8 @@ function startSkill(id,subIdx){
   document.getElementById('tQ').textContent=Q_CT;
   document.getElementById('corgiG').innerHTML=CSvg(55);
   document.getElementById('corgiG').style.display='block';
-  // Voice: play skill intro, then show first question after intro finishes
-  voicePlay('intro',sk.id);
   voiceStartIdle();
-  // Wait for intro voice to finish before showing question (avoid overlap)
-  if(_voiceAudio&&_voiceAudio.src&&voiceEnabled()){
-    var _introStarted=false;
-    _voiceAudio.addEventListener('playing',function _ip(){_introStarted=true;_voiceAudio.removeEventListener('playing',_ip)});
-    _voiceAudio.addEventListener('ended',function _ie(){_voiceAudio.removeEventListener('ended',_ie);showQ()});
-    _voiceAudio.addEventListener('error',function _ir(){_voiceAudio.removeEventListener('error',_ir);showQ()});
-    // Fallback: if voice didn't start in 500ms (no audio file), show question anyway
-    setTimeout(function(){if(!_introStarted)showQ()},500);
-  } else {
-    showQ();
-  }
+  showQ();
 }
 function replaySkill(){if(curSkill){sndTap();startSkill(curSkill.id,curSubject)}}
 
