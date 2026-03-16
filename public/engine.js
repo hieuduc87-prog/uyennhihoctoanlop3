@@ -536,11 +536,11 @@ function showQ(){
     +(GC.hasLives?'<div class="g-stat"><div class="lb">M\u1ea1ng</div><div class="vl">'+'\u2764\ufe0f'.repeat(Math.max(0,_lives))+'\ud83e\udd0d'.repeat(Math.max(0,(GC.livesCount||3)-_lives))+'</div></div>':'')
     +'</div>'
     +'<div class="question-card">'
-    +'<div class="q-text" style="font-size:'+fs+';white-space:pre-line">'+q.text+'</div>'
-    +'<div class="q-hint">'+q.hint+'</div>'
+    +'<div class="q-text" style="font-size:'+fs+';white-space:pre-line">'+escHtml(q.text)+'</div>'
+    +'<div class="q-hint">'+escHtml(q.hint)+'</div>'
     +'<div class="answers-grid '+(singleCol?'single-col':'')+'">'
     +q.options.map(function(o){
-      var display=q.isText?o:o.toLocaleString();
+      var display=q.isText?escHtml(String(o)):escHtml(String(o.toLocaleString()));
       return '<button class="ans-btn" data-val="'+encodeURIComponent(String(o))+'" onclick="checkA(this)">'+display+'</button>';
     }).join('')
     +'</div></div>';
@@ -622,7 +622,7 @@ function handleW(){
 }
 function nextQ(){qIdx++;if(GC.hasLives&&_lives<=0){endRound();return}showQ()}
 
-function showEnc(ok){var ms=ok?C_MSGS:W_MSGS;var m=ms[R(0,ms.length-1)];var ov=document.createElement('div');ov.className='encourage-overlay';ov.innerHTML='<div class="enc-text">'+m.t+'</div><div class="enc-sub">'+m.s+'</div>';document.body.appendChild(ov);setTimeout(function(){ov.remove()},1600)}
+function showEnc(ok){var ms=ok?C_MSGS:W_MSGS;var m=ms[R(0,ms.length-1)];var ov=document.createElement('div');ov.className='encourage-overlay';ov.innerHTML='<div class="enc-text">'+escHtml(m.t)+'</div><div class="enc-sub">'+escHtml(m.s)+'</div>';document.body.appendChild(ov);setTimeout(function(){ov.remove()},1600)}
 function spawnFloat(e,n){for(var i=0;i<n;i++){(function(){var el=document.createElement('div');el.className='corgi-tap-effect';el.textContent=e;el.style.left=R(20,80)+'%';el.style.top=R(30,70)+'%';document.body.appendChild(el);setTimeout(function(){el.remove()},1100)})()}}
 // ============ FLOATING SCORE POPUP ============
 function showScoreFloat(text,type,x,y){
@@ -699,7 +699,7 @@ function endRound(){
   var sp2=['T\u1ed1t l\u1eafm! L\u1ea7n sau 3 sao nh\u00e9!','G\u1ea7n ho\u00e0n h\u1ea3o r\u1ed3i!'];
   var sp1=['Kh\u00f4ng sao! Corgi \u1edf b\u00ean Nhi!','M\u1ed7i l\u1ea7n ch\u01a1i l\u00e0 gi\u1ecfi h\u01a1n!'];
   var sp=stars>=3?sp3:stars>=2?sp2:sp1;
-  document.getElementById('rSpeech').innerHTML='<div class="speech-bubble" style="margin:8px auto">'+sp[R(0,sp.length-1)]+'</div>';
+  document.getElementById('rSpeech').innerHTML='<div class="speech-bubble" style="margin:8px auto">'+escHtml(sp[R(0,sp.length-1)])+'</div>';
   // Count-up animated result stats
   countUp(document.getElementById('rCor'),correct,'','/'+Q_CT,500);
   countUp(document.getElementById('rAcc'),acc,'','%',600);
@@ -1465,7 +1465,7 @@ function renderSettings(){
     '</div>'+
     '<div class="set-group"><div class="set-title">👤 Tài khoản</div>'+
     '<div class="set-row"><span class="set-lbl">📛 Tên</span><div style="display:flex;gap:6px;flex:1;justify-content:flex-end">'+
-      '<input id="setName" class="set-input" value="'+getPlayerName()+'" maxlength="20">'+
+      '<input id="setName" class="set-input" value="'+escHtml(getPlayerName())+'" maxlength="20">'+
       '<button class="set-btn" onclick="saveName()">Lưu</button></div></div>'+
     '<div class="set-row"><span class="set-lbl">🔑 Mật khẩu</span><button class="set-btn" onclick="showChangePass()">Đổi</button></div>'+
     '</div>'+
@@ -1554,7 +1554,7 @@ function setDiffLevel(n,btn){
   renderSettings();
 }
 function saveName(){
-  var n=document.getElementById('setName').value.trim();if(!n)return;
+  var n=document.getElementById('setName').value.trim().replace(/<[^>]*>/g,'').slice(0,20);if(!n)return;
   try{var p=JSON.parse(localStorage.getItem('player_profile'))||{};p.name=n;PP.name=n;localStorage.setItem('player_profile',JSON.stringify(p))}catch(e){}
   sndCorrect();updateUI();
 }

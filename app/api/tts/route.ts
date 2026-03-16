@@ -4,7 +4,36 @@ import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts'
 const VOICE_VI = 'vi-VN-NamMinhNeural'
 const VOICE_EN = 'en-US-GuyNeural'
 
+// Rate limit: 30 requests per minute per IP
+const ttsRateMap = new Map<string, { count: number; resetAt: number }>()
+const TTS_RATE_LIMIT = 30
+const TTS_RATE_WINDOW = 60_000
+
+function isTtsRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entry = ttsRateMap.get(ip)
+  if (!entry || now > entry.resetAt) {
+    ttsRateMap.set(ip, { count: 1, resetAt: now + TTS_RATE_WINDOW })
+    return false
+  }
+  entry.count++
+  return entry.count > TTS_RATE_LIMIT
+}
+
+// Strip HTML/script tags from text input
+function sanitizeText(text: string): string {
+  return text.replace(/<[^>]*>/g, '').replace(/[<>]/g, '').trim()
+}
+
 export async function GET(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    || req.headers.get('x-real-ip')
+    || 'unknown'
+
+  if (isTtsRateLimited(ip)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
+
   const text = req.nextUrl.searchParams.get('text')
   const lang = req.nextUrl.searchParams.get('lang') || 'vi'
 
@@ -12,11 +41,21 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid text' }, { status: 400 })
   }
 
+  // Only allow vi or en
+  if (lang !== 'vi' && lang !== 'en') {
+    return NextResponse.json({ error: 'Invalid lang' }, { status: 400 })
+  }
+
+  const cleanText = sanitizeText(text)
+  if (!cleanText) {
+    return NextResponse.json({ error: 'Empty text' }, { status: 400 })
+  }
+
   try {
     const tts = new MsEdgeTTS()
     await tts.setMetadata(lang === 'en' ? VOICE_EN : VOICE_VI, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3)
 
-    const result = tts.toStream(text)
+    const result = tts.toStream(cleanText)
     const readable = result.audioStream
     const chunks: Buffer[] = []
 
