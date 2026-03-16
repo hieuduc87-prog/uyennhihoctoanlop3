@@ -65,6 +65,7 @@ export default function Landing() {
             try {
               localStorage.removeItem('player_profile')
               localStorage.removeItem('voicon_user')
+              document.cookie = 'voicon_session=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/'
               document.cookie = 'logged_in=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/'
               document.cookie = 'guest_mode=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/'
             } catch {}

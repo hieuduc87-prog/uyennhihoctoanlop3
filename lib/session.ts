@@ -1,12 +1,12 @@
 import { createHmac } from 'crypto'
 import { NextRequest } from 'next/server'
 
-const SESSION_SECRET = process.env.SUPABASE_SERVICE_ROLE_KEY || 'vuongquoc_fallback_secret_2026'
+const SESSION_SECRET = process.env.SESSION_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 const COOKIE_NAME = 'voicon_session'
 
 /** Sign a username into a session token: username.hmac */
 export function signSession(username: string): string {
-  const sig = createHmac('sha256', SESSION_SECRET).update(username).digest('hex').slice(0, 32)
+  const sig = createHmac('sha256', SESSION_SECRET).update(username).digest('hex')
   return `${username}.${sig}`
 }
 
@@ -18,7 +18,7 @@ export function getSessionUser(req: NextRequest): string | null {
   if (dotIdx < 1) return null
   const username = cookie.slice(0, dotIdx)
   const sig = cookie.slice(dotIdx + 1)
-  const expected = createHmac('sha256', SESSION_SECRET).update(username).digest('hex').slice(0, 32)
+  const expected = createHmac('sha256', SESSION_SECRET).update(username).digest('hex')
   if (sig !== expected) return null
   return username
 }
@@ -30,7 +30,7 @@ export function sessionCookieOptions() {
     httpOnly: true,
     sameSite: 'lax' as const,
     path: '/',
-    maxAge: 365 * 24 * 60 * 60, // 1 year
+    maxAge: 30 * 24 * 60 * 60, // 30 days
     secure: process.env.NODE_ENV === 'production',
   }
 }

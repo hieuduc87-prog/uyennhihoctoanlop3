@@ -1,8 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import bcrypt from 'bcryptjs'
 import { createHash } from 'crypto'
 import { signSession, sessionCookieOptions } from '@/lib/session'
 import { VALID_GRADE_IDS } from '@/lib/grade-registry'
+
+const BCRYPT_ROUNDS = 10
 
 function getSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -13,8 +16,8 @@ function getSupabase() {
 
 // Simple in-memory rate limiter (per-IP, resets on deploy)
 const rateMap = new Map<string, { count: number; resetAt: number }>()
-const RATE_LIMIT = 10 // max attempts
-const RATE_WINDOW = 60_000 // per 1 minute
+const RATE_LIMIT = 5
+const RATE_WINDOW = 60_000
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
@@ -27,7 +30,8 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT
 }
 
-function hashPassword(pw: string): string {
+// Legacy SHA-256 hash (for migration only)
+function legacyHash(pw: string): string {
   return createHash('sha256').update(pw + '_vuongquoc_salt_2026').digest('hex')
 }
 
@@ -35,9 +39,17 @@ function sanitize(s: string, maxLen = 50): string {
   return s.trim().slice(0, maxLen)
 }
 
+// Helper: set session cookie on response
+function setSessionCookie(res: NextResponse, username: string) {
+  const opts = sessionCookieOptions()
+  res.cookies.set(opts.name, signSession(username), opts)
+  res.cookies.set('logged_in', '1', { path: '/', maxAge: opts.maxAge, sameSite: 'lax', secure: opts.secure })
+}
+
+const USER_SELECT = 'id,username,display_name,gender,pet,grade,created_at'
+
 // POST /api/auth — login / register / change-password
 export async function POST(req: NextRequest) {
-  // Rate limit by IP
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
     || req.headers.get('x-real-ip')
     || 'unknown'
@@ -64,44 +76,42 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Nhập đầy đủ tên đăng nhập và mật khẩu!' }, { status: 400 })
     }
 
-    // Try hashed password first, fallback to plaintext for legacy accounts
-    const hashed = hashPassword(password)
-    let { data, error } = await supabase
+    // Fetch user by username (password verified in app, not in query)
+    const { data: users, error } = await supabase
       .from('users')
-      .select('id,username,display_name,gender,pet,grade,created_at')
+      .select(USER_SELECT + ',password')
       .eq('username', username)
-      .eq('password', hashed)
       .limit(1)
 
-    if (!error && (!data || data.length === 0)) {
-      // Fallback: check plaintext password (legacy)
-      const legacy = await supabase
-        .from('users')
-        .select('id,username,display_name,gender,pet,grade,created_at')
-        .eq('username', username)
-        .eq('password', password)
-        .limit(1)
-      data = legacy.data
-      error = legacy.error
+    if (error) return NextResponse.json({ error: 'Lỗi hệ thống' }, { status: 500 })
+    if (!users || users.length === 0) {
+      return NextResponse.json({ error: 'Sai tên đăng nhập hoặc mật khẩu!' }, { status: 401 })
+    }
 
-      // Auto-migrate: hash the plaintext password
-      if (data && data.length > 0) {
-        await supabase
-          .from('users')
-          .update({ password: hashed })
-          .eq('username', username)
-          .eq('password', password)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const user = users[0] as any
+    const storedPw: string = user.password || ''
+    let verified = false
+
+    // Try bcrypt first
+    if (storedPw.startsWith('$2')) {
+      verified = await bcrypt.compare(password, storedPw)
+    } else {
+      // Legacy: SHA-256 or plaintext — auto-migrate to bcrypt
+      verified = storedPw === legacyHash(password) || storedPw === password
+      if (verified) {
+        const hashed = await bcrypt.hash(password, BCRYPT_ROUNDS)
+        await supabase.from('users').update({ password: hashed }).eq('id', user.id)
       }
     }
 
-    if (error) return NextResponse.json({ error: 'Lỗi hệ thống' }, { status: 500 })
-    if (!data || data.length === 0) {
+    if (!verified) {
       return NextResponse.json({ error: 'Sai tên đăng nhập hoặc mật khẩu!' }, { status: 401 })
     }
-    // Never return password field — set signed session cookie
-    const res = NextResponse.json({ user: data[0] })
-    const opts = sessionCookieOptions()
-    res.cookies.set(opts.name, signSession(data[0].username), opts)
+
+    const { password: _, ...safeUser } = user
+    const res = NextResponse.json({ user: safeUser })
+    setSessionCookie(res, user.username)
     return res
   }
 
@@ -109,7 +119,6 @@ export async function POST(req: NextRequest) {
     const display_name = typeof body.display_name === 'string' ? sanitize(body.display_name, 30) : ''
     const gender = body.gender === 'boy' ? 'boy' : 'girl'
     const pet = ['corgi', 'cat', 'trex', 'dragon'].includes(body.pet as string) ? body.pet : 'corgi'
-    // Accept string grade ID (pre_4, pre_5, lop1-5) or legacy number (1-5 → lop1-5)
     let grade: string = 'lop1'
     if (typeof body.grade === 'string' && VALID_GRADE_IDS.includes(body.grade)) {
       grade = body.grade
@@ -131,9 +140,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Mật khẩu cần ít nhất 6 ký tự!' }, { status: 400 })
     }
 
+    const hashed = await bcrypt.hash(password, BCRYPT_ROUNDS)
     const row: Record<string, unknown> = {
       username,
-      password: hashPassword(password),
+      password: hashed,
       display_name,
       gender,
       pet,
@@ -144,7 +154,7 @@ export async function POST(req: NextRequest) {
     const { data, error } = await supabase
       .from('users')
       .insert(row)
-      .select('id,username,display_name,gender,pet,grade,created_at')
+      .select(USER_SELECT)
 
     if (error) {
       if (error.message?.includes('unique') || error.message?.includes('duplicate')) {
@@ -155,8 +165,7 @@ export async function POST(req: NextRequest) {
     const user = Array.isArray(data) ? data[0] : data
     const res = NextResponse.json({ user })
     if (user?.username) {
-      const opts = sessionCookieOptions()
-      res.cookies.set(opts.name, signSession(user.username), opts)
+      setSessionCookie(res, user.username)
     }
     return res
   }
@@ -170,33 +179,37 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Mật khẩu mới cần ít nhất 6 ký tự!' }, { status: 400 })
     }
 
-    // Verify old password (try hashed, then plaintext)
-    const hashed = hashPassword(password)
-    let { data: check } = await supabase
+    // Fetch user to verify old password
+    const { data: users } = await supabase
       .from('users')
-      .select('id')
+      .select('id,password')
       .eq('username', username)
-      .eq('password', hashed)
       .limit(1)
 
-    if (!check || check.length === 0) {
-      const legacy = await supabase
-        .from('users')
-        .select('id')
-        .eq('username', username)
-        .eq('password', password)
-        .limit(1)
-      check = legacy.data
-    }
-
-    if (!check || check.length === 0) {
+    if (!users || users.length === 0) {
       return NextResponse.json({ error: 'Mật khẩu cũ sai!' }, { status: 401 })
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const user = users[0] as any
+    const storedPw: string = user.password || ''
+    let verified = false
+
+    if (storedPw.startsWith('$2')) {
+      verified = await bcrypt.compare(password, storedPw)
+    } else {
+      verified = storedPw === legacyHash(password) || storedPw === password
+    }
+
+    if (!verified) {
+      return NextResponse.json({ error: 'Mật khẩu cũ sai!' }, { status: 401 })
+    }
+
+    const hashed = await bcrypt.hash(newPassword, BCRYPT_ROUNDS)
     const { error: updateErr } = await supabase
       .from('users')
-      .update({ password: hashPassword(newPassword) })
-      .eq('id', check[0].id)
+      .update({ password: hashed })
+      .eq('id', user.id)
 
     if (updateErr) return NextResponse.json({ error: 'Lỗi cập nhật. Thử lại!' }, { status: 500 })
     return NextResponse.json({ ok: true })
